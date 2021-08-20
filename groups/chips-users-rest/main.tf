@@ -27,7 +27,7 @@ provider "vault" {
   }
 }
 
-module "chips-ef-batch" {
+module "chips-users-proxy" {
   source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=feature/chips-module"
 
   application                      = var.application
