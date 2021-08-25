@@ -13,7 +13,7 @@ environment = "development"
 
 # ASG settings
 asg_count = 1
-instance_size = "t3.medium"
+instance_size = "z1d.large"
 
 # CVO NFS Mounts
 nfs_server = "10.104.9.145"

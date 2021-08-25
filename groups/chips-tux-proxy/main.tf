@@ -31,6 +31,7 @@ module "chips-tux-proxy" {
   source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=feature/chips-module"
 
   application                      = var.application
+  application_type                 = "chips"
   aws_region                       = var.aws_region
   aws_account                      = var.aws_account
   account                          = var.account
@@ -43,4 +44,8 @@ module "chips-tux-proxy" {
   nfs_mounts                       = var.nfs_mounts
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
+
+  additional_userdata_suffix = <<-EOT
+  su -l ec2-user bootstrap
+  EOT
 }
