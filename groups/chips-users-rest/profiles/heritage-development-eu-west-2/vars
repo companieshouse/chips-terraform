@@ -30,6 +30,11 @@ nfs_mounts = {
 # 'NFSPATH' file_path in file_path keys will be templated with the full path to the application instances mounted share folder (e.g. /mnt/nfs/cics/cics1 )
 ############################################
 cloudwatch_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit/"
+    log_group_retention = 7
+  }
+
   "messages" = {
     file_path = "/var/log"
     log_group_retention = 7
