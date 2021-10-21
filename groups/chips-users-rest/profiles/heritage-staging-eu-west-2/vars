@@ -1,0 +1,64 @@
+# Account details
+aws_profile = "heritage-staging-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-staging"
+
+# Account shorthand
+account = "hstg"
+region  = "euw2"
+
+# Application details
+application = "chips-users-rest"
+environment = "staging"
+
+# ASG settings
+asg_count = 2
+instance_size = "z1d.large"
+
+# CVO NFS Mounts
+nfs_server = "192.168.255.19"
+nfs_mount_destination_parent_dir = "/mnt/nfs"
+nfs_mounts = {
+  application_root = {
+    local_mount_point = "chips"
+    nfs_source_mount  = "chips"
+  }
+}
+
+############################################
+# Log entries to be aggregated in Cloudwatch Logs
+# 'NFSPATH' file_path in file_path keys will be templated with the full path to the application instances mounted share folder (e.g. /mnt/nfs/cics/cics1 )
+############################################
+cloudwatch_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit"
+    log_group_retention = 7
+  }
+
+  "messages" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+  
+  "secure" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "yum.log" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "ssm-errors" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "errors.log"
+    log_group_retention = 7
+  }
+
+  "ssm-agent" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "amazon-ssm-agent.log"
+    log_group_retention = 7
+  }
+}
