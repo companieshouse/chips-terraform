@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-ef-batch" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.88"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.91"
 
   application                      = var.application
   application_type                 = "chips"
@@ -44,6 +44,16 @@ module "chips-ef-batch" {
   nfs_mounts                       = var.nfs_mounts
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
+
+  additional_ingress_with_cidr_blocks = [
+    {
+      from_port   = 49075
+      to_port     = 49078
+      protocol    = "tcp"
+      description = "Tuxedo ports"
+      cidr_blocks = join(",", [for s in module.chips-ef-batch.application_subnets : s.cidr_block])
+    }
+  ]
 
   additional_userdata_suffix = <<-EOT
   su -l ec2-user bootstrap
