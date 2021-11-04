@@ -13,16 +13,6 @@ environment = "development"
 db_instance_count = 1
 db_instance_size = "c5.4xlarge"
 
-# CVO NFS Mounts
-nfs_server = "192.168.255.19"
-nfs_mount_destination_parent_dir = "/mnt/nfs"
-nfs_mounts = {
-  REPLACEME = {
-    local_mount_point = "REPLACEME"
-    nfs_source_mount  = "REPLACEME"
-  }
-}
-
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
 ############################################

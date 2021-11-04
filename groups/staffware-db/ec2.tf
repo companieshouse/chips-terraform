@@ -22,21 +22,21 @@ module "db_ec2_security_group" {
       to_port     = 1521
       protocol    = "tcp"
       description = "Oracle DB port"
-      cidr_blocks = join(",", var.vpc_sg_cidr_blocks_oracle)
+      cidr_blocks = join(",", local.oracle_allowed_ranges)
     },
     {
       from_port   = 1522
       to_port     = 1522
       protocol    = "tcp"
       description = "Oracle DB port"
-      cidr_blocks = join(",", var.vpc_sg_cidr_blocks_oracle)
+      cidr_blocks = join(",", local.oracle_allowed_ranges)
     },
     {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
       description = "SSH ports"
-      cidr_blocks = join(",", var.vpc_sg_cidr_blocks_ssh)
+      cidr_blocks = join(",", local.internal_cidrs)
     }
   ]
   egress_rules = ["all-all"]
@@ -52,7 +52,7 @@ resource "aws_instance" "db_ec2" {
 
   key_name      = aws_key_pair.ec2_keypair.key_name
   instance_type = var.db_instance_size
-  subnet_id     = data.aws_subnet_ids.data.ids[count.index]
+  subnet_id     = sort(data.aws_subnet_ids.data.ids)[count.index]
 
   iam_instance_profile = module.db_instance_profile.aws_iam_instance_profile.name
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered

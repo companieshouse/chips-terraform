@@ -105,21 +105,3 @@ variable "cloudwatch_logs" {
   default = null
   description = "Map of log files to be collected by Cloudwatch Logs"
 }
-
-variable "nfs_mounts" {
-  type = map(any)
-  default = null
-  description = "Map of NFS mount definitions to be mounted to the server"
-}
-
-variable "nfs_mount_destination_parent_dir" {
-  type = string
-  default = "/mnt/nfs"
-  description = "Parent directory that NFS mounts will be mounted under"
-}
-
-variable "nfs_server" {
-  type = string
-  default = null
-  description = "NFS server address"
-}

@@ -2,7 +2,7 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  admin_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
+  internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
 
   shared_services_s3_data = data.vault_generic_secret.shared_services_s3.data
   security_s3_data        = data.vault_generic_secret.security_s3_buckets.data
@@ -18,6 +18,8 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
+  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
+
   #For each log map passed, add an extra kv for the log group name
   cw_logs = { for log, map in var.cloudwatch_logs : log => merge(map, { "log_group_name" = "${var.application}-${log}" }) }
 
@@ -25,10 +27,6 @@ locals {
 
   ansible_inputs = {
     environment                = var.environment
-    default_nfs_server_address = var.nfs_server
-    mounts_parent_dir          = var.nfs_mount_destination_parent_dir
-    mounts                     = var.nfs_mounts
-    install_watcher_service    = false
     region                     = var.aws_region
     cw_log_files               = local.cw_logs
     cw_agent_user              = "root"
