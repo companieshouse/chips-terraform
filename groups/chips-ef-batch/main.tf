@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-ef-batch" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.90"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.91"
 
   application                      = var.application
   application_type                 = "chips"
