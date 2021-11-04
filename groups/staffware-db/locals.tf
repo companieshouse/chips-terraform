@@ -19,6 +19,8 @@ locals {
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
   oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
+  ssh_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
+
 
   #For each log map passed, add an extra kv for the log group name
   cw_logs = { for log, map in var.cloudwatch_logs : log => merge(map, { "log_group_name" = "${var.application}-${log}" }) }
