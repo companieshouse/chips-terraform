@@ -9,18 +9,6 @@ module "iprocess_app_asg_security_group" {
   description = "Security group for the ${var.component} asg"
   vpc_id      = data.aws_vpc.vpc.id
 
-  computed_ingress_with_source_security_group_id = [
-    {
-      rule                     = "http-80-tcp"
-      source_security_group_id = module.iprocess_app_internal_alb_security_group.this_security_group_id
-    },
-    {
-      rule                     = "http-80-tcp"
-      source_security_group_id = module.iprocess_app_external_alb_security_group.this_security_group_id
-    }
-  ]
-  number_of_computed_ingress_with_source_security_group_id = 2
-
   egress_rules = ["all-all"]
 
   tags = merge(
@@ -61,7 +49,7 @@ module "iprocess_app_asg" {
   ]
   root_block_device = [
     {
-      volume_size = "40"
+      volume_size = "100"
       volume_type = "gp2"
       encrypted   = true
       iops        = 0
@@ -70,7 +58,7 @@ module "iprocess_app_asg" {
   # Auto scaling group
   asg_name                       = "${var.component}-asg"
   vpc_zone_identifier            = data.aws_subnet_ids.application.ids
-  health_check_type              = "ELB"
+  health_check_type              = "EC2"
   min_size                       = var.min_size
   max_size                       = var.max_size
   desired_capacity               = var.desired_capacity
@@ -82,7 +70,6 @@ module "iprocess_app_asg" {
   refresh_triggers               = ["launch_configuration"]
   key_name                       = aws_key_pair.iprocess_app_keypair.key_name
   termination_policies           = ["OldestLaunchConfiguration"]
-  target_group_arns              = concat(module.iprocess_app_external_alb.target_group_arns, module.iprocess_app_internal_alb.target_group_arns)
   iam_instance_profile           = module.iprocess_app_profile.aws_iam_instance_profile.name
   user_data_base64               = data.template_cloudinit_config.userdata_config.rendered
 
@@ -92,9 +79,4 @@ module "iprocess_app_asg" {
       "ServiceTeam", "${upper(var.component)}-Support"
     )
   )
-
-  depends_on = [
-    module.iprocess_app_external_alb,
-    module.iprocess_app_internal_alb
-  ]
 }

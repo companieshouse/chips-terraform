@@ -21,14 +21,8 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_external_alb_metrics"></a> [external\_alb\_metrics](#module\_external\_alb\_metrics) | git@github.com:companieshouse/terraform-modules//aws/alb-metrics?ref=tags/1.0.26 |  |
-| <a name="module_internal_alb_metrics"></a> [internal\_alb\_metrics](#module\_internal\_alb\_metrics) | git@github.com:companieshouse/terraform-modules//aws/alb-metrics?ref=tags/1.0.26 |  |
 | <a name="module_iprocess_app_asg"></a> [iprocess\_app\_asg](#module\_iprocess\_app\_asg) | git@github.com:companieshouse/terraform-modules//aws/terraform-aws-autoscaling?ref=tags/1.0.36 |  |
 | <a name="module_iprocess_app_asg_security_group"></a> [iprocess\_app\_asg\_security\_group](#module\_iprocess\_app\_asg\_security\_group) | terraform-aws-modules/security-group/aws | ~> 3.0 |
-| <a name="module_iprocess_app_external_alb"></a> [iprocess\_app\_external\_alb](#module\_iprocess\_app\_external\_alb) | terraform-aws-modules/alb/aws | ~> 5.0 |
-| <a name="module_iprocess_app_external_alb_security_group"></a> [iprocess\_app\_external\_alb\_security\_group](#module\_iprocess\_app\_external\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 3.0 |
-| <a name="module_iprocess_app_internal_alb"></a> [iprocess\_app\_internal\_alb](#module\_iprocess\_app\_internal\_alb) | terraform-aws-modules/alb/aws | ~> 5.0 |
-| <a name="module_iprocess_app_internal_alb_security_group"></a> [iprocess\_app\_internal\_alb\_security\_group](#module\_iprocess\_app\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 3.0 |
 | <a name="module_iprocess_app_profile"></a> [iprocess\_app\_profile](#module\_iprocess\_app\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.59 |  |
 
 ## Resources
@@ -37,7 +31,6 @@
 |------|------|
 | [aws_cloudwatch_log_group.iprocess_app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_key_pair.iprocess_app_keypair](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair) | resource |
-| [aws_route53_record.ewf_alb_internal](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_acm_certificate.acm_cert](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/acm_certificate) | data source |
 | [aws_ami.iprocess_app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
