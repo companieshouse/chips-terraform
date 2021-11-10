@@ -53,7 +53,7 @@ data "vault_generic_secret" "internal_cidrs" {
 }
 
 data "vault_generic_secret" "ec2_data" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/ec2"
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/db/ec2"
 }
 
 data "vault_generic_secret" "kms_keys" {
@@ -89,7 +89,7 @@ data "template_file" "userdata" {
   vars = {
     ENVIRONMENT          = title(var.environment)
     APPLICATION_NAME     = var.application
-    ANSIBLE_INPUTS       = jsonencode(local.ansible_inputs)
+    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, {hostname = format("%s%02d", var.application, count.index + 1)}))
     ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
   }
 }

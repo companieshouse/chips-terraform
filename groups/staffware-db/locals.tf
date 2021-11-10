@@ -33,7 +33,6 @@ locals {
     region        = var.aws_region
     cw_log_files  = local.cw_logs
     cw_agent_user = "root"
-    hostname      = format("%s%02d", var.application, count.index + 1)
     domain        = local.internal_fqdn
   }
 
