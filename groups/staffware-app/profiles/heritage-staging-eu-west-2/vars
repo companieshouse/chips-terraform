@@ -1,0 +1,104 @@
+# Account details
+aws_profile = "heritage-staging-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-staging"
+
+# Account shorthand
+account = "hstg"
+region  = "euw2"
+
+# Application details
+application = "staffware"
+component   = "iprocess-app"
+environment = "staging"
+
+# iProcess App settings
+instance_size = "t2.medium"
+min_size = 1
+max_size = 1
+desired_capacity = 1
+
+# iProcess App Load Balancer
+public_allow_cidr_blocks = [
+  "127.0.0.1/32"
+]
+
+# CVO Mounts
+nfs_server = "192.168.255.19"
+nfs_mount_destination_parent_dir = "/-"
+nfs_mounts = {
+    # AWS NFS
+    ewf_image = {
+      local_mount_point = "/mnt/nfs/filings/image"
+    },
+    ewf_upload = {
+      local_mount_point = "/mnt/nfs/filings/upload"
+    },
+    ewf_submissions = {
+      local_mount_point = "/mnt/nfs/filings/submissions"
+    },
+    ewf_archive = {
+      local_mount_point = "/mnt/nfs/filings/archive"
+    },
+    ewf_recent_filings = {
+      local_mount_point = "/mnt/nfs/filings/recent_filings"
+    },
+    # On-premise NFS
+    ewf_image_onp = {
+      local_mount_point = "/mnt/nfs/onsite/filings/image"
+      nfs_source_mount = "vol/tst00/ewf/image"
+      nfs_server_address = "chfas-pl3.internal.ch"
+    },
+    ewf_upload_onp = {
+      local_mount_point = "/mnt/nfs/onsite/filings/upload"
+      nfs_source_mount = "vol/tst00/ewf/upload"
+      nfs_server_address = "chfas-pl3.internal.ch"
+    },
+    ewf_submissions_onp = {
+      local_mount_point = "/mnt/nfs/onsite/filings/submissions"
+      nfs_source_mount = "vol/tst01/ewf/submissions"
+      nfs_server_address = "chfas-pl3.internal.ch"
+    },
+    ewf_archive_onp = {
+      local_mount_point = "/mnt/nfs/onsite/filings/archive"
+      nfs_source_mount = "vol/tst01/ewf/archive"
+      nfs_server_address = "chfas-pl3.internal.ch"
+    }
+  }
+
+cw_logs = {
+  "messages" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "secure" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "yum.log" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "errors.log" = {
+    file_path = "/var/log/amazon/ssm"
+    log_group_retention = 7
+  }
+
+  "amazon-ssm-agent.log" = {
+    file_path = "/var/log/amazon/ssm"
+    log_group_retention = 7
+  }
+
+  "ewf_access_log" = {
+    file_path = "/var/log/httpd"
+    log_group_retention = 7
+  }
+
+  "ewf_error_log" = {
+    file_path = "/var/log/httpd"
+    log_group_retention = 7
+  }
+}
