@@ -87,11 +87,10 @@ data "template_file" "userdata" {
   count = var.db_instance_count
 
   vars = {
-    ENVIRONMENT      = title(var.environment)
-    APPLICATION_NAME = var.application
-    ANSIBLE_INPUTS   = jsonencode(local.ansible_inputs)
-    hostname         = format("%s%02d", var.application, count.index + 1)
-    domain           = local.internal_fqdn
+    ENVIRONMENT          = title(var.environment)
+    APPLICATION_NAME     = var.application
+    ANSIBLE_INPUTS       = jsonencode(local.ansible_inputs)
+    ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
   }
 }
 

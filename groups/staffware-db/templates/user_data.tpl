@@ -6,8 +6,8 @@ exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 cp /usr/local/bin/nagios-host-add.sh /usr/local/bin/nagios-host-add.j2
 REPLACE=${APPLICATION_NAME}_${ENVIRONMENT} /usr/local/bin/j2 /usr/local/bin/nagios-host-add.j2 > /usr/local/bin/nagios-host-add.sh
 
-#Create unique iscsi initiator name (AMI contains static name which is shared with all EC2 that use it unless changed)
-echo "InitiatorName=`/sbin/iscsi-iname`" > /etc/iscsi/initiatorname.iscsi
+#Insert pre-generated unique iscsi initiator name (AMI contains static name which is shared with all EC2 that use it unless changed)
+echo "InitiatorName=${ISCSI_INITIATOR_NAME}" > /etc/iscsi/initiatorname.iscsi
 
 #Run Ansible playbook for deployment using provided inputs
 cat <<EOF >inputs.json
