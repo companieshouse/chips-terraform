@@ -2,8 +2,8 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  admin_cidrs  = values(data.vault_generic_secret.internal_cidrs.data)
-  s3_releases  = data.vault_generic_secret.s3_releases.data
+  admin_cidrs           = values(data.vault_generic_secret.internal_cidrs.data)
+  s3_releases           = data.vault_generic_secret.s3_releases.data
   iprocess_app_ec2_data = data.vault_generic_secret.iprocess_app_ec2_data.data
 
   kms_keys_data          = data.vault_generic_secret.kms_keys.data
@@ -22,8 +22,8 @@ locals {
   chs_app_subnets = values(jsondecode(data.vault_generic_secret.chs_vpc_subnets.data["applications"]))
 
   #For each log map passed, add an extra kv for the log group name
-  cw_logs     = { for log, map in var.cw_logs : log => merge(map, { "log_group_name" = "${var.application}-fe-${log}" }) }
-  log_groups  = compact([for log, map in local.cw_logs : lookup(map, "log_group_name", "")])
+  cw_logs    = { for log, map in var.cw_logs : log => merge(map, { "log_group_name" = "${var.application}-fe-${log}" }) }
+  log_groups = compact([for log, map in local.cw_logs : lookup(map, "log_group_name", "")])
 
   iprocess_app_ansible_inputs = {
     s3_bucket_releases         = local.s3_releases["release_bucket_name"]
