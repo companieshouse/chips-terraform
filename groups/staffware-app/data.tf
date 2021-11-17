@@ -88,6 +88,10 @@ data "vault_generic_secret" "staffware_app_ec2_data" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/app/ec2"
 }
 
+data "vault_generic_secret" "staffware_app_config_data" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/app/config"
+}
+
 data "aws_acm_certificate" "acm_cert" {
   domain = var.domain_name
 }

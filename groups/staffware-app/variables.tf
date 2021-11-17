@@ -108,20 +108,8 @@ variable "nfs_mounts" {
 
 
 # ------------------------------------------------------------------------------
-# iProcess App Variables - ALB 
+# iProcess App Variables 
 # ------------------------------------------------------------------------------
-
-variable "service_port" {
-  type        = number
-  default     = 80
-  description = "Target group backend port"
-}
-
-variable "health_check_path" {
-  type        = string
-  default     = "/"
-  description = "Target group health check path"
-}
 
 variable "default_log_group_retention_in_days" {
   type        = number
@@ -136,7 +124,7 @@ variable "app_release_version" {
 
 variable "ami_name" {
   type        = string
-  default     = "ewf-frontend-*"
+  default     = "iprocess-app-*"
   description = "Name of the AMI to use in the Auto Scaling configuration for frontend server(s)"
 }
 
