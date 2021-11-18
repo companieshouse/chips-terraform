@@ -9,7 +9,7 @@ module "db_ec2_security_group" {
   name        = "sgr-${var.application}-ec2-001"
   description = "Security group for the DB ec2 instance"
   vpc_id      = data.aws_vpc.vpc.id
-  
+
   ingress_with_self = [
     {
       rule = "all-all"
@@ -48,11 +48,11 @@ module "db_ec2_security_group" {
 resource "aws_instance" "db_ec2" {
   count = var.db_instance_count
 
-  ami           = data.aws_ami.oracle_12.id
+  ami = data.aws_ami.oracle_12.id
 
   key_name      = aws_key_pair.ec2_keypair.key_name
   instance_type = var.db_instance_size
-  subnet_id     = sort(data.aws_subnet_ids.data.ids)[count.index]
+  subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
   iam_instance_profile = module.db_instance_profile.aws_iam_instance_profile.name
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered

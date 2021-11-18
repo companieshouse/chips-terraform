@@ -22,6 +22,12 @@ data "aws_subnet_ids" "data" {
   }
 }
 
+data "aws_subnet" "data_subnets" {
+  for_each = data.aws_subnet_ids.data.ids
+
+  id = each.value
+}
+
 data "aws_vpc" "vpc" {
   tags = {
     Name = "vpc-${var.aws_account}"
@@ -89,7 +95,7 @@ data "template_file" "userdata" {
   vars = {
     ENVIRONMENT          = title(var.environment)
     APPLICATION_NAME     = var.application
-    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, {hostname = format("%s%02d", var.application, count.index + 1)}))
+    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s%02d", var.application, count.index + 1) }))
     ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
   }
 }

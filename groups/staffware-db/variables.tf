@@ -101,7 +101,13 @@ variable "db_instance_count" {
 }
 
 variable "cloudwatch_logs" {
-  type = map(any)
-  default = null
+  type        = map(any)
+  default     = null
   description = "Map of log files to be collected by Cloudwatch Logs"
+}
+
+variable "availability_zones" {
+  type        = list(string)
+  default     = null
+  description = "List of availability zone names (e.g. [eu-west-2a, eu-west-2b]) to deploy instances into, usually to meet constraints such as remote storage locality. Leaving null will deploy across all matching subnets/zones in the provided VPC"
 }
