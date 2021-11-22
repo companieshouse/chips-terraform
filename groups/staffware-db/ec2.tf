@@ -6,7 +6,7 @@ module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
 
-  name        = "sgr-${var.application}-ec2-001"
+  name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
   vpc_id      = data.aws_vpc.vpc.id
 
@@ -71,7 +71,7 @@ resource "aws_instance" "db_ec2" {
   tags = merge(
     local.default_tags,
     map(
-      "Name", format("%s%02d", var.application, count.index + 1),
+      "Name", format("%s-db-%02d", var.application, count.index + 1),
       "ServiceTeam", "Platforms/DBA",
       "Terraform", true
     )

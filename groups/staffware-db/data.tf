@@ -95,7 +95,7 @@ data "template_file" "userdata" {
   vars = {
     ENVIRONMENT          = title(var.environment)
     APPLICATION_NAME     = var.application
-    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s%02d", var.application, count.index + 1) }))
+    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s-db-%02d", var.application, count.index + 1) }))
     ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
   }
 }
