@@ -82,7 +82,7 @@ resource "aws_route53_record" "db_dns" {
   count = var.db_instance_count
 
   zone_id = data.aws_route53_zone.private_zone.zone_id
-  name    = format("%s%02d", var.application, count.index + 1)
+  name    = format("%s-db-%02d", var.application, count.index + 1)
   type    = "A"
   ttl     = "300"
   records = [aws_instance.db_ec2[count.index].private_ip]
