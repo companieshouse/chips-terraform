@@ -7,11 +7,11 @@ account = "hstg"
 region  = "euw2"
 
 # Application details
-application = "staffware"
+application = "chips-rep"
 environment = "staging"
 
 db_instance_count = 2
-db_instance_size = "r5n.4xlarge"
+db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
