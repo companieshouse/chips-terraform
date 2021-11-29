@@ -1,4 +1,4 @@
-# ewf-infrastructure
+# Staffware-iProcess-App-Infrastructure
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
