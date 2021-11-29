@@ -16,7 +16,7 @@ module "iprocess_app_profile" {
       local.log_groups
     ),
   ]) : null
-  instance_asg_arns = [module.asg.this_autoscaling_group_arn]
+  instance_asg_arns = [module.iprocess_app_asg.this_autoscaling_group_arn]
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id

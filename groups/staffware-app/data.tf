@@ -84,12 +84,12 @@ data "vault_generic_secret" "chs_vpc_subnets" {
   path = "aws-accounts/${var.environment}/vpc/subnets"
 }
 
-data "vault_generic_secret" "staffware_app_ec2_data" {
+data "vault_generic_secret" "iprocess_app_ec2_data" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/app/ec2"
 }
 
-data "vault_generic_secret" "staffware_app_config_data" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/app/config"
+data "vault_generic_secret" "iprocess_app_config_data" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/app/iprocess"
 }
 
 data "aws_acm_certificate" "acm_cert" {
@@ -119,13 +119,13 @@ data "aws_ami" "iprocess_app" {
 }
 
 data "template_file" "userdata" {
-  template = file("${path.module}/templates/fe_user_data.tpl")
+  template = file("${path.module}/templates/user_data.tpl")
 
   vars = {
-    REGION               = var.aws_region
+    APPLICATION          = var.component
     HERITAGE_ENVIRONMENT = title(var.environment)
-    IPROCESS_APP_INPUTS  = local.iprocess_app_data
-    ANSIBLE_INPUTS       = jsonencode(local.iprocess_app_ansible_inputs)
+    IPROCESS_APP_INPUTS  = jsonencode(local.iprocess_app_deployment_ansible_inputs)
+    IPROCESS_TNS_INPUTS  = jsonencode(local.iprocess_tnsnames_inputs)
   }
 }
 

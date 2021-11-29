@@ -21,18 +21,28 @@ locals {
   cw_logs    = { for log, map in var.cw_logs : log => merge(map, { "log_group_name" = "${var.application}-fe-${log}" }) }
   log_groups = compact([for log, map in local.cw_logs : lookup(map, "log_group_name", "")])
 
-  iprocess_app_ansible_inputs = {
-    s3_bucket_releases         = local.s3_releases["release_bucket_name"]
-    s3_bucket_configs          = local.s3_releases["config_bucket_name"]
-    git_ssh_key                = local.iprocess_app_config_data["private-key"]
-    heritage_environment       = var.environment
-    version                    = var.app_release_version
+  iprocess_app_deployment_ansible_inputs = {
+    HOSTNAME                   = format("%s-001", var.component)
+    DOMAIN                     = local.internal_fqdn
+    APP_TCP_PORT               = local.iprocess_app_config_data["app_tcp_port"]
+    EAI_DB_PASS                = local.iprocess_app_config_data["eai_db_password"]
+    EAI_DB_SCHEMAOWNER         = local.iprocess_app_config_data["eai_db_schemaowner"]
+    EAI_DB_USER                = local.iprocess_app_config_data["eai_db_user"]
+    ORACLE_SID_VALUE           = local.iprocess_app_config_data["oracle_std_sid"]
     default_nfs_server_address = var.nfs_server
     mounts_parent_dir          = var.nfs_mount_destination_parent_dir
     mounts                     = var.nfs_mounts
     region                     = var.aws_region
     cw_log_files               = local.cw_logs
     cw_agent_user              = "root"
+  }
+
+  iprocess_tnsnames_inputs = {
+    db_address     = local.iprocess_app_config_data["db_address"]
+    db_port        = local.iprocess_app_config_data["db_port"]
+    oracle_std_sid = local.iprocess_app_config_data["oracle_std_sid"]
+    oracle_taf_sid = local.iprocess_app_config_data["oracle_taf_sid"]
+    service_name   = local.iprocess_app_config_data["service_name"]
   }
 
   default_tags = {

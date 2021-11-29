@@ -38,7 +38,7 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
 module "iprocess_app_asg" {
   source = "git@github.com:companieshouse/terraform-modules//aws/terraform-aws-autoscaling?ref=tags/1.0.36"
 
-  name = var.component
+  name = format("%s-001", var.component)
   # Launch configuration
   lc_name       = "${var.component}-launchconfig"
   image_id      = data.aws_ami.iprocess_app.id
