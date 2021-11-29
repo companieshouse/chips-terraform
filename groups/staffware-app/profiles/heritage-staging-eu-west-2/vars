@@ -48,4 +48,14 @@ cw_logs = {
     file_path = "/var/log/amazon/ssm"
     log_group_retention = 7
   }
+
+  "sw_warn.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 180
+  }
+
+  "sw_error.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 180
+  }
 }
