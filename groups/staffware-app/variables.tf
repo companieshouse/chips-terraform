@@ -75,39 +75,6 @@ variable "public_allow_cidr_blocks" {
 }
 
 # ------------------------------------------------------------------------------
-# NFS Mount Variables
-# ------------------------------------------------------------------------------
-# See Ansible role for full documentation on NFS arguements:
-#      https://github.com/companieshouse/ansible-collections/tree/main/ch_collections/heritage_services/roles/nfs/files/nfs_mounts
-variable "nfs_server" {
-  type        = string
-  description = "The name or IP of the environment specific NFS server"
-  default     = null
-}
-
-variable "nfs_mount_destination_parent_dir" {
-  type        = string
-  description = "The parent folder that all NFS shares should be mounted inside on the EC2 instance"
-  default     = "/mnt"
-}
-
-variable "nfs_mounts" {
-  type        = map(any)
-  description = "A map of objects which contains mount details for each mount path required."
-  # Example: 
-  #   nfs_share_name = {                  # The name of the NFS Share from the NFS Server
-  #     local_mount_point = "folder",     # The name of the local folder to mount to under the parent directory, if omitted the share name is used.
-  #     mount_options = [                 # Traditional mount options as documented for any NFS Share mounts
-  #       "rw",
-  #       "wsize=8192"
-  #     ]
-  #   }
-  # }
-  #
-}
-
-
-# ------------------------------------------------------------------------------
 # iProcess App Variables 
 # ------------------------------------------------------------------------------
 

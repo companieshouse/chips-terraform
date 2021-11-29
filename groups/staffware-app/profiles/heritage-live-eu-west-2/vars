@@ -23,15 +23,6 @@ public_allow_cidr_blocks = [
   "127.0.0.1/32"
 ]
 
-# CVO Mounts
-nfs_server = "192.168.255.35"
-nfs_mount_destination_parent_dir = "/-"
-nfs_mounts = {
-    ewf_image = {
-      local_mount_point = "/mnt/nfs/filings/image"
-    }
-  }
-
 cw_logs = {
   "messages" = {
     file_path = "/var/log"
