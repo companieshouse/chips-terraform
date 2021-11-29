@@ -10,7 +10,7 @@ region  = "euw2"
 # Application details
 application = "staffware"
 component   = "iprocess-app"
-environment = "staging"
+environment = "live"
 
 # iProcess App settings
 instance_size = "t2.medium"
