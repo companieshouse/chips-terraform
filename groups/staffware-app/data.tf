@@ -124,6 +124,7 @@ data "template_file" "userdata" {
   vars = {
     APPLICATION          = var.component
     HERITAGE_ENVIRONMENT = title(var.environment)
+    R53_ZONEID           = data.aws_route53_zone.zone_id
     IPROCESS_APP_INPUTS  = jsonencode(local.iprocess_app_deployment_ansible_inputs)
     IPROCESS_TNS_INPUTS  = jsonencode(local.iprocess_tnsnames_inputs)
   }

@@ -17,3 +17,7 @@ cat <<EOF >deployment.json
 ${IPROCESS_APP_INPUTS}
 EOF
 /usr/local/bin/ansible-playbook /root/deployment.yml -e "@deployment.json"
+
+#Run DNS Update script with inputs
+FQDN=`cat deployment.json | jq -r '"\(.HOSTNAME).\(.DOMAIN)"'`
+sh /root/updatedns.sh ${R53_ZONEID} $FQDN
