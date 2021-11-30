@@ -1,8 +1,10 @@
 module "iprocess_app_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.59"
 
-  name       = "${var.component}-profile"
-  enable_SSM = true
+  name              = "${var.component}-profile"
+  enable_SSM        = true
+  s3_buckets_write  = [local.session_manager_bucket_name]
+  instance_asg_arns = [module.iprocess_app_asg.this_autoscaling_group_arn]
   cw_log_group_arns = length(local.log_groups) > 0 ? flatten([
     formatlist(
       "arn:aws:logs:%s:%s:log-group:%s:*:*",
@@ -16,12 +18,10 @@ module "iprocess_app_profile" {
       local.log_groups
     ),
   ]) : null
-  instance_asg_arns = [module.iprocess_app_asg.this_autoscaling_group_arn]
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id
   ]
-  s3_buckets_write = [local.session_manager_bucket_name]
   custom_statements = [
     {
       sid    = "AllowAccessToReleaseBucket",
@@ -35,6 +35,14 @@ module "iprocess_app_profile" {
       actions = [
         "s3:Get*",
         "s3:List*",
+      ]
+    },
+    {
+      sid       = "AllowWriteToRoute53",
+      effect    = "Allow",
+      resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.private_zone.zone_id}"],
+      actions = [
+        "route53:ChangeResourceRecordSets"
       ]
     }
   ]
