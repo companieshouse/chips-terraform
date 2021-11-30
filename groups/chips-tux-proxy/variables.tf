@@ -96,14 +96,14 @@ variable "ami_name" {
 }
 
 variable "instance_root_volume_size" {
-  type = number
-  default = 40
+  type        = number
+  default     = 40
   description = "Size of root volume attached to instances"
 }
 
 variable "alb_deletion_protection" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Enable or disable deletion protection for instances"
 }
 
