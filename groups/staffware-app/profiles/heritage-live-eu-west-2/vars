@@ -13,7 +13,7 @@ component   = "iprocess-app"
 environment = "live"
 
 # iProcess App settings
-instance_size = "t2.medium"
+instance_size = "t3.medium"
 min_size = 1
 max_size = 1
 desired_capacity = 1
@@ -24,28 +24,43 @@ public_allow_cidr_blocks = [
 ]
 
 cw_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit"
+    log_group_retention = 180
+  }
+
   "messages" = {
     file_path = "/var/log"
-    log_group_retention = 30
+    log_group_retention = 180
   }
 
   "secure" = {
     file_path = "/var/log"
-    log_group_retention = 30
+    log_group_retention = 180
   }
 
   "yum.log" = {
     file_path = "/var/log"
-    log_group_retention = 30
+    log_group_retention = 180
   }
 
   "errors.log" = {
     file_path = "/var/log/amazon/ssm"
-    log_group_retention = 30
+    log_group_retention = 180
   }
 
   "amazon-ssm-agent.log" = {
     file_path = "/var/log/amazon/ssm"
-    log_group_retention = 30
+    log_group_retention = 180
+  }
+
+  "sw_warn.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 180
+  }
+
+  "sw_error.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 180
   }
 }
