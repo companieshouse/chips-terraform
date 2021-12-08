@@ -29,6 +29,8 @@ locals {
     EAI_DB_SCHEMAOWNER = local.iprocess_app_config_data["eai_db_schemaowner"]
     EAI_DB_USER        = local.iprocess_app_config_data["eai_db_user"]
     ORACLE_SID_VALUE   = local.iprocess_app_config_data["oracle_std_sid"]
+    DB_ADDRESS         = local.iprocess_app_config_data["db_address"]
+    DB_PORT            = local.iprocess_app_config_data["db_port"]
     region             = var.aws_region
     cw_log_files       = local.cw_logs
     cw_agent_user      = "root"
