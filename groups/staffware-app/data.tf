@@ -30,6 +30,12 @@ data "aws_subnet_ids" "application" {
   }
 }
 
+data "aws_subnet" "data" {
+  for_each = data.aws_subnet_ids.data.ids
+
+  id = each.value
+}
+
 data "aws_security_group" "nagios_shared" {
   filter {
     name   = "group-name"
@@ -127,6 +133,12 @@ data "template_file" "userdata" {
     R53_ZONEID           = data.aws_route53_zone.private_zone.zone_id
     IPROCESS_APP_INPUTS  = jsonencode(local.iprocess_app_deployment_ansible_inputs)
     IPROCESS_TNS_INPUTS  = jsonencode(local.iprocess_tnsnames_inputs)
+    SW_GIT_TOKEN         = data.vault_generic_secret.iprocess_app_config_data.data["git_token"]
+    CRON_ENTRIES = templatefile("${path.module}/templates/cron/${var.aws_account}/cron.tpl", {
+      "USER"     = "",
+      "PASSWORD" = ""
+      }
+    )
   }
 }
 

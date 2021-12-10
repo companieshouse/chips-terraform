@@ -21,3 +21,15 @@ EOF
 #Run DNS Update script with inputs
 FQDN=`cat deployment.json | jq -r '"\(.HOSTNAME).\(.DOMAIN)"'`
 sh /root/updatedns.sh ${R53_ZONEID} $FQDN
+
+#Create cron file and set crontab for SWPRO user:
+cat <<EOF >>/root/cronfile
+${CRON_ENTRIES}
+EOF
+crontab -u swpro /root/cronfile
+
+#Set GIT TOKEN
+echo "export GIT_TOKEN=${SW_GIT_TOKEN}" >> /home/swpro/.bash_profile
+
+#Download Scripts
+git clone https://$GIT_TOKEN@github.com/companieshouse/chips-service-admin

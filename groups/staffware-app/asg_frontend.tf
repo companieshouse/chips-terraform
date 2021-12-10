@@ -9,6 +9,45 @@ module "iprocess_app_asg_security_group" {
   description = "Security group for the ${var.component} asg"
   vpc_id      = data.aws_vpc.vpc.id
 
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 30001
+      to_port     = 30100
+      protocol    = "tcp"
+      description = "Oracle DB inbound port range"
+      cidr_blocks = join(",", [for subnet in data.aws_subnet.data : subnet.cidr_block])
+    },
+    {
+      from_port   = 111
+      to_port     = 111
+      protocol    = "tcp"
+      description = "Client inbound rpc port"
+      cidr_blocks = join(",", local.admin_cidrs)
+    },
+    {
+      from_port   = 30201
+      to_port     = 30220
+      protocol    = "tcp"
+      description = "Client inbound connection port range"
+      cidr_blocks = join(",", local.admin_cidrs)
+    },
+    {
+      from_port   = 30201
+      to_port     = 30220
+      protocol    = "tcp"
+      description = "Client inbound connection port range"
+      cidr_blocks = join(",", local.admin_cidrs)
+    },
+    {
+      from_port   = 35311
+      to_port     = 35314
+      protocol    = "tcp"
+      description = "WebLogic inbound port range"
+      cidr_blocks = "127.0.0.1/32"
+    },
+  ]
+
+
   egress_rules = ["all-all"]
 
   tags = merge(
