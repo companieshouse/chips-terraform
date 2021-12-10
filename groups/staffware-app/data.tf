@@ -43,18 +43,11 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-# data "aws_security_group" "tuxedo" {
-#   filter {
-#     name   = "tag:Name"
-#     values = ["ewf-frontend-tuxedo-${var.environment}"]
-#   }
-# }
-
-# This is a non-production lookup, Forgerock ID Gateway access in Dev and Staging
-# When Forgerock goes into Live then the condition can be removed.
-data "aws_security_group" "identity_gateway" {
-  count = var.environment == "live" ? 0 : 1
-  name  = "identity-gateway-instance"
+data "aws_security_group" "chips_weblogic" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-chips-ef-batch-asg-*"]
+  }
 }
 
 data "aws_route53_zone" "private_zone" {

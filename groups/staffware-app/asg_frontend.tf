@@ -30,23 +30,19 @@ module "iprocess_app_asg_security_group" {
       protocol    = "tcp"
       description = "Client inbound connection port range"
       cidr_blocks = join(",", local.admin_cidrs)
-    },
-    {
-      from_port   = 30201
-      to_port     = 30220
-      protocol    = "tcp"
-      description = "Client inbound connection port range"
-      cidr_blocks = join(",", local.admin_cidrs)
-    },
-    {
-      from_port   = 35311
-      to_port     = 35314
-      protocol    = "tcp"
-      description = "WebLogic inbound port range"
-      cidr_blocks = "127.0.0.1/32"
-    },
+    }
   ]
 
+  computed_ingress_with_source_security_group_id = [
+    {
+      from_port                = 35311
+      to_port                  = 35314
+      protocol                 = "tcp"
+      description              = "WebLogic inbound port range"
+      source_security_group_id = data.aws_security_group.chips_weblogic.id
+    }
+  ]
+  number_of_computed_ingress_with_source_security_group_id = 1
 
   egress_rules = ["all-all"]
 
