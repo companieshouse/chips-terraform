@@ -8,6 +8,8 @@ REPLACE=${APPLICATION_NAME}_${ENVIRONMENT} /usr/local/bin/j2 /usr/local/bin/nagi
 
 #Insert pre-generated unique iscsi initiator name (AMI contains static name which is shared with all EC2 that use it unless changed)
 echo "InitiatorName=${ISCSI_INITIATOR_NAME}" > /etc/iscsi/initiatorname.iscsi
+#Restart iscsid to take in the new initiator name.
+systemctl restart iscsid
 
 #Run Ansible playbook for deployment using provided inputs
 cat <<EOF >inputs.json
