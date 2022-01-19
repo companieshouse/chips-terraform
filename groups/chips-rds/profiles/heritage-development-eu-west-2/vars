@@ -21,7 +21,7 @@ performance_insights_enabled = false
 
 # RDS Engine settings
 major_engine_version       = "19"
-engine_version             = "19.0"
+engine_version             = "19"
 license_model              = "license-included"
 auto_minor_version_upgrade = true
 
@@ -38,10 +38,6 @@ parameter_group_settings = [
     {
       name  = "aq_tm_processes"
       value = "6"
-    },
-    {
-      name  = "sec_case_sensitive_logon"
-      value = "TRUE"
     },
     {
       name         = "compatible"
