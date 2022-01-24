@@ -96,10 +96,6 @@ parameter_group_settings = [
       value = "10"
     },
     {
-      name  = "undo_retention"
-      value = "900"
-    },
-    {
       name         = "timed_statistics"
       value        = "TRUE"
       apply_method = "pending-reboot"
