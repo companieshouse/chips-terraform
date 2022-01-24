@@ -88,6 +88,18 @@ parameter_group_settings = [
       apply_method = "pending-reboot"
     },
     {
+      name  = "sqlnetora.sqlnet.allowed_logon_version_client"
+      value = "10"
+    },
+    {
+      name  = "sqlnetora.sqlnet.allowed_logon_version_server"
+      value = "10"
+    },
+    {
+      name  = "undo_retention"
+      value = "900"
+    },
+    {
       name         = "timed_statistics"
       value        = "TRUE"
       apply_method = "pending-reboot"
