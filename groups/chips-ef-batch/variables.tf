@@ -58,7 +58,7 @@ variable "environment" {
 }
 
 # ------------------------------------------------------------------------------
-# CIC ASG Variables
+# CHIPS ASG Variables
 # ------------------------------------------------------------------------------
 
 variable "instance_size" {
@@ -107,9 +107,14 @@ variable "alb_deletion_protection" {
   description = "Enable or disable deletion protection for instances"
 }
 
+variable "enable_instance_refresh" {
+  type        = bool
+  default     = false
+  description = "Enable or disable instance refresh when the ASG is updated"
+}
 
 # ------------------------------------------------------------------------------
-# CIC ALB Variables
+# CHIPS ALB Variables
 # ------------------------------------------------------------------------------
 
 variable "application_port" {
