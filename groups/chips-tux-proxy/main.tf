@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-tux-proxy" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.96"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.100"
 
   application                      = var.application
   application_type                 = "chips"
@@ -39,6 +39,7 @@ module "chips-tux-proxy" {
   environment                      = var.environment
   asg_count                        = var.asg_count
   instance_size                    = var.instance_size
+  enable_instance_refresh          = var.enable_instance_refresh
   nfs_server                       = var.nfs_server
   nfs_mount_destination_parent_dir = var.nfs_mount_destination_parent_dir
   nfs_mounts                       = var.nfs_mounts

@@ -14,6 +14,7 @@ environment = "development"
 # ASG settings
 asg_count = 1
 instance_size = "t3.medium"
+enable_instance_refresh = true
 
 # CVO NFS Mounts
 nfs_server = "10.104.9.145"
