@@ -44,7 +44,6 @@ module "chips-tux-proxy" {
   nfs_mounts                       = var.nfs_mounts
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
-  create_tuxedo_nlb                = true
 
   additional_ingress_with_cidr_blocks = [
     {
