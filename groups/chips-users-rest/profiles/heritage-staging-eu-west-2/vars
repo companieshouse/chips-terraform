@@ -16,7 +16,7 @@ asg_count = 2
 instance_size = "z1d.large"
 
 # NFS Mounts - default NFS server is CVO
-nfs_server = "192.168.255.19" 
+nfs_server = "192.168.255.19"
 nfs_mount_destination_parent_dir = "/mnt/nfs"
 nfs_mounts = {
   application_root = {
