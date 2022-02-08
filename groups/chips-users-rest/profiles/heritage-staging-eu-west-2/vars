@@ -15,27 +15,8 @@ environment = "staging"
 asg_count = 2
 instance_size = "z1d.large"
 
-# NFS Mounts - default NFS server is CVO
-nfs_server = "192.168.255.19"
+# NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
-nfs_mounts = {
-  application_root = {
-    local_mount_point = "chips"
-    nfs_source_mount  = "chips"
-  }
-
-  batt14 = {
-    local_mount_point  = "batt14"
-    nfs_source_mount   = "/vol/data0/Home/batt14"
-    nfs_server_address = "chfas-pl1.internal.ch"
-  }
-
-  image = {
-    local_mount_point  = "image"
-    nfs_source_mount   = "/vol/data0/test_image"
-    nfs_server_address = "chfas-pl1.internal.ch"
-  }   
-}
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
