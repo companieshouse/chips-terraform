@@ -40,9 +40,8 @@ module "chips-tux-proxy" {
   asg_count                        = var.asg_count
   instance_size                    = var.instance_size
   enable_instance_refresh          = var.enable_instance_refresh
-  nfs_server                       = var.nfs_server
   nfs_mount_destination_parent_dir = var.nfs_mount_destination_parent_dir
-  nfs_mounts                       = var.nfs_mounts
+  nfs_mounts                       = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
 

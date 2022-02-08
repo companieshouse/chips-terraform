@@ -15,15 +15,8 @@ environment = "staging"
 asg_count = 2
 instance_size = "z1d.large"
 
-# CVO NFS Mounts
-nfs_server = "192.168.255.19"
+# NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
-nfs_mounts = {
-  application_root = {
-    local_mount_point = "chips"
-    nfs_source_mount  = "chips"
-  }
-}
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
