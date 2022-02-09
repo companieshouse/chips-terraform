@@ -74,6 +74,11 @@ variable "ami_name" {
   description = "Name of the AMI to use in the Auto Scaling configuration for email servers"
 }
 
+variable "ami_id" {
+  type        = string
+  default     = null
+  description = "Id of an AMI you want to force the Terraform to use, overrides ami_name"
+}
 
 variable "vpc_sg_cidr_blocks_oracle" {
   type        = list(any)

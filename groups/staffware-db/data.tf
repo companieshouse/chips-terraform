@@ -14,6 +14,14 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
+
+data "aws_security_group" "iprocess_app" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-iprocess-app-asg-*"]
+  }
+}
+
 data "aws_subnet_ids" "data" {
   vpc_id = data.aws_vpc.vpc.id
   filter {
