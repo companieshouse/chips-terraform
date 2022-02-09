@@ -12,6 +12,7 @@ environment = "staging"
 
 db_instance_count = 2
 db_instance_size = "r5.4xlarge"
+ami_id = "ami-07753d6b2935e32bf"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
