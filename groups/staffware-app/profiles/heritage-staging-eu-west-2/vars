@@ -13,7 +13,7 @@ component   = "iprocess-app"
 environment = "staging"
 
 # iProcess App settings
-instance_size = "t3.medium"
+instance_size = "r5.xlarge"
 min_size = 1
 max_size = 1
 desired_capacity = 1
