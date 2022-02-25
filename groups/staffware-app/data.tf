@@ -128,11 +128,6 @@ data "template_file" "userdata" {
     IPROCESS_TNS_INPUTS       = jsonencode(local.iprocess_tnsnames_inputs)
     IPROCESS_STAFF_DAT_INPUTS = jsonencode(local.iprocess_staff_dat_inputs)
     SW_GIT_TOKEN              = data.vault_generic_secret.iprocess_app_config_data.data["git_token"]
-    CRON_ENTRIES = templatefile("${path.module}/templates/cron/${var.aws_account}/cron.tpl", {
-      "USER"     = "",
-      "PASSWORD" = ""
-      }
-    )
   }
 }
 
