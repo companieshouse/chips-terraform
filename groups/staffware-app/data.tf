@@ -121,12 +121,13 @@ data "template_file" "userdata" {
   template = file("${path.module}/templates/user_data.tpl")
 
   vars = {
-    APPLICATION          = var.component
-    HERITAGE_ENVIRONMENT = title(var.environment)
-    R53_ZONEID           = data.aws_route53_zone.private_zone.zone_id
-    IPROCESS_APP_INPUTS  = jsonencode(local.iprocess_app_deployment_ansible_inputs)
-    IPROCESS_TNS_INPUTS  = jsonencode(local.iprocess_tnsnames_inputs)
-    SW_GIT_TOKEN         = data.vault_generic_secret.iprocess_app_config_data.data["git_token"]
+    APPLICATION               = var.component
+    HERITAGE_ENVIRONMENT      = title(var.environment)
+    R53_ZONEID                = data.aws_route53_zone.private_zone.zone_id
+    IPROCESS_APP_INPUTS       = jsonencode(local.iprocess_app_deployment_ansible_inputs)
+    IPROCESS_TNS_INPUTS       = jsonencode(local.iprocess_tnsnames_inputs)
+    IPROCESS_STAFF_DAT_INPUTS = jsonencode(local.iprocess_staff_dat_inputs)
+    SW_GIT_TOKEN              = data.vault_generic_secret.iprocess_app_config_data.data["git_token"]
     CRON_ENTRIES = templatefile("${path.module}/templates/cron/${var.aws_account}/cron.tpl", {
       "USER"     = "",
       "PASSWORD" = ""
