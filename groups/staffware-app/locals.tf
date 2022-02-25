@@ -44,6 +44,10 @@ locals {
     service_name   = local.iprocess_app_config_data["service_name"]
   }
 
+  iprocess_staff_dat_inputs = {
+    staff_dat = local.iprocess_app_config_data["staff_dat"]
+  }
+
   default_tags = {
     Terraform   = "true"
     Application = upper(var.application)

@@ -12,6 +12,12 @@ ${IPROCESS_TNS_INPUTS}
 EOF
 /usr/local/bin/j2 -f json /home/swenvp1/tnsnames.j2 tnsnames.json > /app/oracle/product/19c/network/admin/tnsnames.ora
 
+#Use provided inputs to create final staff.dat file
+cat <<EOF >>staff_dat.json
+${IPROCESS_STAFF_DAT_INPUTS}
+EOF
+/usr/local/bin/j2 -f json /home/swenvp1/staff_dat.j2 staff_dat.json > /app/iProcess/11_8/staff.dat
+
 #Run Ansible playbook for app deployment using provided inputs
 cat <<EOF >deployment.json
 ${IPROCESS_APP_INPUTS}
@@ -22,11 +28,5 @@ EOF
 FQDN=`cat deployment.json | jq -r '"\(.HOSTNAME).\(.DOMAIN)"'`
 sh /root/updatedns.sh ${R53_ZONEID} $FQDN
 
-#Create cron file and set crontab for SWPRO user:
-cat <<EOF >>/root/cronfile
-${CRON_ENTRIES}
-EOF
-crontab -u swpro /root/cronfile
-
-#Download Scripts
-git clone https://$GIT_TOKEN@github.com/companieshouse/chips-service-admin
+# Download Scripts
+# git clone https://$GIT_TOKEN@github.com/companieshouse/chips-service-admin
