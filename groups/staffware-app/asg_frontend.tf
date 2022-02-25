@@ -30,6 +30,13 @@ module "iprocess_app_asg_security_group" {
       protocol    = "tcp"
       description = "Client inbound connection port range"
       cidr_blocks = join(",", local.admin_cidrs)
+    },
+    {
+      from_port   = 35311
+      to_port     = 35314
+      protocol    = "tcp"
+      description = "On-premise WebLogic inbound port range"
+      cidr_blocks = join(",", local.admin_cidrs)
     }
   ]
 
