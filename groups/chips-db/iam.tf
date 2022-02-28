@@ -26,4 +26,15 @@ module "db_instance_profile" {
       local.log_groups
     ),
   ]) : null
+
+  custom_statements = [
+    {
+      sid       = "AllowDescribeTags",
+      effect    = "Allow",
+      resources = ["*"],
+      actions = [
+        "ec2:DescribeTags"
+      ]
+    }
+  ]
 }
