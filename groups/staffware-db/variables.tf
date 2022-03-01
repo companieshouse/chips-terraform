@@ -116,3 +116,87 @@ variable "availability_zones" {
   default     = null
   description = "List of availability zone names (e.g. [eu-west-2a, eu-west-2b]) to deploy instances into, usually to meet constraints such as remote storage locality. Leaving null will deploy across all matching subnets/zones in the provided VPC"
 }
+
+# ------------------------------------------------------------------------------
+# Ansible SSM variables
+# ------------------------------------------------------------------------------
+
+variable "ansible_ssm_git_repo_name" {
+  type        = string
+  description = "Name of the repository containing Ansible code to be downloaded."
+}
+
+variable "ansible_ssm_git_repo_owner" {
+  type        = string
+  description = "Name of the repository owner containing Ansible code to be downloaded."
+}
+
+variable "ansible_ssm_git_repo_path" {
+  type        = string
+  description = "Directory prefix of code to be downloaded"
+  default     = "ansible/"
+}
+
+variable "ansible_ssm_git_repo_options" {
+  type        = string
+  description = "Options for git code pull, e.g. 'branch:master'"
+  default     = "branch:master"
+}
+
+variable "ansible_ssm_git_repo_token" {
+  type        = string
+  description = "Github token to authenticate Git operations if required."
+  default     = null
+}
+
+variable "ansible_ssm_apply_only_at_cron_interval" {
+  type        = string
+  description = "If false, applies on terraform apply, then on provided schedule expression. If true first apply will be at the next occurance of the schedule expression."
+  default     = true
+}
+
+variable "ansible_ssm_check_schedule_expression" {
+  type        = string
+  description = "SSM schedule expression for running playbook in check mode, see https://docs.aws.amazon.com/systems-manager/latest/userguide/reference-cron-and-rate-expressions.html for syntax."
+  default     = null
+}
+
+variable "ansible_ssm_apply_schedule_expression" {
+  type        = string
+  description = "SSM schedule expression for running playbook in apply mode, see https://docs.aws.amazon.com/systems-manager/latest/userguide/reference-cron-and-rate-expressions.html for syntax."
+  default     = null
+}
+
+variable "ansible_ssm_verbose_level" {
+  type        = string
+  description = "Verbosity flag to passs to ansible command, e.g. '-v', '-vvv'"
+  default     = "-v"
+}
+
+variable "maintenance_window_schedule_expression" {
+  type        = string
+  description = "The schedule of the Maintenance Window in the form of a cron or rate expression"
+  default     = null
+}
+variable "maintenance_window_duration" {
+  type        = number
+  description = "The duration of the Maintenance Window in hours"
+  default     = 2
+}
+variable "maintenance_window_cutoff" {
+  type        = number
+  description = "The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution"
+  default     = 1
+}
+
+variable "ssm_playbook_file_name" {
+  type        = string
+  description = "Name of the playbook file to run"
+  default     = "playbook.yml"
+}
+
+variable "ssm_requirements_file_name" {
+  type        = string
+  description = "Name of the requirements file to download Ansible dependancies"
+  default     = "requirements.yml"
+}
