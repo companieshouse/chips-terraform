@@ -97,7 +97,7 @@ resource "aws_ssm_maintenance_window_target" "target" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.db_ec2.*.instance_id
+    values = aws_instance.db_ec2.*.id
   }
   # owner_information - (Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
 }
