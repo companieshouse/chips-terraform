@@ -13,7 +13,7 @@ EOF
 /usr/local/bin/j2 -f json /home/swenvp1/tnsnames.j2 tnsnames.json > /app/oracle/product/19c/network/admin/tnsnames.ora
 
 #Use provided inputs to create final staff.dat file
-cat <<EOF >>staff_dat.json
+cat <<'EOF' >>staff_dat.json
 ${IPROCESS_STAFF_DAT_INPUTS}
 EOF
 /usr/local/bin/j2 -f json /home/swenvp1/staff_dat.j2 staff_dat.json > /app/iProcess/11_8/staff.dat
