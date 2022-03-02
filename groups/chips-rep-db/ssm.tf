@@ -7,7 +7,7 @@ resource "aws_ssm_association" "ansible_check" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.db_ec2.*.instance_id
+    values = aws_instance.db_ec2.*.id
   }
 
   name = "ch-ssm-run-ansible"
@@ -44,7 +44,7 @@ resource "aws_ssm_association" "ansible_apply" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.db_ec2.*.instance_id
+    values = aws_instance.db_ec2.*.id
   }
 
   name = "ch-ssm-run-ansible"
