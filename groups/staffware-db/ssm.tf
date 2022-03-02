@@ -32,7 +32,7 @@ resource "aws_ssm_association" "ansible_check" {
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
-  apply_only_at_cron_interval = var.ansible_ssm_apply_only_at_cron_interval
+  apply_only_at_cron_interval = var.ansible_ssm_check_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_check_schedule_expression
 }
 
@@ -69,7 +69,7 @@ resource "aws_ssm_association" "ansible_apply" {
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
-  apply_only_at_cron_interval = var.ansible_ssm_apply_only_at_cron_interval
+  apply_only_at_cron_interval = var.ansible_ssm_apply_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_apply_schedule_expression
 }
 
