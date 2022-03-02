@@ -70,11 +70,12 @@ resource "aws_instance" "db_ec2" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "Name", format("%s-db-%02d", var.application, count.index + 1),
-      "ServiceTeam", "Platforms/DBA",
-      "Terraform", true
-    )
+    tomap({
+      "Name"        = format("%s-db-%02d", var.application, count.index + 1),
+      "Domain"      = local.internal_fqdn,
+      "ServiceTeam" = "Platforms/DBA",
+      "Terraform"   = true
+    })
   )
 }
 
