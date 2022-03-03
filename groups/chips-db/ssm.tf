@@ -44,6 +44,8 @@ resource "aws_ssm_association" "ansible_check" {
 ## Scheduled task to run provided ansible playbook in apply mode
 ################################################################################
 resource "aws_ssm_association" "ansible_apply" {
+  count = var.ansible_ssm_apply_schedule_expression != null ? 1 : 0
+
   association_name = "${var.application}-db-ansible-apply"
 
   targets {

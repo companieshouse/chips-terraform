@@ -56,7 +56,7 @@ cloudwatch_logs = {
 ansible_ssm_git_repo_name = "oracle-12-ami"
 ansible_ssm_git_repo_owner = "companieshouse"
 ansible_ssm_git_repo_path = "ansible/"
-ansible_ssm_git_repo_options = "branch:master"
+ansible_ssm_git_repo_options = "branch:main"
 ansible_ssm_git_repo_token = null
 
 ansible_ssm_apply_only_at_cron_interval = true
