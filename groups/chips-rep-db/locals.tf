@@ -20,7 +20,7 @@ locals {
   logs_kms_key_id   = local.kms_keys_data["logs"]
   ssm_logs_key_id   = local.kms_keys_data["ssm"]
   ssm_kms_key_id    = local.security_kms_keys_data["session-manager-kms-key-arn"]
-  backup_kms_key_id = local.backup_kms_keys_data["chipsbackup-kms-key-arn"]
+  backup_kms_key_id = local.backup_kms_keys_data["${var.account}-chipsbackup-kms-key-arn"]
 
   resources_bucket_name       = local.shared_services_s3_data["resources_bucket_name"]
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
