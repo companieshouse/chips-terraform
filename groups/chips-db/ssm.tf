@@ -38,6 +38,12 @@ resource "aws_ssm_association" "ansible_check" {
   }
   apply_only_at_cron_interval = var.ansible_ssm_check_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_check_schedule_expression
+
+  output_location {
+    s3_bucket_name = local.ssm_data.ssm_logs_bucket_name
+    s3_key_prefix  = "${var.application}-db/ansible-check/"
+    s3_region      = var.aws_region
+  }
 }
 
 ################################################################################
@@ -77,6 +83,12 @@ resource "aws_ssm_association" "ansible_apply" {
   }
   apply_only_at_cron_interval = var.ansible_ssm_apply_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_apply_schedule_expression
+
+  output_location {
+    s3_bucket_name = local.ssm_data.ssm_logs_bucket_name
+    s3_key_prefix  = "${var.application}-db/ansible-apply/"
+    s3_region      = var.aws_region
+  }
 }
 
 

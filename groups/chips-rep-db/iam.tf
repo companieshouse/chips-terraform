@@ -11,7 +11,8 @@ module "db_instance_profile" {
     local.resources_bucket_name,
   ]
   s3_buckets_write = [
-    local.session_manager_bucket_name
+    local.session_manager_bucket_name,
+    local.ssm_data.ssm_logs_bucket_name
   ]
   cw_log_group_arns = length(local.log_groups) > 0 ? flatten([
     formatlist(
