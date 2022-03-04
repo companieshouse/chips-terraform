@@ -14,7 +14,6 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-
 data "aws_security_group" "iprocess_app" {
   filter {
     name   = "group-name"
@@ -88,6 +87,10 @@ data "vault_generic_secret" "shared_services_s3" {
 
 data "vault_generic_secret" "security_s3_buckets" {
   path = "aws-accounts/security/s3"
+}
+
+data "vault_generic_secret" "ssm" {
+  path = "aws-accounts/${var.aws_account}/ssm"
 }
 
 data "aws_route53_zone" "private_zone" {

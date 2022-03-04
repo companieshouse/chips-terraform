@@ -82,6 +82,10 @@ data "vault_generic_secret" "security_s3_buckets" {
   path = "aws-accounts/security/s3"
 }
 
+data "vault_generic_secret" "ssm" {
+  path = "aws-accounts/${var.aws_account}/ssm"
+}
+
 data "aws_route53_zone" "private_zone" {
   name         = local.internal_fqdn
   private_zone = true
