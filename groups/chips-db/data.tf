@@ -70,6 +70,10 @@ data "vault_generic_secret" "security_kms_keys" {
   path = "aws-accounts/security/kms"
 }
 
+data "vault_generic_secret" "backup_kms_keys" {
+  path = "aws-accounts/chips-backup/kms"
+}
+
 data "aws_kms_key" "ebs" {
   key_id = "alias/${var.account}/${var.region}/ebs"
 }
