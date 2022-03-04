@@ -43,7 +43,14 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-data "aws_security_group" "chips_weblogic" {
+data "aws_security_group" "chips_users_rest_app" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-chips-users-rest-asg-*"]
+  }
+}
+
+data "aws_security_group" "chips_ef_batch_app" {
   filter {
     name   = "group-name"
     values = ["sgr-chips-ef-batch-asg-*"]

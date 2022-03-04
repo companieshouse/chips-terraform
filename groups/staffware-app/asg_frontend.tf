@@ -45,8 +45,15 @@ module "iprocess_app_asg_security_group" {
       from_port                = 30511
       to_port                  = 30514
       protocol                 = "tcp"
-      description              = "WebLogic inbound port range"
-      source_security_group_id = data.aws_security_group.chips_weblogic.id
+      description              = "WebLogic chips-users-rest inbound port range"
+      source_security_group_id = data.aws_security_group.chips_users_rest_app.id
+    },
+    {
+      from_port                = 30511
+      to_port                  = 30514
+      protocol                 = "tcp"
+      description              = "WebLogic chips-ef-batch inbound port range"
+      source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
     }
   ]
   number_of_computed_ingress_with_source_security_group_id = 1

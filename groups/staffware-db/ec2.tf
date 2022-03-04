@@ -22,6 +22,20 @@ module "db_ec2_security_group" {
       protocol                 = "tcp"
       description              = "iProcess Application Security Group"
       source_security_group_id = data.aws_security_group.iprocess_app.id
+    },
+    {
+      from_port                = 1521
+      to_port                  = 1521
+      protocol                 = "tcp"
+      description              = "WebLogic chips-users-rest Application Security Group"
+      source_security_group_id = data.aws_security_group.chips_users_rest_app.id
+    },
+    {
+      from_port                = 1521
+      to_port                  = 1521
+      protocol                 = "tcp"
+      description              = "WebLogic chips-ef-batch Application Security Group"
+      source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
     }
   ]
   ingress_with_cidr_blocks = [
