@@ -5,7 +5,8 @@ module "db_instance_profile" {
   enable_SSM = true
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
-    local.ssm_kms_key_id
+    local.ssm_kms_key_id,
+    local.ssm_logs_key_id
   ]
   s3_buckets_read = [
     local.resources_bucket_name,
