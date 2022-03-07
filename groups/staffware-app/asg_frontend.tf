@@ -40,7 +40,7 @@ module "iprocess_app_asg_security_group" {
     }
   ]
 
-  computed_ingress_with_source_security_group_id = [
+  ingress_with_source_security_group_id = [
     {
       from_port                = 30511
       to_port                  = 30514
@@ -56,7 +56,6 @@ module "iprocess_app_asg_security_group" {
       source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
     }
   ]
-  number_of_computed_ingress_with_source_security_group_id = 1
 
   egress_rules = ["all-all"]
 
