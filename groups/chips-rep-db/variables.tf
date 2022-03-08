@@ -74,6 +74,11 @@ variable "ami_name" {
   description = "Name of the AMI to use in the Auto Scaling configuration for email servers"
 }
 
+variable "ami_id" {
+  type        = string
+  description = "Set this to null to use the latest AMI, set the default to an AMI Id to hardcode and always use that AMI"
+  default     = "ami-07753d6b2935e32bf"
+}
 
 variable "vpc_sg_cidr_blocks_oracle" {
   type        = list(any)

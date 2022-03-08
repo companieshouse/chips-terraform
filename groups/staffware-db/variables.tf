@@ -76,8 +76,8 @@ variable "ami_name" {
 
 variable "ami_id" {
   type        = string
+  description = "Set this to null to use the latest AMI, set the default to an AMI Id to hardcode and always use that AMI"
   default     = null
-  description = "Id of an AMI you want to force the Terraform to use, overrides ami_name"
 }
 
 variable "vpc_sg_cidr_blocks_oracle" {
