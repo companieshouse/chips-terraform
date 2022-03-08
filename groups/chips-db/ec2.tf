@@ -141,11 +141,3 @@ module "cloudwatch-alarms" {
     })
   )
 }
-
-
-
-
-
-
-
-
