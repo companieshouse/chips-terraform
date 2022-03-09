@@ -6,7 +6,8 @@ module "db_instance_profile" {
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id,
-    local.ssm_logs_key_id
+    local.ssm_logs_key_id,
+    local.backup_kms_key_id
   ]
   s3_buckets_read = [
     local.resources_bucket_name,
@@ -36,6 +37,17 @@ module "db_instance_profile" {
       resources = ["*"],
       actions = [
         "ec2:DescribeTags"
+      ]
+    },
+    {
+      sid    = "TempBackupPolicy",
+      effect = "Allow",
+      resources = [
+        local.backup_bucket_name,
+        "${local.backup_bucket_name}/*"
+      ],
+      actions = [
+        "s3:*"
       ]
     }
   ]
