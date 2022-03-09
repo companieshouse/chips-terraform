@@ -13,7 +13,7 @@ locals {
   ec2_data                = data.vault_generic_secret.ec2_data.data
   kms_keys_data           = data.vault_generic_secret.kms_keys.data
   security_kms_keys_data  = data.vault_generic_secret.security_kms_keys.data
-  backup_kms_keys_data    = data.vault_generic_secret.backup_kms_keys_data.data
+  backup_kms_keys_data    = data.vault_generic_secret.backup_kms_keys.data
 
   ssm_data = data.vault_generic_secret.ssm.data
 
