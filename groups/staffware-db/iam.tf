@@ -43,8 +43,8 @@ module "db_instance_profile" {
       sid    = "TempBackupPolicy",
       effect = "Allow",
       resources = [
-        local.backup_bucket_name,
-        "${local.backup_bucket_name}/*"
+        "arn:aws:s3:::${local.backup_bucket_name}",
+        "arn:aws:s3:::${local.backup_bucket_name}/*"
       ],
       actions = [
         "s3:*"
