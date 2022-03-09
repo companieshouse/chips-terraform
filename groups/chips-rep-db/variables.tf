@@ -77,7 +77,7 @@ variable "ami_name" {
 variable "ami_id" {
   type        = string
   description = "Set this to null to use the latest AMI, set the default to an AMI Id to hardcode and always use that AMI"
-  default     = "ami-0b37408fa67a64cfb"
+  default     = null
 }
 
 variable "vpc_sg_cidr_blocks_oracle" {
