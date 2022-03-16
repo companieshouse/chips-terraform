@@ -193,7 +193,7 @@ variable "maintenance_window_cutoff" {
 variable "ssm_playbook_file_name" {
   type        = string
   description = "Name of the playbook file to run"
-  default     = "playbook.yml"
+  default     = "ssm-playbook.yml"
 }
 
 variable "ssm_requirements_file_name" {
