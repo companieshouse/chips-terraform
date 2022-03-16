@@ -9,6 +9,7 @@ region  = "euw2"
 # Application details
 application = "staffware"
 environment = "staging"
+oracle_unqname = "STAFFSTG"
 
 db_instance_count = 2
 db_instance_size = "r5.4xlarge"
