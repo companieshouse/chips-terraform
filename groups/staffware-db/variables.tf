@@ -200,3 +200,15 @@ variable "ssm_requirements_file_name" {
   description = "Name of the requirements file to download Ansible dependancies"
   default     = "requirements.yml"
 }
+
+variable "oracle_unqname" {
+  type        = string
+  description = "Value to be inserted into oracle users ORACLE_UNQNAME env variable"
+  default     = ""
+}
+
+variable "oracle_sid" {
+  type        = string
+  description = "Value to be inserted into oracle users ORACLE_SID env variable"
+  default     = ""
+}
