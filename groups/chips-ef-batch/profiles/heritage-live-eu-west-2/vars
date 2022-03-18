@@ -204,4 +204,22 @@ cloudwatch_logs = {
     file_name = "batch-batchmanager-*.log"
     log_group_retention = 180
   }
+
+  "bulk-image-load-log" = {
+    file_path = "NFSPATH/running-servers/bulk-image-load"
+    file_name = "batch-bulk-image-load-*.log"
+    log_group_retention = 180
+  }
+
+  "clear-cloud-images-dir-log" = {
+    file_path = "NFSPATH/running-servers/bulk-image-load"
+    file_name = "batch-clear-cloud-images-dir-*.log"
+    log_group_retention = 180
+  }
+
+  "psc-pursuit-trigger-log" = {
+    file_path = "NFSPATH/running-servers/psc-pursuit-trigger"
+    file_name = "batch-psc-pursuit-trigger-*.log"
+    log_group_retention = 180
+  }
 }
