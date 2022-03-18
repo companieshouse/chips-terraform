@@ -143,11 +143,11 @@ module "cloudwatch-alarms" {
   used_swap_memory_threshold = "50" # Percentage
 
   alarm_actions = [
-    module.cloudwatch_sns_notifications.this_sns_topic_arn
+    data.vault_generic_secret.chips_sns.data["chips-sns-topic-emails"]
   ]
 
   ok_actions = [
-    module.cloudwatch_sns_notifications.this_sns_topic_arn
+    data.vault_generic_secret.chips_sns.data["chips-sns-topic-emails"]
   ]
 
   depends_on = [
