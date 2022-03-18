@@ -13,14 +13,18 @@ locals {
   ec2_data                = data.vault_generic_secret.ec2_data.data
   kms_keys_data           = data.vault_generic_secret.kms_keys.data
   security_kms_keys_data  = data.vault_generic_secret.security_kms_keys.data
-  ssm_data                = data.vault_generic_secret.ssm.data
+  backup_kms_keys_data    = data.vault_generic_secret.backup_kms_keys.data
 
-  logs_kms_key_id = local.kms_keys_data["logs"]
-  ssm_logs_key_id = local.kms_keys_data["ssm"]
-  ssm_kms_key_id  = local.security_kms_keys_data["session-manager-kms-key-arn"]
+  ssm_data = data.vault_generic_secret.ssm.data
+
+  logs_kms_key_id   = local.kms_keys_data["logs"]
+  ssm_logs_key_id   = local.kms_keys_data["ssm"]
+  ssm_kms_key_id    = local.security_kms_keys_data["session-manager-kms-key-arn"]
+  backup_kms_key_id = local.backup_kms_keys_data["${var.account}-chipsbackup-kms-key-arn"]
 
   resources_bucket_name       = local.shared_services_s3_data["resources_bucket_name"]
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
+  backup_bucket_name          = "${var.aws_account}-chips-backup.chips-backup.${var.aws_region}"
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 

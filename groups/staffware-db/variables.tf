@@ -76,8 +76,8 @@ variable "ami_name" {
 
 variable "ami_id" {
   type        = string
+  description = "Set this to null to use the latest AMI, set the default to an AMI Id to hardcode and always use that AMI"
   default     = null
-  description = "Id of an AMI you want to force the Terraform to use, overrides ami_name"
 }
 
 variable "vpc_sg_cidr_blocks_oracle" {
@@ -192,11 +192,23 @@ variable "maintenance_window_cutoff" {
 variable "ssm_playbook_file_name" {
   type        = string
   description = "Name of the playbook file to run"
-  default     = "playbook.yml"
+  default     = "ssm-playbook.yml"
 }
 
 variable "ssm_requirements_file_name" {
   type        = string
   description = "Name of the requirements file to download Ansible dependancies"
   default     = "requirements.yml"
+}
+
+variable "oracle_unqname" {
+  type        = string
+  description = "Value to be inserted into oracle users ORACLE_UNQNAME env variable"
+  default     = ""
+}
+
+variable "oracle_sid" {
+  type        = string
+  description = "Value to be inserted into oracle users ORACLE_SID env variable"
+  default     = ""
 }

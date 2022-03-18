@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.107"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.111"
 
   application                      = var.application
   application_type                 = "chips"
