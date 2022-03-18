@@ -112,7 +112,7 @@ resource "aws_route53_record" "db_dns" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.112"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.117"
 
   name_prefix               = "staffware"
   instance_id               = aws_instance.db_ec2.id
