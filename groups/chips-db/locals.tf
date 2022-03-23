@@ -19,6 +19,7 @@ locals {
 
   logs_kms_key_id   = local.kms_keys_data["logs"]
   ssm_logs_key_id   = local.kms_keys_data["ssm"]
+  sns_kms_key_id    = local.kms_keys_data["sns"]
   ssm_kms_key_id    = local.security_kms_keys_data["session-manager-kms-key-arn"]
   backup_kms_key_id = local.backup_kms_keys_data["${var.account}-chipsbackup-kms-key-arn"]
 
