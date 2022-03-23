@@ -153,8 +153,7 @@ module "cloudwatch-alarms" {
   ]
 
   depends_on = [
-    aws_instance.db_ec2,
-    module.cloudwatch_sns_notifications
+    aws_instance.db_ec2
   ]
 
   tags = merge(
