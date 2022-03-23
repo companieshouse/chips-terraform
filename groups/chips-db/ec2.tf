@@ -126,6 +126,7 @@ module "cloudwatch-alarms" {
   alarm_actions = [
     module.cloudwatch_sns_notifications.this_sns_topic_arn
   ]
+
   ok_actions = [
     module.cloudwatch_sns_notifications.this_sns_topic_arn
   ]
