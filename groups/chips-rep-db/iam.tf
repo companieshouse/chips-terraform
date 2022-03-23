@@ -49,6 +49,14 @@ module "db_instance_profile" {
       actions = [
         "s3:*"
       ]
+    },
+    {
+      sid       = "CloudwatchMetrics"
+      effect    = "Allow"
+      resources = ["*"]
+      actions = [
+        "cloudwatch:PutMetricData"
+      ]
     }
   ]
 }
