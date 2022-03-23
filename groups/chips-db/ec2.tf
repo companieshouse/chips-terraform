@@ -124,11 +124,11 @@ module "cloudwatch-alarms" {
   used_swap_memory_threshold = "50" # Percentage
 
   alarm_actions = [
-    module.cloudwatch_sns_notifications.this_sns_topic_arn
+    module.cloudwatch_sns_notifications.sns_topic_arn
   ]
 
   ok_actions = [
-    module.cloudwatch_sns_notifications.this_sns_topic_arn
+    module.cloudwatch_sns_notifications.sns_topic_arn
   ]
 
   depends_on = [
