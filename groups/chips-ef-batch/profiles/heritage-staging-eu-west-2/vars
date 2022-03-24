@@ -222,4 +222,10 @@ cloudwatch_logs = {
     file_name = "batch-psc-pursuit-trigger-*.log"
     log_group_retention = 7
   }
+
+  "image-regeneration-log" = {
+    file_path = "NFSPATH/running-servers/image-regeneration"
+    file_name = "batch-image-regeneration-*.log"
+    log_group_retention = 7
+  }
 }
