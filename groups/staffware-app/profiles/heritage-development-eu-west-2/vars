@@ -1,0 +1,66 @@
+# Account details
+aws_profile = "heritage-development-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-development"
+
+# Account shorthand
+account = "hdev"
+region  = "euw2"
+
+# Application details
+application = "staffware"
+component   = "iprocess-app"
+environment = "development"
+
+# iProcess App settings
+instance_size = "r5.large"
+min_size = 1
+max_size = 1
+desired_capacity = 1
+
+# iProcess App Load Balancer
+public_allow_cidr_blocks = [
+  "127.0.0.1/32"
+]
+
+cw_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit"
+    log_group_retention = 30
+  }
+
+  "messages" = {
+    file_path = "/var/log"
+    log_group_retention = 30
+  }
+
+  "secure" = {
+    file_path = "/var/log"
+    log_group_retention = 30
+  }
+
+  "yum.log" = {
+    file_path = "/var/log"
+    log_group_retention = 30
+  }
+
+  "errors.log" = {
+    file_path = "/var/log/amazon/ssm"
+    log_group_retention = 30
+  }
+
+  "amazon-ssm-agent.log" = {
+    file_path = "/var/log/amazon/ssm"
+    log_group_retention = 30
+  }
+
+  "sw_warn.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 30
+  }
+
+  "sw_error.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 30
+  }
+}
