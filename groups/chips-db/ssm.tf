@@ -115,3 +115,29 @@ resource "aws_ssm_maintenance_window_target" "target" {
   }
   # owner_information - (Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
 }
+
+
+################################################################################
+## DB Failover Runbook Doc
+################################################################################
+
+resource "aws_ssm_document" "failover-db" {
+  name            = "ch-ssm-failover-chips-db"
+  document_type   = "Automation"
+  document_format = "YAML"
+  content = templatefile("templates/chips-db-failover-ssm-document.yaml",
+    {
+      execution_role         = module.ssm-runbook-execution-role.iam_role_arn
+      region_name            = var.aws_region
+      chips_db_instance_name = "${var.application}-db-*"
+      command_document_name  = "ch-ssm-run-ansible"
+    }
+  )
+  tags = merge(
+    local.default_tags,
+    map(
+      "Account", var.aws_account,
+      "ServiceTeam", "Platforms"
+    )
+  )
+}

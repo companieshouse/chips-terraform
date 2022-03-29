@@ -60,3 +60,56 @@ module "db_instance_profile" {
     }
   ]
 }
+
+
+################################################################################
+## SSM Failover Execution Role
+################################################################################
+
+module "ssm-runbook-execution-role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
+  version = "4.17.1"
+
+  role_name               = "ch-ssm-failover-chips-db"
+  create_role             = true
+  role_requires_mfa       = false
+  trusted_role_services   = ["ssm.amazonaws.com"]
+  custom_role_policy_arns = [aws_iam_policy.ssm-runbook-execution-perms.arn]
+}
+
+resource "aws_iam_policy" "ssm-runbook-execution-perms" {
+  name   = "ch-ssm-failover-chips-db-policy"
+  policy = data.aws_iam_policy_document.ssm-runbook-execution-perms.json
+}
+
+data "aws_iam_policy_document" "ssm-runbook-execution-perms" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DescribeInstances",
+      "ec2:StartInstances",
+      "ec2:DescribeInstanceStatus"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:DescribeInstanceInformation",
+      "ssm:ListCommands",
+      "ssm:ListCommandInvocations"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:SendCommand"
+    ]
+    resources = [
+      "arn:aws:ssm:*:903815704705:document/ch-ssm-run-ansible",
+      "arn:aws:ec2:*:903815704705:instance/*",
+      "arn:aws:ssm:*:903815704705:managed-instance/*"
+    ]
+  }
+}
