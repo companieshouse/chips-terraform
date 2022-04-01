@@ -101,6 +101,12 @@ resource "aws_instance" "db_ec2" {
       "Terraform"   = true
     })
   )
+
+  lifecycle {
+    ignore_changes = [
+      user_data
+    ]
+  }
 }
 
 resource "aws_route53_record" "db_dns" {
