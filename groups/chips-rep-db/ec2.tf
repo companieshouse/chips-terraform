@@ -82,7 +82,8 @@ resource "aws_instance" "db_ec2" {
 
   lifecycle {
     ignore_changes = [
-      user_data
+      user_data,
+      user_data_base64
     ]
   }
 }
