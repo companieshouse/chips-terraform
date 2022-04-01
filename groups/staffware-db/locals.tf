@@ -43,6 +43,7 @@ locals {
     region        = var.aws_region
     cw_log_files  = local.cw_logs
     cw_agent_user = "root"
+    cw_namespace  = "CHIPS/STFWARE"
     domain        = local.internal_fqdn
   }
 
