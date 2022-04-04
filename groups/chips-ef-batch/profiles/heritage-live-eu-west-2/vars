@@ -228,4 +228,10 @@ cloudwatch_logs = {
     file_name = "batch-image-regeneration-*.log"
     log_group_retention = 180
   }
+
+  "officer-bulk-process-log" = {
+    file_path = "NFSPATH/running-servers/officer-bulk-process"
+    file_name = "batch-officer-bulk-process-*.log"
+    log_group_retention = 180
+  }
 }
