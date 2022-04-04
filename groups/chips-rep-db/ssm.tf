@@ -81,7 +81,7 @@ resource "aws_ssm_document" "failover_db" {
   document_format = "YAML"
   content = templatefile("templates/chips-db-failover-ssm-document.yaml",
     {
-      execution_role              = module.ssm-runbook-execution-role.iam_role_arn
+      execution_role              = module.ssm_runbook_execution_role.iam_role_arn
       region_name                 = var.aws_region
       chips_db_instance_name      = "${var.application}-db-*"
       command_document_name       = "ch-ssm-run-ansible"

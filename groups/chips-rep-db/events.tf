@@ -19,5 +19,5 @@ resource "aws_cloudwatch_event_target" "failover_event_target" {
   target_id = "${var.application}DBSSMFailoverDocument"
   arn       = aws_ssm_document.failover_db.arn
   rule      = aws_cloudwatch_event_rule.failover_alarm_rule.name
-  role_arn  = aws_iam_role.ssm_runbook_execution_perms.arn
+  role_arn  = aws_iam_role.ssm_runbook_execution_role.arn
 }

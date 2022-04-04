@@ -66,7 +66,7 @@ module "db_instance_profile" {
 ## SSM Failover Execution Role
 ################################################################################
 
-module "ssm-runbook-execution-role" {
+module "ssm_runbook_execution_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "4.17.1"
 
@@ -74,15 +74,15 @@ module "ssm-runbook-execution-role" {
   create_role             = true
   role_requires_mfa       = false
   trusted_role_services   = ["ssm.amazonaws.com"]
-  custom_role_policy_arns = [aws_iam_policy.ssm-runbook-execution-perms.arn]
+  custom_role_policy_arns = [aws_iam_policy.ssm_runbook_execution_perms.arn]
 }
 
-resource "aws_iam_policy" "ssm-runbook-execution-perms" {
+resource "aws_iam_policy" "ssm_runbook_execution_perms" {
   name   = "ch-ssm-failover-chips-db-policy"
-  policy = data.aws_iam_policy_document.ssm-runbook-execution-perms.json
+  policy = data.aws_iam_policy_document.ssm_runbook_execution_perms.json
 }
 
-data "aws_iam_policy_document" "ssm-runbook-execution-perms" {
+data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
   statement {
     effect = "Allow"
     actions = [
