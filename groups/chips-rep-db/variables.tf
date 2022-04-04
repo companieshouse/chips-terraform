@@ -111,6 +111,12 @@ variable "cloudwatch_logs" {
   description = "Map of log files to be collected by Cloudwatch Logs"
 }
 
+variable "default_log_group_retention_in_days" {
+  type        = number
+  default     = 180
+  description = "Total days to retain logs in CloudWatch log group if not specified for specific logs"
+}
+
 variable "availability_zones" {
   type        = list(string)
   default     = null
