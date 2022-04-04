@@ -7,9 +7,8 @@ resource "aws_cloudwatch_event_rule" "failover_alarm_rule" {
   "detail-type": ["CloudWatch Alarm State Change"],
   "detail": {
     "alarmName": [
-      "${module.cloudwatch-alarms.ec2_systemstatus_check.alarm_name}",
-      "${module.cloudwatch-alarms.ec2_overallstatus_check.alarm_name}",
-      "${module.cloudwatch-alarms.ec2_instancestatus_check.alarm_name}"
+      "${module.cloudwatch-alarms[0].ec2_composite_status.alarm_name}",
+      "${module.cloudwatch-alarms[1].ec2_composite_status.alarm_name}"
     ]
   }
 }
