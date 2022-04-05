@@ -76,7 +76,7 @@ resource "aws_ssm_maintenance_window_target" "target" {
 ################################################################################
 
 resource "aws_ssm_document" "failover_db" {
-  name            = "ch-ssm-failover-chips-db"
+  name            = "ch-ssm-failover-${var.application}-db"
   document_type   = "Automation"
   document_format = "YAML"
   content = templatefile("templates/chips-db-failover-ssm-document.yaml",
