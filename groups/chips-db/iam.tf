@@ -70,7 +70,7 @@ module "ssm_runbook_execution_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "4.17.1"
 
-  role_name               = "ch-ssm-failover-chips-db"
+  role_name               = "ch-ssm-failover-${var.application}-db"
   create_role             = true
   role_requires_mfa       = false
   trusted_role_services   = ["ssm.amazonaws.com"]
@@ -78,7 +78,7 @@ module "ssm_runbook_execution_role" {
 }
 
 resource "aws_iam_policy" "ssm_runbook_execution_perms" {
-  name   = "ch-ssm-failover-chips-db-policy"
+  name   = "ch-ssm-failover-${var.application}-db-policy"
   policy = data.aws_iam_policy_document.ssm_runbook_execution_perms.json
 }
 
