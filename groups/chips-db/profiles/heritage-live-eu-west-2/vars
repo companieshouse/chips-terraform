@@ -9,8 +9,8 @@ region  = "euw2"
 # Application details
 application = "chips"
 environment = "live"
-oracle_unqname = "cdb1"
-oracle_sid = "ENVT14"
+oracle_unqname = ""
+oracle_sid = ""
 
 db_instance_count = 2
 db_instance_size = "r5.16xlarge"
