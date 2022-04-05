@@ -60,10 +60,10 @@ mainSteps:
           valueSet:
             - '{{select_failover_instance.id}}'
   - name: trigger_configuration
-    action: 'aws:runDocument'
+    action: 'aws:runCommand'
     inputs:
-      DocumentType: "SSMDocument"
       DocumentName: ${command_document_name}
       InstanceIds:
         - '{{select_failover_instance.id}}'
-      DocumentParameters: {{ command_document_parameters }}
+      Parameters:
+        ${command_document_parameters}
