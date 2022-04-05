@@ -1,0 +1,69 @@
+aws_profile = "heritage-live-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-live"
+
+# shorthand
+account = "hlive"
+region  = "euw2"
+
+# Application details
+application = "staffware"
+environment = "live"
+oracle_unqname = "STAFFSTG"
+oracle_sid = "STAFFSTG"
+
+db_instance_count = 2
+db_instance_size = "r5.4xlarge"
+ami_id = "ami-07753d6b2935e32bf"
+
+availability_zones = ["eu-west-2a","eu-west-2b"]
+
+cloudwatch_namespace = "CHIPS/STFWARE"
+
+############################################
+# Log entries to be aggregated in Cloudwatch Logs
+############################################
+cloudwatch_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit"
+    log_group_retention = 180
+  }
+
+  "messages" = {
+    file_path = "/var/log"
+    log_group_retention = 180
+  }
+  
+  "secure" = {
+    file_path = "/var/log"
+    log_group_retention = 180
+  }
+
+  "yum.log" = {
+    file_path = "/var/log"
+    log_group_retention = 180
+  }
+
+  "ssm-errors" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "errors.log"
+    log_group_retention = 180
+  }
+
+  "ssm-agent" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "amazon-ssm-agent.log"
+    log_group_retention = 180
+  }
+}
+
+ansible_ssm_git_repo_name = "oracle-12-ami"
+ansible_ssm_git_repo_owner = "companieshouse"
+ansible_ssm_git_repo_path = "ansible/"
+ansible_ssm_git_repo_options = "branch:main"
+ansible_ssm_git_repo_token = null
+
+ansible_ssm_apply_only_at_cron_interval = true
+ansible_ssm_check_schedule_expression = "cron(00 01 ? * MON *)"
+maintenance_window_schedule_expression = "cron(00 01 ? * SUN *)"
+
