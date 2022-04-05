@@ -10,28 +10,8 @@ resource "aws_ssm_association" "ansible_check" {
     values = aws_instance.db_ec2.*.id
   }
 
-  name = "ch-ssm-run-ansible"
-  parameters = {
-    SourceType = "GitHub"
-    SourceInfo = jsonencode({
-      owner      = var.ansible_ssm_git_repo_owner
-      repository = var.ansible_ssm_git_repo_name
-      path       = var.ansible_ssm_git_repo_path
-      getOptions = var.ansible_ssm_git_repo_options
-      tokenInfo  = var.ansible_ssm_git_repo_token
-    })
-
-    InstallDependencies = "False"
-    InstallRequirements = "True"
-    PlaybookFile        = var.ssm_playbook_file_name
-    RequirementsFile    = var.ssm_requirements_file_name
-
-    ExtraVariables     = "SSM=True" #space separated vars
-    ExtraVariablesJson = jsonencode(local.ansible_inputs)
-    Check              = "True"
-    Verbose            = var.ansible_ssm_verbose_level
-    TimeoutSeconds     = "3600"
-  }
+  name                        = "ch-ssm-run-ansible"
+  parameters                  = merge(local.ansible_ssm_parameters, { Check = "True" })
   apply_only_at_cron_interval = var.ansible_ssm_check_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_check_schedule_expression
 
@@ -56,28 +36,8 @@ resource "aws_ssm_association" "ansible_apply" {
     values = aws_instance.db_ec2.*.id
   }
 
-  name = "ch-ssm-run-ansible"
-  parameters = {
-    SourceType = "GitHub"
-    SourceInfo = jsonencode({
-      owner      = var.ansible_ssm_git_repo_owner
-      repository = var.ansible_ssm_git_repo_name
-      path       = var.ansible_ssm_git_repo_path
-      getOptions = var.ansible_ssm_git_repo_options
-      tokenInfo  = var.ansible_ssm_git_repo_token
-    })
-
-    InstallDependencies = "False"
-    InstallRequirements = "True"
-    PlaybookFile        = var.ssm_playbook_file_name
-    RequirementsFile    = var.ssm_requirements_file_name
-
-    ExtraVariables     = "SSM=True" #space separated vars
-    ExtraVariablesJson = jsonencode(local.ansible_inputs)
-    Check              = "False"
-    Verbose            = var.ansible_ssm_verbose_level
-    TimeoutSeconds     = "3600"
-  }
+  name                        = "ch-ssm-run-ansible"
+  parameters                  = merge(local.ansible_ssm_parameters, { Check = "False" })
   apply_only_at_cron_interval = var.ansible_ssm_apply_schedule_expression != null ? var.ansible_ssm_apply_only_at_cron_interval : null
   schedule_expression         = var.ansible_ssm_apply_schedule_expression
 
@@ -110,4 +70,30 @@ resource "aws_ssm_maintenance_window_target" "target" {
     key    = "InstanceIds"
     values = aws_instance.db_ec2.*.id
   }
+}
+
+################################################################################
+## DB Failover Runbook Doc
+################################################################################
+
+resource "aws_ssm_document" "failover_db" {
+  name            = "ch-ssm-failover-chips-db"
+  document_type   = "Automation"
+  document_format = "YAML"
+  content = templatefile("templates/chips-db-failover-ssm-document.yaml",
+    {
+      execution_role              = module.ssm_runbook_execution_role.iam_role_arn
+      region_name                 = var.aws_region
+      chips_db_instance_name      = "${var.application}-db-*"
+      command_document_name       = "ch-ssm-run-ansible"
+      command_document_parameters = merge(local.ansible_ssm_parameters, { Check = "False" })
+    }
+  )
+  tags = merge(
+    local.default_tags,
+    map(
+      "Account", var.aws_account,
+      "ServiceTeam", "Platforms"
+    )
+  )
 }
