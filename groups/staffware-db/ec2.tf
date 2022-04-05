@@ -121,7 +121,7 @@ resource "aws_route53_record" "db_dns" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.124"
   count  = var.db_instance_count
 
   name_prefix               = "staffware"
@@ -138,7 +138,7 @@ module "cloudwatch-alarms" {
   disk_devices = [
     {
       instance_device_mount_path = "/"
-      instance_device_location   = "/dev/nvme0n1p2"
+      instance_device_location   = "nvme0n1p2"
       instance_device_fstype     = "xfs"
     }
   ]
