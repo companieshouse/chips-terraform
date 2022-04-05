@@ -1,14 +1,14 @@
-aws_profile = "heritage-staging-eu-west-2"
+aws_profile = "heritage-live-eu-west-2"
 aws_region  = "eu-west-2"
-aws_account = "heritage-staging"
+aws_account = "heritage-live"
 
 # shorthand
-account = "hstg"
+account = "hlive"
 region  = "euw2"
 
 # Application details
 application = "chips-rep"
-environment = "staging"
+environment = "live"
 oracle_unqname = "REPSTG"
 oracle_sid = "REPSTG"
 
@@ -16,6 +16,8 @@ db_instance_count = 2
 db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
+
+cloudwatch_namespace = "CHIPS/REP"
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs

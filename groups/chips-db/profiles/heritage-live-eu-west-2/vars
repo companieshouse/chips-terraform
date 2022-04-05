@@ -1,14 +1,14 @@
-aws_profile = "heritage-staging-eu-west-2"
+aws_profile = "heritage-live-eu-west-2"
 aws_region  = "eu-west-2"
-aws_account = "heritage-staging"
+aws_account = "heritage-live"
 
 # shorthand
-account = "hstg"
+account = "hlive"
 region  = "euw2"
 
 # Application details
 application = "chips"
-environment = "staging"
+environment = "live"
 oracle_unqname = "cdb1"
 oracle_sid = "ENVT14"
 

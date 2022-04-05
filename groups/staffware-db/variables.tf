@@ -111,6 +111,12 @@ variable "cloudwatch_logs" {
   description = "Map of log files to be collected by Cloudwatch Logs"
 }
 
+variable "cloudwatch_namespace" {
+  type        = string
+  default     = null
+  description = "A custom namespace to define for CloudWatch custom metrics such as memory and disk"
+}
+
 variable "default_log_group_retention_in_days" {
   type        = number
   default     = 180

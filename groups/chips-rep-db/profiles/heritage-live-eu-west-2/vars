@@ -7,17 +7,17 @@ account = "hstg"
 region  = "euw2"
 
 # Application details
-application = "chips"
+application = "chips-rep"
 environment = "staging"
-oracle_unqname = "cdb1"
-oracle_sid = "ENVT14"
+oracle_unqname = "REPSTG"
+oracle_sid = "REPSTG"
 
 db_instance_count = 2
-db_instance_size = "r5.16xlarge"
+db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
-cloudwatch_namespace = "CHIPS/OLTP"
+cloudwatch_namespace = "CHIPS/REP"
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
@@ -55,7 +55,6 @@ cloudwatch_logs = {
     log_group_retention = 180
   }
 }
-
 
 ansible_ssm_git_repo_name = "oracle-12-ami"
 ansible_ssm_git_repo_owner = "companieshouse"

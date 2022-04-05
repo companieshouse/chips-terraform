@@ -18,6 +18,8 @@ ami_id = "ami-07753d6b2935e32bf"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+cloudwatch_namespace = "CHIPS/STFWARE"
+
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
 ############################################
