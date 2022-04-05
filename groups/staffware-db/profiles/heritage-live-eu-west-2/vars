@@ -9,8 +9,8 @@ region  = "euw2"
 # Application details
 application = "staffware"
 environment = "live"
-oracle_unqname = "STAFFSTG"
-oracle_sid = "STAFFSTG"
+oracle_unqname = "STAFFLIVE"
+oracle_sid = "STAFFLIVE"
 
 db_instance_count = 2
 db_instance_size = "r5.4xlarge"
