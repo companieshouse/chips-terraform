@@ -87,7 +87,7 @@ resource "aws_ssm_document" "failover_db" {
       region_name                 = var.aws_region
       chips_db_instance_name      = "${var.application}-db-*"
       command_document_name       = "ch-ssm-run-ansible"
-      command_document_parameters = merge(local.ansible_ssm_parameters, { Check = "False" })
+      command_document_parameters = indent(8, yamlencode(merge(local.ansible_ssm_parameters, { Check = "False" })))
     }
   )
   tags = merge(
