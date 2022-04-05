@@ -17,6 +17,8 @@ db_instance_size = "r5.16xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+cloudwatch_namespace = "CHIPS/OLTP"
+
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
 ############################################

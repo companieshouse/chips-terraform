@@ -99,10 +99,11 @@ resource "aws_route53_record" "db_dns" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.119"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.122"
   count  = var.db_instance_count
 
   name_prefix               = "chips-oltp"
+  namespace                 = var.cloudwatch_namespace
   instance_id               = aws_instance.db_ec2[count.index].id
   status_evaluation_periods = "3"
   status_statistics_period  = "60"
