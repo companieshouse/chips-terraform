@@ -3,14 +3,16 @@ resource "aws_cloudwatch_event_rule" "failover_alarm_rule" {
   description   = "Rule for triggering failover actions based on ${var.application} db alarms."
   event_pattern = <<EOF
 {
-  "source": ["aws.cloudwatch"],
-  "detail-type": ["CloudWatch Alarm State Change"],
-  "detail": {
-    "alarmName": [
-      "${module.cloudwatch-alarms[0].ec2_composite_status.alarm_name}",
-      "${module.cloudwatch-alarms[1].ec2_composite_status.alarm_name}"
-    ]
-  }
+  "source": [
+    "aws.cloudwatch"
+  ],
+  "detail-type": [
+    "CloudWatch Alarm State Change"
+  ],
+  "resources": [
+    "${module.cloudwatch-alarms[0].ec2_composite_status.arn}",
+    "${module.cloudwatch-alarms[1].ec2_composite_status.arn}"
+  ]
 }
 EOF
 }
