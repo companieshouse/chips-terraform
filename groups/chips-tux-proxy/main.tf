@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-tux-proxy" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.111"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.124"
 
   application                      = var.application
   application_type                 = "chips"
@@ -44,6 +44,7 @@ module "chips-tux-proxy" {
   nfs_mounts                       = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
+  alb_idle_timeout                 = 180
 
   additional_ingress_with_cidr_blocks = [
     {
