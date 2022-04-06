@@ -110,4 +110,17 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
       "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:managed-instance/*"
     ]
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey",
+      "kms:Encrypt",
+      "kms:GenerateDataKey*",
+      "kms:ReEncrypt*",
+    ]
+    resources = [
+      data.aws_kms_key.ebs.arn
+    ]
+  }
 }
