@@ -106,9 +106,9 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
       "ssm:SendCommand"
     ]
     resources = [
-      "arn:aws:ssm:*:903815704705:document/ch-ssm-run-ansible",
-      "arn:aws:ec2:*:903815704705:instance/*",
-      "arn:aws:ssm:*:903815704705:managed-instance/*"
+      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:document/ch-ssm-run-ansible",
+      "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:managed-instance/*"
     ]
   }
 }
