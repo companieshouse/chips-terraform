@@ -40,6 +40,14 @@ module "db_instance_profile" {
       ]
     },
     {
+      sid       = "AllowS3ListAllBuckets",
+      effect    = "Allow",
+      resources = ["*"],
+      actions = [
+        "s3:ListAllMyBuckets"
+      ]
+    },
+    {
       sid    = "TempBackupPolicy",
       effect = "Allow",
       resources = [
