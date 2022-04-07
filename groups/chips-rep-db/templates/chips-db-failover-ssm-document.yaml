@@ -2,7 +2,7 @@ description: 'Upon triggering by EventBridge, select a Chips DB Instance ID to f
 schemaVersion: '0.3'
 assumeRole: '${execution_role}'
 parameters:
-  triggeringInstance:
+  alarmName:
     type: String
 mainSteps:
   - name: select_failover_instance
@@ -17,8 +17,12 @@ mainSteps:
       Script: |-
         def script_handler(events, context):
           import boto3
+          import re
         
-          triggering_instance = events['triggering_instance']  
+          #extract the instance ID from alarm name that triggered
+          alarm_name = events['alarm_name']  
+          triggering_instance = re.search('^arn:aws:cloudwatch:.+:.\d+:alarm:.+(i-.*)$', alarm_name).group(1)
+
           ec2 = boto3.client('ec2', region_name='${region_name}')
 
           chips_db_instances = ec2.describe_instances(
@@ -40,7 +44,7 @@ mainSteps:
                       return failover_id
 
       InputPayload:
-        triggering_instance: '{{ triggeringInstance }}'
+        alarm_name: '{{ alarmName }}'
   - name: start_failover_instance
     action: 'aws:changeInstanceState'
     inputs:
