@@ -15,6 +15,9 @@ environment = "live"
 asg_count = 2
 instance_size = "t3.large"
 
+# SNS Topic creation
+enable_sns_topic = true
+
 # NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
 

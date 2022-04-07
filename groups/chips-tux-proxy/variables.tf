@@ -175,3 +175,9 @@ variable "cloudwatch_logs" {
   description = "Map of log file information; used to create log groups, IAM permissions and passed to the application to configure remote logging"
   default     = {}
 }
+
+variable "enable_sns_topic" {
+  type        = bool
+  description = "A boolean value to indicate whether to deploy SNS topic configuration for CloudWatch actions"
+  default     = false
+}

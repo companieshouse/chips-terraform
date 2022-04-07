@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-ef-batch" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.124"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.125"
 
   application                      = var.application
   application_type                 = var.application_type
@@ -45,6 +45,7 @@ module "chips-ef-batch" {
   cloudwatch_logs                  = var.cloudwatch_logs
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
   alb_idle_timeout                 = 180
+  enable_sns_topic                 = var.enable_sns_topic
 
   additional_ingress_with_cidr_blocks = [
     {
