@@ -27,6 +27,6 @@ resource "aws_cloudwatch_event_target" "failover_event_target" {
     input_paths = {
       alarm_name = "$.resources[0]",
     }
-    input_template = "{\"alarmName\":\"<instance>\"}"
+    input_template = "{\"alarmName\":\"<alarm_name>\"}"
   }
 }
