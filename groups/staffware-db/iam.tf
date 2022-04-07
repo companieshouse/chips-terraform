@@ -124,4 +124,21 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
       data.aws_kms_key.ebs.arn
     ]
   }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:CreateGrant"
+    ]
+    resources = [
+      data.aws_kms_key.ebs.arn
+    ]
+    condition {
+      test     = "Bool"
+      variable = "kms:GrantIsForAWSResource"
+      values = [
+        "true"
+      ]
+    }
+  }
 }
