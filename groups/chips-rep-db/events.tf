@@ -19,7 +19,7 @@ EOF
 
 resource "aws_cloudwatch_event_target" "failover_event_target" {
   target_id = "${var.application}DBSSMFailoverDocument"
-  arn       = "${replace(aws_ssm_document.failover_db.arn, "document/", "automation-definition/")}:$DEFAULT"
+  arn       = replace(aws_ssm_document.failover_db.arn, "document/", "automation-definition/")
   rule      = aws_cloudwatch_event_rule.failover_alarm_rule.name
   role_arn  = aws_iam_role.eventbridge_ssm_execution_role.arn
 
