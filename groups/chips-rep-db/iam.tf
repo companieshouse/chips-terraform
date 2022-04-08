@@ -145,7 +145,7 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
 ################################################################################
 ## SSM Failover Role for Eventbridge SSM triggers
 ################################################################################
-resource "aws_iam_role" "eventbridge_ssm_execution__role" {
+resource "aws_iam_role" "eventbridge_ssm_execution_role" {
   name               = "ch-ssm-failover-${var.application}-db-eventbridge-role"
   assume_role_policy = <<EOF
 {
@@ -172,8 +172,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "eventbridge_ssm_execution_role_policy_attach" {
-  role       = aws_iam_role.aws_events_ssm_automation_role.name
-  policy_arn = data.aws_iam_policy.eventbridge_ssm_execution_policy.arn
+  role       = aws_iam_role.eventbridge_ssm_execution_role.name
+  policy_arn = aws_iam_policy.eventbridge_ssm_execution_policy.arn
 }
 
 resource "aws_iam_policy" "eventbridge_ssm_execution_policy" {
