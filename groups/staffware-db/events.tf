@@ -21,7 +21,7 @@ resource "aws_cloudwatch_event_target" "failover_event_target" {
   target_id = "${var.application}DBSSMFailoverDocument"
   arn       = replace(aws_ssm_document.failover_db.arn, "document/", "automation-definition/")
   rule      = aws_cloudwatch_event_rule.failover_alarm_rule.name
-  role_arn  = module.ssm_runbook_execution_role.iam_role_arn
+  role_arn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/EventBridgeAutomationServiceRole"
 
   input_transformer {
     input_paths = {
