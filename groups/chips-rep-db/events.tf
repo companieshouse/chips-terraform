@@ -23,10 +23,10 @@ resource "aws_cloudwatch_event_target" "failover_event_target" {
   rule      = aws_cloudwatch_event_rule.failover_alarm_rule.name
   role_arn  = aws_iam_role.eventbridge_ssm_execution_role.arn
 
-  # input_transformer {
-  #   input_paths = {
-  #     alarm_name = "$.resources[0]",
-  #   }
-  #   input_template = "{\"alarmName\":\"<alarm_name>\"}"
-  # }
+  input_transformer {
+    input_paths = {
+      alarm_name = "$.AlarmName",
+    }
+    input_template = "{\"alarmName\":\"<alarm_name>\"}"
+  }
 }
