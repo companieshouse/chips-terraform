@@ -21,7 +21,7 @@ mainSteps:
         
           #extract the instance ID from alarm name that triggered
           alarm_name = events['alarm_name']  
-          triggering_instance = re.search('^arn:aws:cloudwatch:.+:.\d+:alarm:.+(i-.*)$', alarm_name).group(1)
+          triggering_instance = re.search('^.+-(i-.*)$', alarm_name).group(1)
 
           ec2 = boto3.client('ec2', region_name='${region_name}')
 
