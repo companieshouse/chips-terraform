@@ -1,4 +1,4 @@
-description: 'Upon triggering by EventBridge, select a Chips DB Instance ID to failover to, wait until it comes up and then execute an Ansible configuration against the newly started Instance.'
+description: 'Upon triggering by EventBridge, select a DB Instance ID to failover to, wait until it comes up and then execute an Ansible configuration against the newly started Instance.'
 schemaVersion: '0.3'
 assumeRole: '${execution_role}'
 parameters:
@@ -25,19 +25,19 @@ mainSteps:
 
           ec2 = boto3.client('ec2', region_name='${region_name}')
 
-          chips_db_instances = ec2.describe_instances(
+          db_instances = ec2.describe_instances(
               Filters=[
                   {
                       'Name': 'tag:Name',
                       'Values': [
-                          '${chips_db_instance_name}',
+                          '${db_instance_name}',
                       ]
                   }
               ]
           )
         
           # Assumes only ever two instances running, pick up ID that is not that of the triggering instance.
-          for reservation in chips_db_instances['Reservations']:
+          for reservation in db_instances['Reservations']:
               for instance in reservation['Instances']:
                   if instance['InstanceId'] != triggering_instance:
                       failover_id = instance['InstanceId']
