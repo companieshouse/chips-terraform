@@ -1,8 +1,8 @@
-description: 'Upon triggering by EventBridge, select a Chips DB Instance ID to failover to, wait until it comes up and then execute an Ansible configuration against the newly started Instance.'
+description: 'Upon triggering by EventBridge, select a DB Instance ID to failover to, wait until it comes up and then execute an Ansible configuration against the newly started Instance.'
 schemaVersion: '0.3'
 assumeRole: '${execution_role}'
 parameters:
-  alarmName:
+  AlarmName:
     type: String
 mainSteps:
   - name: select_failover_instance
@@ -20,31 +20,31 @@ mainSteps:
           import re
         
           #extract the instance ID from alarm name that triggered
-          alarm_name = events['alarm_name']  
-          triggering_instance = re.search('^arn:aws:cloudwatch:.+:.\d+:alarm:.+(i-.*)$', alarm_name).group(1)
+          alarm_name = events['AlarmName']  
+          triggering_instance = re.search('^.+-(i-.*)$', alarm_name).group(1)
 
           ec2 = boto3.client('ec2', region_name='${region_name}')
 
-          chips_db_instances = ec2.describe_instances(
+          db_instances = ec2.describe_instances(
               Filters=[
                   {
                       'Name': 'tag:Name',
                       'Values': [
-                          '${chips_db_instance_name}',
+                          '${db_instance_name}',
                       ]
                   }
               ]
           )
         
           # Assumes only ever two instances running, pick up ID that is not that of the triggering instance.
-          for reservation in chips_db_instances['Reservations']:
+          for reservation in db_instances['Reservations']:
               for instance in reservation['Instances']:
                   if instance['InstanceId'] != triggering_instance:
                       failover_id = instance['InstanceId']
                       return failover_id
 
       InputPayload:
-        alarm_name: '{{ alarmName }}'
+        AlarmName: '{{ AlarmName }}'
   - name: start_failover_instance
     action: 'aws:changeInstanceState'
     inputs:
