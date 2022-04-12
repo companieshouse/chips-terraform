@@ -12,7 +12,12 @@ resource "aws_cloudwatch_event_rule" "failover_alarm_rule" {
   "resources": [
     "${module.cloudwatch-alarms[0].ec2_composite_status.arn}",
     "${module.cloudwatch-alarms[1].ec2_composite_status.arn}"
-  ]
+  ],
+  "detail": {
+    "state":{
+      "value": ["ALARM"] 
+    }
+  }
 }
 EOF
 }
@@ -25,8 +30,8 @@ resource "aws_cloudwatch_event_target" "failover_event_target" {
 
   input_transformer {
     input_paths = {
-      alarm_name = "$.detail.alarmName",
+      alarmName = "$.detail.alarmName",
     }
-    input_template = "{\"alarmName\":\"<alarm_name>\"}"
+    input_template = "{\"alarmName\":[<alarmName>]}"
   }
 }

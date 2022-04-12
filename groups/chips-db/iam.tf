@@ -143,3 +143,72 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
     }
   }
 }
+
+
+################################################################################
+## SSM Failover Role for Eventbridge SSM triggers
+################################################################################
+resource "aws_iam_role" "eventbridge_ssm_execution_role" {
+  name               = "ch-ssm-failover-${var.application}-db-eventbridge-role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement":
+  [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "events.amazonaws.com"
+      }
+    }
+  ]
+}
+EOF
+  tags = merge(
+    local.default_tags,
+    map(
+      "Account", var.aws_account,
+      "ServiceTeam", "Platform"
+    )
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "eventbridge_ssm_execution_role_policy_attach" {
+  role       = aws_iam_role.eventbridge_ssm_execution_role.name
+  policy_arn = aws_iam_policy.eventbridge_ssm_execution_policy.arn
+}
+
+resource "aws_iam_policy" "eventbridge_ssm_execution_policy" {
+  name   = "ch-ssm-failover-${var.application}-db-eventbridge-policy"
+  policy = data.aws_iam_policy_document.eventbridge_ssm_execution_policy_document.json
+}
+
+data "aws_iam_policy_document" "eventbridge_ssm_execution_policy_document" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:StartAutomationExecution"
+    ]
+    resources = [
+      "arn:aws:ssm:eu-west-2:${data.aws_caller_identity.current.account_id}:automation-definition/${aws_ssm_document.failover_db.name}:$DEFAULT"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "iam:PassRole"
+    ]
+    resources = [
+      module.ssm_runbook_execution_role.iam_role_arn
+    ]
+    condition {
+      test     = "StringLikeIfExists"
+      variable = "iam:PassedToService"
+      values = [
+        "ssm.amazonaws.com"
+      ]
+    }
+  }
+}
