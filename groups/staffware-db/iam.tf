@@ -40,11 +40,12 @@ module "db_instance_profile" {
       ]
     },
     {
-      sid       = "AllowS3ListAllBuckets",
+      sid       = "AllowS3HighLevel",
       effect    = "Allow",
       resources = ["*"],
       actions = [
-        "s3:ListAllMyBuckets"
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation"
       ]
     },
     {
