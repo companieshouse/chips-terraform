@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-tux-proxy" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.125"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.126"
 
   application                      = var.application
   application_type                 = "chips"
@@ -46,6 +46,7 @@ module "chips-tux-proxy" {
   config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
   alb_idle_timeout                 = 180
   enable_sns_topic                 = var.enable_sns_topic
+  create_app_target_group          = false
 
   additional_ingress_with_cidr_blocks = [
     {
