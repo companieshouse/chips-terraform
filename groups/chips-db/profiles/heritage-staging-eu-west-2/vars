@@ -7,7 +7,7 @@ account = "hstg"
 region  = "euw2"
 
 # Application details
-application = "chips"
+application = "chips-oltp"
 environment = "staging"
 oracle_unqname = "cdb1"
 oracle_sid = "ENVT14"
