@@ -35,9 +35,7 @@ locals {
     region             = var.aws_region
     cw_log_files       = local.cw_logs
     cw_agent_user      = "root"
-    s3_bucket_releases = local.s3_releases["release_bucket_name"]
     s3_bucket_configs  = local.s3_releases["config_bucket_name"]
-    s3_bucket_resources = local.s3_releases["resources_bucket_name"]
   }
 
   iprocess_tnsnames_inputs = {
