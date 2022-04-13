@@ -7,7 +7,7 @@ account = "hlive"
 region  = "euw2"
 
 # Application details
-application = "chips"
+application = "chips-oltp"
 environment = "live"
 oracle_unqname = ""
 oracle_sid = ""
