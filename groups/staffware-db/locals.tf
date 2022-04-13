@@ -15,9 +15,10 @@ locals {
   security_kms_keys_data  = data.vault_generic_secret.security_kms_keys.da
   ssm_data                = data.vault_generic_secret.ssm.data
 
-  logs_kms_key_id = local.kms_keys_data["logs"]
-  ssm_logs_key_id = local.kms_keys_data["ssm"]
-  ssm_kms_key_id  = local.security_kms_keys_data["session-manager-kms-key-arn"]
+  logs_kms_key_id        = local.kms_keys_data["logs"]
+  ssm_logs_key_id        = local.kms_keys_data["ssm"]
+  chipsbackup_kms_key_id = local.kms_keys_data["chipsbackup"]
+  ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
 
   resources_bucket_name       = local.shared_services_s3_data["resources_bucket_name"]
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
