@@ -71,3 +71,40 @@ mainSteps:
         - '{{select_failover_instance.id}}'
       Parameters:
         ${command_document_parameters}
+  - name: approve
+    action: aws:approve
+    timeoutSeconds: 7200
+    onFailure: Abort
+    inputs:
+      MinRequiredApprovals: 1
+      Approvers:
+      - AWSReservedSSO_DatabaseAdministrator_9e12cfc9e23bc24d
+      - AWSReservedSSO_AdministratorAccess_16564c3fff051daa
+      - AWSReservedSSO_Infrastructure_6bf455b1d2e533ba
+  - name: run_disk_mounts
+    action: 'aws:runCommand'
+    onFailure: Abort
+    inputs:
+      DocumentName: AWS-RunShellScript
+      InstanceIds:
+        - '{{select_failover_instance.id}}'
+      Parameters:
+        commands: |-
+          #!/bin/bash
+          set -o errexit
+          mkdir -p /CHP/oracle/{arch1,arch2,data,lobdata,redo1,redo2}
+          chown -R oracle:dba /CHP/oracle
+          iscsiadm --mode discovery --op update --type sendtargets --portal 10.94.9.185
+          iscsiadm --mode discovery --op update --type sendtargets --portal 10.94.9.123
+          iscsiadm --mode node -l all
+          vgchange -ay vol.oracle.00
+          vgchange -ay vol.oracle.arch1.00
+          vgchange -ay vol.oracle.arch2.00
+          vgchange -ay vol.oracle.redo1.00
+          vgchange -ay vol.oracle.redo2.00
+          for i in `ls -1 /dev/mapper/vol.oracle.*`;
+            do BLKID=`blkid $i | cut -d " " -f2`;
+              MOUNT=`echo $i | cut -d "_" -f3`;
+              echo "$BLKID        /CHP/oracle/$MOUNT      xfs     defaults        0       0" | tee -a /etc/fstab;
+            done
+          mount -a
