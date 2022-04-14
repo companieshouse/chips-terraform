@@ -98,6 +98,18 @@ resource "aws_route53_record" "db_dns" {
   records = [aws_instance.db_ec2[count.index].private_ip]
 }
 
+resource "aws_route53_record" "dns_cname" {
+  zone_id = data.aws_route53_zone.private_zone.zone_id
+  name    = format("%s-db", var.application)
+  type    = "CNAME"
+  ttl     = "300"
+  records = [aws_instance.db_ec2[0].private_ip]
+  lifecycle {
+    #Ignore changes to the record value, this may be changed outside of terraform 
+    ignore_changes = [records]
+  }
+}
+
 module "cloudwatch-alarms" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
   count  = var.db_instance_count
