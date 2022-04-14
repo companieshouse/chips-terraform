@@ -84,7 +84,7 @@ data "vault_generic_secret" "ec2_data" {
 }
 
 data "vault_generic_secret" "chips_sns" {
-  path = "applications/${var.aws_profile}/chips/outputs"
+  path = "applications/${var.aws_profile}/chips-oltp/outputs"
 }
 
 data "vault_generic_secret" "kms_keys" {
