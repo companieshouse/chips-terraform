@@ -142,6 +142,15 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
       ]
     }
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:ChangeResourceRecordSets"
+    ]
+    resources = [
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.private_zone.zone_id}"
+    ]
+  }
 }
 
 
