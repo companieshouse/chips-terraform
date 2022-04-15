@@ -86,6 +86,8 @@ resource "aws_ssm_document" "failover_db" {
       db_instance_name            = "${var.application}-db-*"
       command_document_name       = "ch-ssm-run-ansible"
       command_document_parameters = indent(8, yamlencode(merge(local.ansible_ssm_parameters, { Check = "False" })))
+      dns_name                    = aws_route53_record.dns_cname.name
+      route53_zone                = data.aws_route53_zone.private_zone.zone_id
     }
   )
   tags = merge(

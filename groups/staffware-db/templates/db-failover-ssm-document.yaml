@@ -103,3 +103,69 @@ mainSteps:
               echo "$BLKID        /CHP/oracle/$MOUNT      xfs     defaults        0       0" | tee -a /etc/fstab;
             done
           mount -a
+
+  - name: failover_dns
+    action: 'aws:executeScript'
+    inputs:
+      Runtime: python3.6
+      Handler: script_handler
+      InputPayload:
+        InstanceId: '{{select_failover_instance.id}}'
+      Script: |-
+        def script_handler(events, context):
+          import boto3
+
+          #get instance
+          instance_id = events['InstanceId']
+          region = '${region_name}'
+          route53_zone = '${route53_zone}'
+          dns_name = '${dns_name}'
+
+          ec2 = boto3.client('ec2', region_name=region)
+          instance_tags = ec2.describe_tags(
+            Filters=[{
+                'Name': 'resource-id',
+                'Values': [instance_id],
+              }
+            ]
+          )
+          instance_name = ""
+          domain = ""
+          for tag in instance_tags['Tags']:
+            if tag['Key'] == 'Name':
+              instance_name = tag['Value']
+            if tag['Key'] == 'Domain':
+              domain = tag['Value']
+            
+          if instance_name == "":
+            exit("No name tag found on instance")
+          if domain == "":
+            exit("No domain tag found on instance")
+
+          #initiate route53
+          route53 = boto3.client('route53', region_name=region)
+
+          #update route53 entry to point to failover instance
+          response = route53.change_resource_record_sets(
+            HostedZoneId=route53_zone,
+            ChangeBatch={
+              'Comment': 'Failover automation',
+              'Changes': [
+                {
+                  'Action': 'UPSERT',
+                  'ResourceRecordSet': {
+                    'Name': dns_name,
+                    'Type': 'CNAME',
+                    'TTL': 300,
+                    'ResourceRecords': [
+                      {
+                        'Value': instance_name + "." + domain
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          )
+
+          
