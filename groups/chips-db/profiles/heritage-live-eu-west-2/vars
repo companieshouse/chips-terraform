@@ -66,3 +66,9 @@ ansible_ssm_git_repo_token = null
 ansible_ssm_apply_only_at_cron_interval = true
 ansible_ssm_check_schedule_expression = "cron(00 01 ? * MON *)"
 maintenance_window_schedule_expression = "cron(00 01 ? * SUN *)"
+
+failover_approvers = [
+  "AWSReservedSSO_DatabaseAdministrator_.*",
+  "AWSReservedSSO_Infrastructure_.*",
+  "AWSReservedSSO_AdministratorAccess_.*"
+]

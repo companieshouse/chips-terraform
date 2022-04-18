@@ -225,3 +225,8 @@ variable "oracle_sid" {
   description = "Value to be inserted into oracle users ORACLE_SID env variable"
   default     = ""
 }
+
+variable "failover_approvers" {
+  type        = list(string)
+  description = "List of aws roles that can approve database failover actions. Provided as regex strings to allow matching of roles names with UID's across environments."
+}

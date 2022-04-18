@@ -119,3 +119,8 @@ data "template_cloudinit_config" "userdata_config" {
     content      = data.template_file.userdata[count.index].rendered
   }
 }
+
+data "aws_iam_roles" "failover_approvers" {
+  for_each   = toset(var.failover_approvers)
+  name_regex = each.key
+}
