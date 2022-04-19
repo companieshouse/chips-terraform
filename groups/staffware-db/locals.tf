@@ -73,4 +73,6 @@ locals {
     Region      = var.aws_region
     Account     = var.aws_account
   }
+
+  failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))
 }

@@ -78,9 +78,7 @@ mainSteps:
     inputs:
       MinRequiredApprovals: 1
       Approvers:
-      - AWSReservedSSO_DatabaseAdministrator_9e12cfc9e23bc24d
-      - AWSReservedSSO_AdministratorAccess_16564c3fff051daa
-      - AWSReservedSSO_Infrastructure_6bf455b1d2e533ba
+        ${failover_approvers}
   - name: run_disk_mounts
     action: 'aws:runCommand'
     onFailure: Abort
