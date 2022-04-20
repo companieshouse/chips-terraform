@@ -55,6 +55,13 @@ module "chips-tux-proxy" {
       protocol    = "tcp"
       description = "Tuxedo proxy ports"
       cidr_blocks = join(",", [for s in module.chips-tux-proxy.application_subnets : s.cidr_block])
+    },
+    {
+      from_port   = 21010
+      to_port     = 21011
+      protocol    = "tcp"
+      description = "WebLogic HTTP ports"
+      cidr_blocks = join(",", [for s in module.chips-tux-proxy.application_subnets : s.cidr_block])
     }
   ]
 
