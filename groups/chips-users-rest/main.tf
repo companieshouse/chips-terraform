@@ -54,6 +54,20 @@ module "chips-users-rest" {
       protocol    = "tcp"
       description = "Tuxedo ports"
       cidr_blocks = join(",", [for s in module.chips-users-rest.application_subnets : s.cidr_block])
+    },
+    {
+      from_port   = 21010
+      to_port     = 21014
+      protocol    = "tcp"
+      description = "WebLogic HTTP ports"
+      cidr_blocks = join(",", [for s in module.chips-users-rest.application_subnets : s.cidr_block])
+    },
+    {
+      from_port   = 21030
+      to_port     = 21034
+      protocol    = "tcp"
+      description = "WebLogic t3s ports"
+      cidr_blocks = join(",", [for s in module.chips-users-rest.application_subnets : s.cidr_block])
     }
   ]
 
