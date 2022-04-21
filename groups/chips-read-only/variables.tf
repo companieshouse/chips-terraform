@@ -72,45 +72,9 @@ variable "instance_size" {
   description = "The size of the ec2 instances to build"
 }
 
-variable "asg_min_size" {
-  type        = number
-  default     = 1
-  description = "The min size of the ASG - always 1"
-}
-
-variable "asg_max_size" {
-  type        = number
-  default     = 1
-  description = "The max size of the ASG - always 1"
-}
-
-variable "asg_desired_capacity" {
-  type        = number
-  default     = 1
-  description = "The desired capacity of ASG - always 1"
-}
-
 variable "asg_count" {
   type        = number
   description = "The number of ASGs - typically 1 for dev and 2 for staging/live"
-}
-
-variable "ami_name" {
-  type        = string
-  default     = "docker-ami-*"
-  description = "Name of the AMI to use in the Auto Scaling configuration"
-}
-
-variable "instance_root_volume_size" {
-  type        = number
-  default     = 40
-  description = "Size of root volume attached to instances"
-}
-
-variable "alb_deletion_protection" {
-  type        = bool
-  default     = false
-  description = "Enable or disable deletion protection for instances"
 }
 
 variable "enable_instance_refresh" {
@@ -120,54 +84,14 @@ variable "enable_instance_refresh" {
 }
 
 # ------------------------------------------------------------------------------
-# CHIPS ALB Variables
-# ------------------------------------------------------------------------------
-
-variable "application_port" {
-  type        = number
-  default     = 21000
-  description = "Target group backend port for application"
-}
-
-variable "admin_port" {
-  type        = number
-  default     = 21001
-  description = "Target group backend port for administration"
-}
-
-variable "app_health_check_path" {
-  type        = string
-  default     = "/"
-  description = "Target group health check path for application"
-}
-
-variable "admin_health_check_path" {
-  type        = string
-  default     = "/console"
-  description = "Target group health check path for administration console"
-}
-
-variable "domain_name" {
-  type        = string
-  default     = "*.companieshouse.gov.uk"
-  description = "Domain Name for ACM Certificate"
-}
-
-# ------------------------------------------------------------------------------
 # NFS Mount Variables
 # ------------------------------------------------------------------------------
-# See Ansible role for full documentation on NFS arguements:
+# See Ansible role for full documentation on NFS arguments:
 #      https://github.com/companieshouse/ansible-collections/tree/main/ch_collections/heritage_services/roles/nfs/files/nfs_mounts
 variable "nfs_mount_destination_parent_dir" {
   type        = string
   description = "The parent folder that all NFS shares should be mounted inside on the EC2 instance"
   default     = "/mnt"
-}
-
-variable "default_log_group_retention_in_days" {
-  type        = number
-  default     = 14
-  description = "Total days to retain logs in CloudWatch log group if not specified for specific logs"
 }
 
 variable "cloudwatch_logs" {
