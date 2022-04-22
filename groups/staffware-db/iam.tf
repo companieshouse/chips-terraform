@@ -96,6 +96,7 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
     actions = [
       "ec2:DescribeInstances",
       "ec2:StartInstances",
+      "ec2:StopInstances",
       "ec2:DescribeInstanceStatus"
     ]
     resources = ["*"]
