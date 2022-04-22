@@ -91,6 +91,7 @@ resource "aws_ssm_document" "failover_db" {
       dns_name                    = aws_route53_record.dns_cname.name
       route53_zone                = data.aws_route53_zone.private_zone.zone_id
       failover_approvers          = indent(8, yamlencode(local.failover_approvers))
+      netapp_ips                  = var.netapp_ips
     }
   )
   tags = merge(
