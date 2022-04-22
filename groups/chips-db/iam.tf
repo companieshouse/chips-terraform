@@ -109,7 +109,8 @@ data "aws_iam_policy_document" "ssm_runbook_execution_perms" {
     resources = [
       "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:document/ch-ssm-run-ansible",
       "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:managed-instance/*"
+      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:managed-instance/*",
+      "arn:aws:ssm:*::document/AWS-RunShellScript"
     ]
   }
   statement {
