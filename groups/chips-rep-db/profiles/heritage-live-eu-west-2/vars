@@ -71,3 +71,5 @@ failover_approvers = [
   "AWSReservedSSO_Infrastructure_.*",
   "AWSReservedSSO_AdministratorAccess_.*"
 ]
+
+netapp_ips = ["10.84.9.97", "10.84.9.211"]

@@ -230,3 +230,8 @@ variable "failover_approvers" {
   type        = list(string)
   description = "List of aws roles that can approve database failover actions. Provided as regex strings to allow matching of roles names with UID's across environments."
 }
+
+variable "netapp_ips" {
+  type        = list(string)
+  description = "List of Netapp IP addresses to use for iscsi discovery."
+}
