@@ -23,7 +23,7 @@ locals {
 
   resources_bucket_name       = local.shared_services_s3_data["resources_bucket_name"]
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
-  backup_bucket_name          = "chips-backup-${var.aws_account}-${var.aws_region}"
+  backup_bucket_name          = "${var.application}-backup-${var.aws_account}-${var.aws_region}"
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
