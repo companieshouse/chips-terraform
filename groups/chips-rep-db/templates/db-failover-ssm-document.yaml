@@ -92,9 +92,9 @@ mainSteps:
           set -o errexit
           mkdir -p /CHP/oracle/{arch1,arch2,data,lobdata,redo1,redo2}
           chown -R oracle:dba /CHP/oracle
-          %{ for ip in netapp_ips ~}
+%{ for ip in netapp_ips ~}
           iscsiadm --mode discovery --op update --type sendtargets --portal ${ip}
-          %{ endfor ~}
+%{ endfor ~}
           iscsiadm --mode node -l all
           vgchange -ay vol.oracle.00
           vgchange -ay vol.oracle.arch1.00
