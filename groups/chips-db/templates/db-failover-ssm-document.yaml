@@ -8,8 +8,11 @@ mainSteps:
   - name: select_failover_instance
     action: 'aws:executeScript'
     outputs:
-      - Name: id
-        Selector: $.Payload
+      - Name: failover_instance_id
+        Selector: "$.Payload.failover_instance_id"
+        Type: String
+      - Name: triggering_instance_id
+        Selector: "$.Payload.triggering_instance_id"
         Type: String
     inputs:
       Runtime: python3.6
@@ -41,16 +44,25 @@ mainSteps:
               for instance in reservation['Instances']:
                   if instance['InstanceId'] != triggering_instance:
                       failover_id = instance['InstanceId']
-                      return failover_id
+                      return { 
+                        "triggering_instance_id": triggering_instance,
+                        "failover_instance_id": failover_id
+                      }
 
       InputPayload:
         AlarmName: '{{ AlarmName }}'
+  - name: stop_failed_instance
+    action: 'aws:changeInstanceState'
+    inputs:
+      DesiredState: stopped
+      InstanceIds:
+        - '{{select_failover_instance.triggering_instance_id}}'
   - name: start_failover_instance
     action: 'aws:changeInstanceState'
     inputs:
       DesiredState: running
       InstanceIds:
-        - '{{select_failover_instance.id}}'
+        - '{{select_failover_instance.failover_instance_id}}'
   - name: wait
     action: 'aws:waitForAwsResourceProperty'
     inputs:
@@ -62,13 +74,13 @@ mainSteps:
       InstanceInformationFilterList:
         - key: InstanceIds
           valueSet:
-            - '{{select_failover_instance.id}}'
+            - '{{select_failover_instance.failover_instance_id}}'
   - name: trigger_configuration
     action: 'aws:runCommand'
     inputs:
       DocumentName: ${command_document_name}
       InstanceIds:
-        - '{{select_failover_instance.id}}'
+        - '{{select_failover_instance.failover_instance_id}}'
       Parameters:
         ${command_document_parameters}
   - name: approve
@@ -85,7 +97,7 @@ mainSteps:
     inputs:
       DocumentName: AWS-RunShellScript
       InstanceIds:
-        - '{{select_failover_instance.id}}'
+        - '{{select_failover_instance.failover_instance_id}}'
       Parameters:
         commands: |-
           #!/bin/bash
@@ -114,7 +126,7 @@ mainSteps:
       Runtime: python3.6
       Handler: script_handler
       InputPayload:
-        InstanceId: '{{select_failover_instance.id}}'
+        InstanceId: '{{select_failover_instance.failover_instance_id}}'
       Script: |-
         def script_handler(events, context):
           import boto3
