@@ -12,7 +12,7 @@ application = "chips-read-only"
 environment = "live"
 
 # ASG settings
-asg_count = 2
+asg_count = 1
 instance_size = "t3.large"
 
 # SNS Topic creation
