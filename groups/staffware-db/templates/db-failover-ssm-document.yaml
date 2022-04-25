@@ -166,7 +166,7 @@ mainSteps:
                 {
                   'Action': 'UPSERT',
                   'ResourceRecordSet': {
-                    'Name': dns_name,
+                    'Name': dns_name + "." + domain,
                     'Type': 'CNAME',
                     'TTL': 300,
                     'ResourceRecords': [
