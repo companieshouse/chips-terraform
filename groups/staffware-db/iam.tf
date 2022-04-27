@@ -56,6 +56,7 @@ module "db_instance_profile" {
         "arn:aws:s3:::${local.backup_bucket_name}/*"
       ],
       actions = [
+        "s3:HeadBucket",
         "s3:Get*",
         "s3:Put*",
         "s3:DeleteObject*",
