@@ -46,7 +46,7 @@ module "db_instance_profile" {
       actions = [
         "s3:ListAllMyBuckets",
         "s3:GetBucketLocation",
-        "s3:HeadBucket"
+        "s3:ListBucket"
       ]
     },
     {
@@ -62,7 +62,7 @@ module "db_instance_profile" {
         "s3:DeleteObject*",
         "s3:ListObjects",
         "s3:UploadPart",
-        "s3:HeadBucket",
+        "s3:ListBucket",
         "s3:CreateMultipartUpload",
         "s3:CompleteMultipartUpload",
         "s3:AbortMultipartUpload",
