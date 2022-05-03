@@ -40,14 +40,34 @@ module "db_instance_profile" {
       ]
     },
     {
-      sid    = "TempBackupPolicy",
+      sid       = "AllowS3HighLevel",
+      effect    = "Allow",
+      resources = ["*"],
+      actions = [
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation",
+        "s3:ListBucket"
+      ]
+    },
+    {
+      sid    = "S3BackupPolicy",
       effect = "Allow",
       resources = [
         "arn:aws:s3:::${local.backup_bucket_name}",
         "arn:aws:s3:::${local.backup_bucket_name}/*"
       ],
       actions = [
-        "s3:*"
+        "s3:Get*",
+        "s3:Put*",
+        "s3:DeleteObject*",
+        "s3:ListObjects",
+        "s3:UploadPart",
+        "s3:ListBucket",
+        "s3:CreateMultipartUpload",
+        "s3:CompleteMultipartUpload",
+        "s3:AbortMultipartUpload",
+        "s3:ListBucketMultipartUploads",
+        "s3:ListMultipartUploadParts"
       ]
     },
     {
