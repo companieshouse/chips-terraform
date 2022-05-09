@@ -59,7 +59,8 @@ module "db_instance_profile" {
       actions = [
         "s3:Get*",
         "s3:Put*",
-        "s3:DeleteObject*",
+        "s3:DeleteObject",
+        "s3:DeleteObjects",
         "s3:ListObjects",
         "s3:UploadPart",
         "s3:ListBucket",
