@@ -17,6 +17,22 @@ db_instance_size = "r5.16xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+# CVO Mounts
+nfs_server = "192.168.255.19"
+nfs_mount_destination_parent_dir = "/-"
+nfs_mounts = {
+    # AWS NFS example
+    # ewf_image = {
+    #   local_mount_point = "/mnt/nfs/batt14"
+    # },
+    # On-premise NFS
+    batt14_onprem = {
+      local_mount_point = "/mnt/nfs/onsite/batt14"
+      nfs_source_mount = "/vol/data0/Home/batt14"
+      nfs_server_address = "chfas-pl1"
+    }
+  }
+
 cloudwatch_namespace = "CHIPS/OLTP"
 
 ############################################
