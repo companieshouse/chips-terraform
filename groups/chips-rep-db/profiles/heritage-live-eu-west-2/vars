@@ -17,6 +17,22 @@ db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+# NFS Mounts
+nfs_server = "192.168.255.35"
+nfs_mount_destination_parent_dir = "/-"
+nfs_mounts = {
+    # AWS NFS example
+    # batenvp1rep = {
+    #   local_mount_point = "/mnt/nfs/batenvp1rep"
+    # },
+    # On-premise NFS
+    batenvp1rep_onprem = {
+      local_mount_point = "/mnt/nfs/batenvp1rep"
+      nfs_source_mount = "/vol/data0/Home/batenvp1rep"
+      nfs_server_address = "chfas-pl1"
+    }
+  }
+
 cloudwatch_namespace = "CHIPS/REP"
 
 ############################################
