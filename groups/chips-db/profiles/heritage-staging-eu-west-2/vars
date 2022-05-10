@@ -29,7 +29,7 @@ nfs_mounts = {
     batt14_onprem = {
       local_mount_point = "/mnt/nfs/batt14"
       nfs_source_mount = "vol/data0/Home/batt14"
-      nfs_server_address = "chfas-pl1"
+      nfs_server_address = "chfas-pl1.internal.ch"
     }
   }
 
