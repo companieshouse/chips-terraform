@@ -28,7 +28,7 @@ nfs_mounts = {
     # On-premise NFS
     batenvp1_onprem = {
       local_mount_point = "/mnt/nfs/onsite/batenvp1"
-      nfs_source_mount = "/vol/data0/Home/batenvp1"
+      nfs_source_mount = "vol/data0/Home/batenvp1"
       nfs_server_address = "chfas-pl1"
     }
   }
