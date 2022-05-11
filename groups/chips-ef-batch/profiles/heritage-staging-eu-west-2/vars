@@ -237,4 +237,52 @@ cloudwatch_logs = {
     file_name = "batch-officer-bulk-process-*.log"
     log_group_retention = 7
   }
+
+  "process-compliance-log" = {
+    file_path = "NFSPATH/running-servers/process-compliance"
+    file_name = "batch-process-compliance-*.log"
+    log_group_retention = 7
+  }
+
+  "process-ch-address-files-log" = {
+    file_path = "NFSPATH/running-servers/process-compliance"
+    file_name = "batch-process-ch-address-files-*.log"
+    log_group_retention = 7
+  }
+
+  "compliance-trigger-log" = {
+    file_path = "NFSPATH/running-servers/compliance-trigger"
+    file_name = "batch-compliance-trigger-*.log"
+    log_group_retention = 7
+  }
+
+  "letter-producer-log" = {
+    file_path = "NFSPATH/running-servers/letter-producer"
+    file_name = "batch-letter-producer-*.log"
+    log_group_retention = 7
+  }
+
+  "letter-counts-log" = {
+    file_path = "NFSPATH/running-servers/letter-producer"
+    file_name = "batch-letter-counts-*.log"
+    log_group_retention = 7
+  }
+
+  "bad-letters-log" = {
+    file_path = "NFSPATH/running-servers/letter-producer"
+    file_name = "batch-bad-letters-*.log"
+    log_group_retention = 7
+  }
+
+  "doc1-producer-log" = {
+    file_path = "NFSPATH/running-servers/doc1-producer"
+    file_name = "batch-doc1-producer-*.log"
+    log_group_retention = 7
+  }
+
+  "authcode-log" = {
+    file_path = "NFSPATH/running-servers/doc1-producer"
+    file_name = "batch-authcode-*.log"
+    log_group_retention = 7
+  }
 }
