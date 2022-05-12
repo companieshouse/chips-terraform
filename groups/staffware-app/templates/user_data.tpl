@@ -27,6 +27,3 @@ EOF
 #Run DNS Update script with inputs
 FQDN=`cat deployment.json | jq -r '"\(.HOSTNAME).\(.DOMAIN)"'`
 sh /root/updatedns.sh ${R53_ZONEID} $FQDN
-
-# Download Scripts
-# git clone https://$GIT_TOKEN@github.com/companieshouse/chips-service-admin
