@@ -120,3 +120,17 @@ data "aws_iam_roles" "failover_approvers" {
   for_each   = toset(var.failover_approvers)
   name_regex = each.key
 }
+
+data "aws_security_group" "chips_rep" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-chips-rep-db-ec2-001-*"]
+  }
+}
+
+data "aws_security_group" "staffware" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-staffware-db-ec2-001-*"]
+  }
+}
