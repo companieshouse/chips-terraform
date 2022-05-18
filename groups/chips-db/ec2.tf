@@ -39,6 +39,24 @@ module "db_ec2_security_group" {
       cidr_blocks = join(",", local.ssh_allowed_ranges)
     }
   ]
+
+  ingress_with_source_security_group_id = [
+    {
+      from_port                = 1522
+      to_port                  = 1522
+      protocol                 = "tcp"
+      description              = "Oracle DB CHIPS Rep Security Group"
+      source_security_group_id = data.aws_security_group.chips_rep.id
+    },
+    {
+      from_port                = 1522
+      to_port                  = 1522
+      protocol                 = "tcp"
+      description              = "Oracle DB Staffware Security Group"
+      source_security_group_id = data.aws_security_group.staffware.id
+    }
+  ]
+
   egress_rules = ["all-all"]
 }
 
