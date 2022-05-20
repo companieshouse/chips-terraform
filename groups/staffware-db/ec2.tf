@@ -38,15 +38,15 @@ module "db_ec2_security_group" {
       source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
     },
     {
-      from_port                = 1522
-      to_port                  = 1522
+      from_port                = 1521
+      to_port                  = 1521
       protocol                 = "tcp"
       description              = "Oracle DB CHIPS OLTP Security Group"
       source_security_group_id = data.aws_security_group.chips_oltp.id
     },
     {
-      from_port                = 1522
-      to_port                  = 1522
+      from_port                = 1521
+      to_port                  = 1521
       protocol                 = "tcp"
       description              = "Oracle DB CHIPS Rep Security Group"
       source_security_group_id = data.aws_security_group.chips_rep.id
