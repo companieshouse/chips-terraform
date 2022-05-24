@@ -42,14 +42,14 @@ module "db_ec2_security_group" {
 
   ingress_with_source_security_group_id = [
     {
-      from_port                = 1522
+      from_port                = 1521
       to_port                  = 1522
       protocol                 = "tcp"
       description              = "Oracle DB CHIPS OLTP Security Group"
       source_security_group_id = data.aws_security_group.chips_oltp.id
     },
     {
-      from_port                = 1522
+      from_port                = 1521
       to_port                  = 1522
       protocol                 = "tcp"
       description              = "Oracle DB Staffware Security Group"
