@@ -234,3 +234,12 @@ variable "netapp_ips" {
   type        = list(string)
   description = "List of Netapp IP addresses to use for iscsi discovery."
 }
+
+# ------------------------------------------------------------------------------
+# CHIPS DB SG variables
+# ------------------------------------------------------------------------------
+variable "chips_db_sg" {
+  type        = list(any)
+  description = "List of CHIPS DB SGs"
+  default     = []
+}

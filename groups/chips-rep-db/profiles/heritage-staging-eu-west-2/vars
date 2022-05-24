@@ -89,3 +89,17 @@ failover_approvers = [
 ]
 
 netapp_ips = ["10.94.9.185", "10.94.9.123"]
+
+# CHIPS DB SGs
+chips_db_sg = [
+  "sgr-chips-oltp-db-ec2-001-*",
+  "sgr-staffware-db-ec2-001-*",
+  "sgr-chips-ef-batch-asg-001-*",
+  "sgr-chips-users-rest-asg-001-*",
+  "sgr-chips-read-only-asg-001-*",
+  "sgr-windows-workloads-bus-obj-2-server-*"
+]
+
+
+
+

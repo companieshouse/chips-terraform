@@ -121,16 +121,14 @@ data "aws_iam_roles" "failover_approvers" {
   name_regex = each.key
 }
 
-data "aws_security_group" "chips_rep" {
+data "aws_security_group" "chips_sg" {
+  for_each = toset(var.chips_db_sg)
   filter {
     name   = "group-name"
-    values = ["sgr-chips-rep-db-ec2-001-*"]
+    values = [each.value]
   }
 }
 
-data "aws_security_group" "staffware" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-staffware-db-ec2-001-*"]
-  }
+data "vault_generic_secret" "chs_subnet" {
+  path = "aws-accounts/network/${var.aws_account}/chs/application-subnets"
 }

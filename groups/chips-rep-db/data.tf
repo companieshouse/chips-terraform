@@ -125,16 +125,10 @@ data "aws_iam_roles" "failover_approvers" {
   name_regex = each.key
 }
 
-data "aws_security_group" "chips_oltp" {
+data "aws_security_group" "chips_sg" {
+  for_each = toset(var.chips_db_sg)
   filter {
     name   = "group-name"
-    values = ["sgr-chips-oltp-db-ec2-001-*"]
-  }
-}
-
-data "aws_security_group" "staffware" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-staffware-db-ec2-001-*"]
+    values = [each.value]
   }
 }

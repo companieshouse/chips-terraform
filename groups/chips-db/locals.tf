@@ -14,6 +14,7 @@ locals {
   kms_keys_data           = data.vault_generic_secret.kms_keys.data
   security_kms_keys_data  = data.vault_generic_secret.security_kms_keys.data
   ssm_data                = data.vault_generic_secret.ssm.data
+  chs_subnet_data         = data.vault_generic_secret.chs_subnet.data
 
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_logs_key_id        = local.kms_keys_data["ssm"]
@@ -79,4 +80,6 @@ locals {
   }
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))
+
+  source_security_group_id = [for item in data.aws_security_group.chips_sg : item.id]
 }
