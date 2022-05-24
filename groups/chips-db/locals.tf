@@ -47,6 +47,7 @@ locals {
     default_nfs_server_address = var.nfs_server
     mounts_parent_dir          = var.nfs_mount_destination_parent_dir
     mounts                     = var.nfs_mounts
+    install_postcode           = true
   }
 
   ansible_ssm_parameters = {
