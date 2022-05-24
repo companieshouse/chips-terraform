@@ -125,8 +125,8 @@ data "aws_iam_roles" "failover_approvers" {
   name_regex = each.key
 }
 
-data "aws_security_group" "chips_sg" {
-  for_each = toset(var.chips_db_sg)
+data "aws_security_group" "chips_rep_sg" {
+  for_each = toset(var.chips_rep_db_sg)
   filter {
     name   = "group-name"
     values = [each.value]

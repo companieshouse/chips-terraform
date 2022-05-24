@@ -90,8 +90,8 @@ failover_approvers = [
 
 netapp_ips = ["10.84.9.97", "10.84.9.211"]
 
-# CHIPS DB SGs
-chips_db_sg = [
+# CHIPS REP DB Security Groups
+chips_rep_db_sg = [
   "sgr-chips-oltp-db-ec2-001-*",
   "sgr-staffware-db-ec2-001-*",
   "sgr-chips-ef-batch-asg-001-*",

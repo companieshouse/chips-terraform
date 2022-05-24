@@ -79,5 +79,5 @@ locals {
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))
 
-  source_security_group_id = [for item in data.aws_security_group.chips_sg : item.id]
+  source_security_group_id = [for item in data.aws_security_group.chips_rep_sg : item.id]
 }

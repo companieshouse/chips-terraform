@@ -21,7 +21,7 @@ module "db_ec2_security_group" {
       from_port                = 1521
       to_port                  = 1522
       protocol                 = "tcp"
-      description              = "Oracle DB CHIPS Security Group"
+      description              = "Oracle DB Staffware Security Group"
       source_security_group_id = group
     }
   ]

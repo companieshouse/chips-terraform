@@ -75,8 +75,8 @@ failover_approvers = [
 
 netapp_ips = ["10.84.9.97"]
 
-# CHIPS DB SGs
-chips_db_sg = [
+# Staffware DB Security Groups
+staffware_db_sg = [
   "sgr-iprocess-app-asg-*",
   "sgr-chips-users-rest-asg-*",
   "sgr-chips-ef-batch-asg-*",

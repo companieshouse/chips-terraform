@@ -236,10 +236,10 @@ variable "netapp_ips" {
 }
 
 # ------------------------------------------------------------------------------
-# CHIPS DB SG variables
+# Staffware DB SG variables
 # ------------------------------------------------------------------------------
-variable "chips_db_sg" {
+variable "staffware_db_sg" {
   type        = list(any)
-  description = "List of CHIPS DB SGs"
+  description = "List of Staffware DB Security Groups"
   default     = []
 }
