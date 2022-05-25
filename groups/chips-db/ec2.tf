@@ -2,6 +2,7 @@
 # ------------------------------------------------------------------------------
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
+
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
@@ -19,13 +20,6 @@ module "db_ec2_security_group" {
   ingress_with_cidr_blocks = [
     {
       from_port   = 1521
-      to_port     = 1521
-      protocol    = "tcp"
-      description = "Oracle DB port"
-      cidr_blocks = join(",", local.oracle_allowed_ranges)
-    },
-    {
-      from_port   = 1522
       to_port     = 1522
       protocol    = "tcp"
       description = "Oracle DB port"
@@ -37,23 +31,37 @@ module "db_ec2_security_group" {
       protocol    = "tcp"
       description = "SSH ports"
       cidr_blocks = join(",", local.ssh_allowed_ranges)
+    },
+    {
+      from_port   = 1521
+      to_port     = 1522
+      protocol    = "tcp"
+      description = "Oracle DB port"
+      cidr_blocks = local.chs_subnet_data["mm-platform-applications-eu-west-2a"]
+    },
+    {
+      from_port   = 1521
+      to_port     = 1522
+      protocol    = "tcp"
+      description = "Oracle DB port"
+      cidr_blocks = local.chs_subnet_data["mm-platform-applications-eu-west-2b"]
+    },
+    {
+      from_port   = 1521
+      to_port     = 1522
+      protocol    = "tcp"
+      description = "Oracle DB port"
+      cidr_blocks = local.chs_subnet_data["mm-platform-applications-eu-west-2c"]
     }
   ]
 
-  ingress_with_source_security_group_id = [
+  ingress_with_source_security_group_id = [for group in local.source_security_group_id :
     {
       from_port                = 1521
       to_port                  = 1522
       protocol                 = "tcp"
-      description              = "Oracle DB CHIPS Rep Security Group"
-      source_security_group_id = data.aws_security_group.chips_rep.id
-    },
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "Oracle DB Staffware Security Group"
-      source_security_group_id = data.aws_security_group.staffware.id
+      description              = "Oracle DB CHIPS Security Group"
+      source_security_group_id = group
     }
   ]
 

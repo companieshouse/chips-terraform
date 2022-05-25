@@ -14,27 +14,6 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-data "aws_security_group" "iprocess_app" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-iprocess-app-asg-*"]
-  }
-}
-
-data "aws_security_group" "chips_users_rest_app" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-chips-users-rest-asg-*"]
-  }
-}
-
-data "aws_security_group" "chips_ef_batch_app" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-chips-ef-batch-asg-*"]
-  }
-}
-
 data "aws_subnet_ids" "data" {
   vpc_id = data.aws_vpc.vpc.id
   filter {
@@ -146,16 +125,10 @@ data "aws_iam_roles" "failover_approvers" {
   name_regex = each.key
 }
 
-data "aws_security_group" "chips_rep" {
+data "aws_security_group" "staffware_sg" {
+  for_each = toset(var.staffware_db_sg)
   filter {
     name   = "group-name"
-    values = ["sgr-chips-rep-db-ec2-001-*"]
-  }
-}
-
-data "aws_security_group" "chips_oltp" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-chips-oltp-db-ec2-001-*"]
+    values = [each.value]
   }
 }

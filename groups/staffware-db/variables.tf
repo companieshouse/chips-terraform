@@ -234,3 +234,12 @@ variable "netapp_ips" {
   type        = list(string)
   description = "List of Netapp IP addresses to use for iscsi discovery."
 }
+
+# ------------------------------------------------------------------------------
+# Staffware DB SG variables
+# ------------------------------------------------------------------------------
+variable "staffware_db_sg" {
+  type        = list(any)
+  description = "List of Staffware DB Security Groups"
+  default     = []
+}

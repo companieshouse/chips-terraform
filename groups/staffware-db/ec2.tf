@@ -15,41 +15,14 @@ module "db_ec2_security_group" {
       rule = "all-all"
     }
   ]
-  ingress_with_source_security_group_id = [
+
+  ingress_with_source_security_group_id = [for group in local.source_security_group_id :
     {
       from_port                = 1521
       to_port                  = 1522
       protocol                 = "tcp"
-      description              = "iProcess Application Security Group"
-      source_security_group_id = data.aws_security_group.iprocess_app.id
-    },
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "WebLogic chips-users-rest Application Security Group"
-      source_security_group_id = data.aws_security_group.chips_users_rest_app.id
-    },
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "WebLogic chips-ef-batch Application Security Group"
-      source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
-    },
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "Oracle DB CHIPS OLTP Security Group"
-      source_security_group_id = data.aws_security_group.chips_oltp.id
-    },
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "Oracle DB CHIPS Rep Security Group"
-      source_security_group_id = data.aws_security_group.chips_rep.id
+      description              = "Oracle DB Staffware Security Group"
+      source_security_group_id = group
     }
   ]
 
