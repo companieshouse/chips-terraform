@@ -108,7 +108,7 @@ mainSteps:
           iscsiadm --mode discovery --op update --type sendtargets --portal ${ip}
 %{ endfor ~}
           iscsiadm --mode node -l all
-          vgchange -ay vol.oracle.00
+          for i in `vgs | cut -d " " -f 3 | tail -3`; do vgchange -ay $i; done
           for i in `ls -1 /dev/mapper/vol.oracle.*`;
             do BLKID=`blkid $i | cut -d " " -f2`;
               MOUNT=`echo $i | cut -d "_" -f3`;
