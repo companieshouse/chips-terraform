@@ -62,7 +62,7 @@ module "iprocess_app_asg_security_group" {
   tags = merge(
     local.default_tags,
     map(
-      "ServiceTeam", "${upper(var.component)}-Support"
+      "ServiceTeam", "CSI"
     )
   )
 }
@@ -77,7 +77,7 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
   tags = merge(
     local.default_tags,
     map(
-      "ServiceTeam", "${upper(var.component)}-Support"
+      "ServiceTeam", "CSI"
     )
   )
 }
@@ -124,7 +124,41 @@ module "iprocess_app_asg" {
   tags_as_map = merge(
     local.default_tags,
     map(
-      "ServiceTeam", "${upper(var.component)}-Support"
+      "ServiceTeam", "CSI"
     )
   )
+}
+
+#--------------------------------------------
+# iProcess ASG CloudWatch Alarms
+#--------------------------------------------
+module "asg_alarms" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.116"
+
+  autoscaling_group_name = module.iprocess_app_asg.this_autoscaling_group_name
+  prefix                 = "${var.application}-fe-asg-alarms"
+
+  in_service_evaluation_periods      = "3"
+  in_service_statistic_period        = "120"
+  expected_instances_in_service      = var.desired_capacity
+  in_pending_evaluation_periods      = "3"
+  in_pending_statistic_period        = "120"
+  in_standby_evaluation_periods      = "3"
+  in_standby_statistic_period        = "120"
+  in_terminating_evaluation_periods  = "3"
+  in_terminating_statistic_period    = "120"
+  total_instances_evaluation_periods = "3"
+  total_instances_statistic_period   = "120"
+  total_instances_in_service         = var.desired_capacity
+
+  # If actions are used then all alarms will have these applied, do not add any actions which you only want to be used for specific alarms
+  # The module has lifecycle hooks to ignore changes via the AWS Console so in this use case the alarm can be modified there.
+  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+
+
+  depends_on = [
+    module.cloudwatch_sns_notifications,
+    module.iprocess_app_asg
+  ]
 }

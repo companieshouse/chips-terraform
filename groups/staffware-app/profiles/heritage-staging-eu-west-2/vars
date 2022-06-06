@@ -18,6 +18,8 @@ min_size = 1
 max_size = 1
 desired_capacity = 1
 
+enable_sns_topic = "true"
+
 # iProcess App Load Balancer
 public_allow_cidr_blocks = [
   "127.0.0.1/32"
