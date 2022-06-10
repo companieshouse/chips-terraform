@@ -55,7 +55,29 @@ locals {
       repository = var.ansible_ssm_git_repo_name
       path       = var.ansible_ssm_git_repo_path
       getOptions = var.ansible_ssm_git_repo_options
-      tokenInfo  = local.ssm_data.ssm_github_token
+      tokenInfo  = "{{ssm-secure:${aws_ssm_parameter.github.name}}}"
+    })
+
+    InstallDependencies = "False"
+    InstallRequirements = "True"
+    PlaybookFile        = var.ssm_playbook_file_name
+    RequirementsFile    = var.ssm_requirements_file_name
+
+    ExtraVariables     = "SSM=True" #space separated vars
+    ExtraVariablesJson = jsonencode(local.ansible_inputs)
+    Check              = "True"
+    Verbose            = var.ansible_ssm_verbose_level
+    TimeoutSeconds     = "3600"
+  }
+
+  failover_ssm_parameters = {
+    SourceType = "GitHub"
+    SourceInfo = jsonencode({
+      owner      = var.ansible_ssm_git_repo_owner
+      repository = var.ansible_ssm_git_repo_name
+      path       = var.ansible_ssm_git_repo_path
+      getOptions = var.ansible_ssm_git_repo_options
+      tokenInfo  = null
     })
 
     InstallDependencies = "False"
