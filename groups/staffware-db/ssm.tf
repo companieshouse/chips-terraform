@@ -52,7 +52,7 @@ resource "aws_ssm_association" "ansible_apply" {
 ## Github token secret for SSM Ansible
 ################################################################################
 resource "aws_ssm_parameter" "github" {
-  name  = "github-token"
+  name  = "github-token-${var.application}"
   type  = "SecureString"
   value = local.ssm_data.ssm_github_token
 }
