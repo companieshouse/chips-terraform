@@ -50,9 +50,10 @@ resource "aws_ssm_association" "ansible_apply" {
 ################################################################################
 ## Github token secret for SSM Ansible
 ################################################################################
+# Known bug that this changes on every plan/apply: https://github.com/hashicorp/terraform-provider-aws/issues/21095
 resource "aws_ssm_parameter" "github" {
   name  = "github-token"
-  type  = "String"
+  type  = "SecureString"
   value = local.ssm_data.ssm_github_token
 }
 
