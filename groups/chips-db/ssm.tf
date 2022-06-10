@@ -48,6 +48,17 @@ resource "aws_ssm_association" "ansible_apply" {
 }
 
 ################################################################################
+## Github token secret for SSM Ansible
+################################################################################
+# Known bug that this changes on every plan/apply: https://github.com/hashicorp/terraform-provider-aws/issues/21095
+resource "aws_ssm_parameter" "github" {
+  name  = "github-token"
+  type  = "SecureString"
+  value = local.ssm_data.ssm_github_token
+}
+
+
+################################################################################
 ## Maintenance window, sets up a time period where operations can be ran
 ################################################################################
 resource "aws_ssm_maintenance_window" "maintenance_window" {
@@ -86,7 +97,7 @@ resource "aws_ssm_document" "failover_db" {
       region_name                 = var.aws_region
       db_instance_name            = "${var.application}-db-*"
       command_document_name       = "ch-ssm-run-ansible"
-      command_document_parameters = indent(8, yamlencode(merge(local.ansible_ssm_parameters, { Check = "False" })))
+      command_document_parameters = indent(8, yamlencode(merge(local.failover_ssm_parameters, { Check = "False" })))
       dns_name                    = aws_route53_record.dns_cname.name
       route53_zone                = data.aws_route53_zone.private_zone.zone_id
       failover_approvers          = indent(8, yamlencode(local.failover_approvers))
