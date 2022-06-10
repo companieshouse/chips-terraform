@@ -52,7 +52,7 @@ locals {
       repository = var.ansible_ssm_git_repo_name
       path       = var.ansible_ssm_git_repo_path
       getOptions = var.ansible_ssm_git_repo_options
-      tokenInfo  = var.ansible_ssm_git_repo_token
+      tokenInfo  = "{{ssm-secure:${aws_ssm_parameter.github.name}}}"
     })
 
     InstallDependencies = "False"

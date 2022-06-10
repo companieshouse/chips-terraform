@@ -48,6 +48,14 @@ resource "aws_ssm_association" "ansible_apply" {
   }
 }
 
+################################################################################
+## Github token secret for SSM Ansible
+################################################################################
+resource "aws_ssm_parameter" "github" {
+  name  = "github-token"
+  type  = "String"
+  value = local.ssm_data.ssm_github_token
+}
 
 ################################################################################
 ## Maintenance window, sets up a time period where operations can be ran

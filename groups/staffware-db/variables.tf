@@ -155,12 +155,6 @@ variable "ansible_ssm_git_repo_options" {
   default     = "branch:master"
 }
 
-variable "ansible_ssm_git_repo_token" {
-  type        = string
-  description = "Github token to authenticate Git operations if required."
-  default     = null
-}
-
 variable "ansible_ssm_apply_only_at_cron_interval" {
   type        = string
   description = "If false, applies on terraform apply, then on provided schedule expression. If true first apply will be at the next occurance of the schedule expression."
