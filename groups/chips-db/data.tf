@@ -66,6 +66,10 @@ data "vault_generic_secret" "kms_keys" {
   path = "aws-accounts/${var.aws_account}/kms"
 }
 
+data "vault_generic_secret" "onprem_app_cidrs" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/onprem_app_cidrs"
+}
+
 data "vault_generic_secret" "security_kms_keys" {
   path = "aws-accounts/security/kms"
 }
