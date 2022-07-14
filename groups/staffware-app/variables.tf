@@ -115,3 +115,9 @@ variable "cw_logs" {
   description = "Map of log file information; used to create log groups, IAM permissions and passed to the application to configure remote logging"
   default     = {}
 }
+
+variable "cloudwatch_namespace" {
+  type        = string
+  default     = null
+  description = "A custom namespace to define for CloudWatch custom metrics such as memory and disk"
+}
