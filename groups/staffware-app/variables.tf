@@ -118,6 +118,6 @@ variable "cw_logs" {
 
 variable "cloudwatch_namespace" {
   type        = string
-  default     = null
+  default     = "CHIPS/STFWARE"
   description = "A custom namespace to define for CloudWatch custom metrics such as memory and disk"
 }
