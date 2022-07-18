@@ -44,6 +44,14 @@ module "iprocess_app_profile" {
       actions = [
         "route53:ChangeResourceRecordSets"
       ]
+    },
+    {
+      sid       = "CloudwatchMetrics"
+      effect    = "Allow"
+      resources = ["*"]
+      actions = [
+        "cloudwatch:PutMetricData"
+      ]
     }
   ]
 }
