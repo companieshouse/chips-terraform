@@ -57,6 +57,13 @@ cloudwatch_logs = {
   }
 }
 
+cloudwatch_oracle_log_groups = [
+  "staffware-db/oracle/alert",
+  "staffware-db/oracle/audit",
+  "staffware-db/oracle/listener",
+  "staffware-db/oracle/trace"
+]
+
 ansible_ssm_git_repo_name = "oracle-12-ami"
 ansible_ssm_git_repo_owner = "companieshouse"
 ansible_ssm_git_repo_path = "ansible/"
