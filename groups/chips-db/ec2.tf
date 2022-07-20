@@ -206,3 +206,19 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_groups" {
     })
   )
 }
+
+resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
+  count = length(var.cloudwatch_oracle_log_groups) > 0 ? length(var.cloudwatch_oracle_log_groups) : 0
+
+  name              = var.cloudwatch_oracle_log_groups[count.index]
+  retention_in_days = var.default_log_group_retention_in_days
+  kms_key_id        = local.logs_kms_key_id
+
+  tags = merge(
+    local.default_tags,
+    tomap({
+      "ServiceTeam" = "Platforms/DBA",
+      "Terraform"   = true
+    })
+  )
+}

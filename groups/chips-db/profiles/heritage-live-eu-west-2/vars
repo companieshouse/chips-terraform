@@ -72,6 +72,12 @@ cloudwatch_logs = {
   }
 }
 
+cloudwatch_oracle_log_groups = [
+  "chips-oltp-db/oracle/alert",
+  "chips-oltp-db/oracle/audit",
+  "chips-oltp-db/oracle/listener",
+  "chips-oltp-db/oracle/trace"
+]
 
 ansible_ssm_git_repo_name = "oracle-12-ami"
 ansible_ssm_git_repo_owner = "companieshouse"
