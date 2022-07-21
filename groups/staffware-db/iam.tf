@@ -21,12 +21,12 @@ module "db_instance_profile" {
       "arn:aws:logs:%s:%s:log-group:%s:*:*",
       var.aws_region,
       data.aws_caller_identity.current.account_id,
-      local.log_groups
+      concat(local.log_groups, var.cloudwatch_oracle_log_groups)
     ),
     formatlist("arn:aws:logs:%s:%s:log-group:%s:*",
       var.aws_region,
       data.aws_caller_identity.current.account_id,
-      local.log_groups
+      concat(local.log_groups, var.cloudwatch_oracle_log_groups)
     ),
   ]) : null
 

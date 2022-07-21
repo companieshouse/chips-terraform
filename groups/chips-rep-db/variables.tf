@@ -141,6 +141,12 @@ variable "cloudwatch_logs" {
   description = "Map of log files to be collected by Cloudwatch Logs"
 }
 
+variable "cloudwatch_oracle_log_groups" {
+  type        = list(string)
+  default     = []
+  description = "A list of CloudWatch Log Groups that will be used to receive Oracle log data"
+}
+
 variable "cloudwatch_namespace" {
   type        = string
   default     = null
