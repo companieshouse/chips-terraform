@@ -95,6 +95,10 @@ module "chips_rds" {
       option_name = "JVM"
     },
     {
+      option_name = "S3_INTEGRATION"
+      version     = "1.0"
+    },
+    {
       option_name = "SQLT"
       version     = "2018-07-25.v1"
       option_settings = [
@@ -127,4 +131,10 @@ module "chips_rds" {
       "ServiceTeam", "${upper(var.identifier)}-DBA-Support"
     )
   )
+}
+
+resource "aws_db_instance_role_association" "s3_integration" {
+  db_instance_identifier = module.chips_rds.this_db_instance_id
+  feature_name           = "S3_INTEGRATION"
+  role_arn               = aws_iam_role.s3_integration.arn
 }
