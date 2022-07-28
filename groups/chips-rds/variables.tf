@@ -154,7 +154,7 @@ variable "auto_minor_version_upgrade" {
 # RDS CloudWatch Alarm Variables
 # ------------------------------------------------------------------------------
 variable "alarm_actions_enabled" {
-  type        = string
+  type        = bool
   description = "Defines whether SNS-based alarm actions should be enabled (true) or not (false) for alarms"
 }
 
