@@ -128,3 +128,13 @@ module "chips_rds" {
     )
   )
 }
+
+module "rds_cloudwatch_alarms" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/rds_cloudwatch_alarms?ref=tags/1.0.167"
+
+  rds_instance_id        = module.chips_rds.this_db_instance_id
+  rds_instance_shortname = upper(var.name)
+  alarm_actions_enabled  = var.alarm_actions_enabled
+  alarm_topic_name       = var.alarm_topic_name
+  alarm_topic_name_ooh   = var.alarm_topic_name_ooh
+}

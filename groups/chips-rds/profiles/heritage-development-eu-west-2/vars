@@ -109,3 +109,8 @@ parameter_group_settings = [
       value = "AUTO"
     },
 ]
+
+## CloudWatch Alarms
+alarm_actions_enabled  = false
+alarm_topic_name       = ""
+alarm_topic_name_ooh   = ""
