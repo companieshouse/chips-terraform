@@ -16,6 +16,7 @@ locals {
   ssm_data                = data.vault_generic_secret.ssm.data
   chs_subnet_data         = data.vault_generic_secret.chs_subnet.data
   onprem_app_cidrs        = jsondecode(data.vault_generic_secret.onprem_app_cidrs.data_json).cidrs
+  deployment_cidrs        = jsondecode(data.vault_generic_secret.deployment_cidrs.data_json).cidrs
 
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_logs_key_id        = local.kms_keys_data["ssm"]
@@ -30,7 +31,7 @@ locals {
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
   oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
-  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
+  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
