@@ -21,7 +21,8 @@ resource "aws_iam_role_policy" "s3_integration" {
             "Action": [
                 "s3:GetObject",
                 "s3:PutObject",
-                "s3:ListBucket"
+                "s3:ListBucket",
+                "s3:DeleteObject"
             ],
             "Effect": "Allow",
             "Resource": [
