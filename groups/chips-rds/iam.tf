@@ -41,11 +41,6 @@ resource "aws_iam_role" "s3_integration" {
   assume_role_policy = data.aws_iam_policy_document.rds_assume_role.json
 }
 
-#resource "aws_iam_role_policy_attachment" "s3_integration" {
-#  role       = aws_iam_role.s3_integration.name
-#  policy_arn = aws_iam_policy_document.s3_integration.arn
-#}
-
 resource "aws_db_instance_role_association" "s3_integration" {
   db_instance_identifier = module.chips_rds.this_db_instance_id
   feature_name           = "S3_INTEGRATION"
