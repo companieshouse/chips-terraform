@@ -95,6 +95,10 @@ module "chips_rds" {
       option_name = "JVM"
     },
     {
+      option_name = "S3_INTEGRATION"
+      version     = "1.0"
+    },
+    {
       option_name = "SQLT"
       version     = "2018-07-25.v1"
       option_settings = [
