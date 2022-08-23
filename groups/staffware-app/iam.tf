@@ -54,11 +54,11 @@ module "iprocess_app_profile" {
       ]
     },
     {
-      sid       = "AllowAutoscalingDescribe"
+      sid       = "AllowEC2Describe"
       effect    = "Allow"
       resources = ["*"]
       actions = [
-        "autoscaling:Describe*"
+        "ec2:Describe*"
       ]
     }
   ]
