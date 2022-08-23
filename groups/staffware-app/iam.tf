@@ -52,6 +52,14 @@ module "iprocess_app_profile" {
       actions = [
         "cloudwatch:PutMetricData"
       ]
+    },
+    {
+      sid       = "AllowAutoscalingDescribe"
+      effect    = "Allow"
+      resources = ["*"]
+      actions = [
+        "autoscaling:Describe*"
+      ]
     }
   ]
 }
