@@ -107,5 +107,8 @@ chips_rep_db_sg = [
 ]
 
 
-
-
+## Oracle DB CloudWatch Alarms
+db_instance_shortname  = "ENVT14RP"
+alarm_actions_enabled  = false
+alarm_topic_name       = ""
+alarm_topic_name_ooh   = ""

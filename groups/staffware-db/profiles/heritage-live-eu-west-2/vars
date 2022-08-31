@@ -89,3 +89,9 @@ staffware_db_sg = [
   "sgr-chips-oltp-db-ec2-001-*",
   "sgr-chips-rep-db-ec2-001-*"
 ]
+
+## Oracle DB CloudWatch Alarms
+db_instance_shortname  = "STAFLIVE"
+alarm_actions_enabled  = false
+alarm_topic_name       = "Email_Alerts"
+alarm_topic_name_ooh   = "Phonecall_Alerts"

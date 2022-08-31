@@ -106,3 +106,9 @@ chips_rep_db_sg = [
   "sgr-windows-workloads-bus-obj-1-server-*",
   "sgr-gfn-app-001-*"
 ]
+
+## Oracle DB CloudWatch Alarms
+db_instance_shortname  = "ENVP1REP"
+alarm_actions_enabled  = false
+alarm_topic_name       = "Email_Alerts"
+alarm_topic_name_ooh   = "Phonecall_Alerts"

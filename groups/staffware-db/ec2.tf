@@ -198,3 +198,15 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
     })
   )
 }
+
+module "oracledb_cloudwatch_alarms" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+
+  db_instance_id         = "staffware-db"
+  db_instance_shortname  = var.db_instance_shortname
+  alarm_actions_enabled  = var.alarm_actions_enabled
+  alert_log_group_name   = "staffware-db/oracle/alert"
+  alarm_name_prefix      = "EC2"
+  alarm_topic_name       = var.alarm_topic_name
+  alarm_topic_name_ooh   = var.alarm_topic_name_ooh
+}
