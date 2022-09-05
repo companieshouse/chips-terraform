@@ -162,3 +162,102 @@ module "asg_alarms" {
     module.iprocess_app_asg
   ]
 }
+
+#--------------------------------------------
+# iProcess EC2 CloudWatch Alarms at ASG level
+#--------------------------------------------
+resource "aws_cloudwatch_metric_alarm" "ec2-cpu-utilization-high" {
+  alarm_name          = "${var.application}-EC2-CPUUtilization-High"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Maximum"
+  threshold           = "90"
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+  ok_actions          = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+
+  dimensions = {
+    AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
+  }
+
+  alarm_description = "This metric monitors CPU used by EC2 instances in the ASG"
+
+  lifecycle {
+    ignore_changes = [
+      alarm_actions,
+      ok_actions,
+      insufficient_data_actions
+    ]
+  }
+  depends_on = [
+    module.cloudwatch_sns_notifications,
+    module.iprocess_app_asg
+  ]
+}
+
+resource "aws_cloudwatch_metric_alarm" "ec2-mem-used-percent-high" {
+  alarm_name          = "${var.application}-EC2-MemUsedPercent-High"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "mem_used_percent"
+  namespace           = "CHIPS/STFWARE"
+  period              = "120"
+  statistic           = "Maximum"
+  threshold           = "90"
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+  ok_actions          = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+
+  dimensions = {
+    AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
+  }
+
+  alarm_description = "This metric monitors memory used by EC2 instances in the ASG"
+
+  lifecycle {
+    ignore_changes = [
+      alarm_actions,
+      ok_actions,
+      insufficient_data_actions
+    ]
+  }
+  depends_on = [
+    module.cloudwatch_sns_notifications,
+    module.iprocess_app_asg
+  ]
+}
+
+resource "aws_cloudwatch_metric_alarm" "ec2-disk-used-percent-high" {
+  alarm_name          = "${var.application}-EC2-DiskUsedPercent-High"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "disk_used_percent"
+  namespace           = "CHIPS/STFWARE"
+  period              = "120"
+  statistic           = "Maximum"
+  threshold           = "90"
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+  ok_actions          = var.enable_sns_topic ? [module.cloudwatch_sns_notifications[0].sns_topic_arn] : []
+
+  dimensions = {
+    AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
+  }
+
+  alarm_description = "This metric monitors disk used by EC2 instances in the ASG"
+
+  lifecycle {
+    ignore_changes = [
+      alarm_actions,
+      ok_actions,
+      insufficient_data_actions
+    ]
+  }
+  depends_on = [
+    module.cloudwatch_sns_notifications,
+    module.iprocess_app_asg
+  ]
+}
