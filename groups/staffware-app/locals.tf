@@ -23,21 +23,22 @@ locals {
   log_groups = compact([for log, map in local.cw_logs : lookup(map, "log_group_name", "")])
 
   iprocess_app_deployment_ansible_inputs = {
-    HOSTNAME           = format("%s-001", var.component)
-    DOMAIN             = local.internal_fqdn
-    APP_TCP_PORT       = local.iprocess_app_config_data["app_tcp_port"]
-    EAI_DB_PASS        = local.iprocess_app_config_data["eai_db_password"]
-    EAI_DB_SCHEMAOWNER = local.iprocess_app_config_data["eai_db_schemaowner"]
-    EAI_DB_USER        = local.iprocess_app_config_data["eai_db_user"]
-    ORACLE_SID_VALUE   = local.iprocess_app_config_data["oracle_std_sid"]
-    DB_ADDRESS         = local.iprocess_app_config_data["db_address"]
-    DB_PORT            = local.iprocess_app_config_data["db_port"]
-    SWPRO_PASSWORD     = local.iprocess_app_config_data["swpro_password"]
-    region             = var.aws_region
-    cw_log_files       = local.cw_logs
-    cw_agent_user      = "root"
-    cw_namespace       = var.cloudwatch_namespace
-    s3_bucket_configs  = local.s3_releases["config_bucket_name"]
+    HOSTNAME             = format("%s-001", var.component)
+    DOMAIN               = local.internal_fqdn
+    APP_TCP_PORT         = local.iprocess_app_config_data["app_tcp_port"]
+    EAI_DB_PASS          = local.iprocess_app_config_data["eai_db_password"]
+    EAI_DB_SCHEMAOWNER   = local.iprocess_app_config_data["eai_db_schemaowner"]
+    EAI_DB_USER          = local.iprocess_app_config_data["eai_db_user"]
+    ORACLE_SID_VALUE     = local.iprocess_app_config_data["oracle_std_sid"]
+    DB_ADDRESS           = local.iprocess_app_config_data["db_address"]
+    DB_PORT              = local.iprocess_app_config_data["db_port"]
+    SWPRO_PASSWORD       = local.iprocess_app_config_data["swpro_password"]
+    region               = var.aws_region
+    cw_log_files         = local.cw_logs
+    cw_agent_user        = "root"
+    cw_namespace         = var.cloudwatch_namespace
+    cw_asg_level_metrics = "true"
+    s3_bucket_configs    = local.s3_releases["config_bucket_name"]
   }
 
   iprocess_tnsnames_inputs = {
