@@ -136,7 +136,7 @@ module "asg_alarms" {
   source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.116"
 
   autoscaling_group_name = module.iprocess_app_asg.this_autoscaling_group_name
-  prefix                 = "${var.application}-fe-asg-alarms"
+  prefix                 = "${var.aws_account}-${var.application}-fe-asg-alarms"
 
   in_service_evaluation_periods      = "3"
   in_service_statistic_period        = "120"
@@ -167,7 +167,7 @@ module "asg_alarms" {
 # iProcess EC2 CloudWatch Alarms at ASG level
 #--------------------------------------------
 resource "aws_cloudwatch_metric_alarm" "ec2-cpu-utilization-high" {
-  alarm_name          = "${var.application}-EC2-CPUUtilization-High"
+  alarm_name          = "${var.aws_account}-${var.application}-EC2-CPUUtilization-High"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
@@ -183,7 +183,7 @@ resource "aws_cloudwatch_metric_alarm" "ec2-cpu-utilization-high" {
     AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
   }
 
-  alarm_description = "This metric monitors CPU used by EC2 instances in the ASG"
+  alarm_description = "${var.aws_account}: CPU use high for ${var.application} EC2 instance in ASG ${module.iprocess_app_asg.this_autoscaling_group_name}"
 
   lifecycle {
     ignore_changes = [
@@ -199,7 +199,7 @@ resource "aws_cloudwatch_metric_alarm" "ec2-cpu-utilization-high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "ec2-mem-used-percent-high" {
-  alarm_name          = "${var.application}-EC2-MemUsedPercent-High"
+  alarm_name          = "${var.aws_account}-${var.application}-EC2-MemUsedPercent-High"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "mem_used_percent"
@@ -215,7 +215,7 @@ resource "aws_cloudwatch_metric_alarm" "ec2-mem-used-percent-high" {
     AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
   }
 
-  alarm_description = "This metric monitors memory used by EC2 instances in the ASG"
+  alarm_description = "${var.aws_account}: Memory use high for ${var.application} EC2 instance in ASG ${module.iprocess_app_asg.this_autoscaling_group_name}"
 
   lifecycle {
     ignore_changes = [
@@ -231,7 +231,7 @@ resource "aws_cloudwatch_metric_alarm" "ec2-mem-used-percent-high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "ec2-disk-used-percent-high" {
-  alarm_name          = "${var.application}-EC2-DiskUsedPercent-High"
+  alarm_name          = "${var.aws_account}-${var.application}-EC2-DiskUsedPercent-High"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "disk_used_percent"
@@ -247,7 +247,7 @@ resource "aws_cloudwatch_metric_alarm" "ec2-disk-used-percent-high" {
     AutoScalingGroupName = module.iprocess_app_asg.this_autoscaling_group_name
   }
 
-  alarm_description = "This metric monitors disk used by EC2 instances in the ASG"
+  alarm_description = "${var.aws_account}: Disk use high for ${var.application} EC2 instance in ASG ${module.iprocess_app_asg.this_autoscaling_group_name}"
 
   lifecycle {
     ignore_changes = [
