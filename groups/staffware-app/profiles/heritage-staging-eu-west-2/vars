@@ -65,4 +65,9 @@ cw_logs = {
     file_path = "/app/iProcess/11_8/logs"
     log_group_retention = 30
   }
+
+  "ch_support_alert.log" = {
+    file_path = "/app/iProcess/11_8/logs"
+    log_group_retention = 180
+  }  
 }

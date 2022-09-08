@@ -285,4 +285,9 @@ cloudwatch_logs = {
     file_name = "batch-authcode-*.log"
     log_group_retention = 180
   }
+
+  "ch_support_alert.log" = {
+    file_path = "NFSPATH/running-servers/ch-support"
+    log_group_retention = 180
+  }    
 }
