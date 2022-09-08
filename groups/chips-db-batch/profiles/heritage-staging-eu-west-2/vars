@@ -53,4 +53,9 @@ cloudwatch_logs = {
     file_name = "amazon-ssm-agent.log"
     log_group_retention = 7
   }
+
+  "ch_support_alert.log" = {
+    file_path = "NFSPATH/running-servers/ch-support"
+    log_group_retention = 180
+  }    
 }
