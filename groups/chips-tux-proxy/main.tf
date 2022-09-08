@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-tux-proxy" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.169"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.175"
 
   application                      = var.application
   application_type                 = "chips"
