@@ -108,6 +108,6 @@ chips_db_sg = [
 
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVP1"
-alarm_actions_enabled  = false
+alarm_actions_enabled  = true
 alarm_topic_name       = "Email_Alerts"
 alarm_topic_name_ooh   = "Phonecall_Alerts"
