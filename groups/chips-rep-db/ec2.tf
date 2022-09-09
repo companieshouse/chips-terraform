@@ -207,7 +207,7 @@ module "oracledb_cloudwatch_alarms" {
   db_instance_shortname  = var.db_instance_shortname
   alarm_actions_enabled  = var.alarm_actions_enabled
   alert_log_group_name   = "chips-rep-db/oracle/alert"
-  alarm_name_prefix      = "EC2"
+  alarm_name_prefix      = "Oracle EC2"
   alarm_topic_name       = var.alarm_topic_name
   alarm_topic_name_ooh   = var.alarm_topic_name_ooh
 }
