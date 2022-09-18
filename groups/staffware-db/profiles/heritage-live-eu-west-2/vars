@@ -87,7 +87,8 @@ staffware_db_sg = [
   "sgr-chips-users-rest-asg-*",
   "sgr-chips-ef-batch-asg-*",
   "sgr-chips-oltp-db-ec2-001-*",
-  "sgr-chips-rep-db-ec2-001-*"
+  "sgr-chips-rep-db-ec2-001-*",
+  "sgr-gfn-app-001-*"
 ]
 
 ## Oracle DB CloudWatch Alarms
