@@ -62,6 +62,10 @@ data "vault_generic_secret" "deployment_cidrs" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/deployment_cidrs"
 }
 
+data "vault_generic_secret" "additional_app_cidrs" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/additional_app_cidrs"
+}
+
 data "vault_generic_secret" "ec2_data" {
   path = "applications/${var.aws_profile}/${var.application}/db/ec2"
 }
