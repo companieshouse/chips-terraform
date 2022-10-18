@@ -103,6 +103,7 @@ chips_rep_db_sg = [
   "sgr-chips-ef-batch-asg-001-*",
   "sgr-chips-users-rest-asg-001-*",
   "sgr-chips-read-only-asg-001-*",
+  "sgr-chips-db-batch-asg-001-*",
   "sgr-windows-workloads-bus-obj-2-server-*"
 ]
 
