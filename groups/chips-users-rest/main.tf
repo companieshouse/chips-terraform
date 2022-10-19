@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.176"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.179"
 
   application                      = var.application
   application_type                 = "chips"
@@ -47,6 +47,8 @@ module "chips-users-rest" {
   alb_idle_timeout                 = 180
   enable_sns_topic                 = var.enable_sns_topic
   create_nlb                       = true
+  maximum_5xx_threshold            = 5
+  maximum_4xx_threshold            = 5
 
   additional_ingress_with_cidr_blocks = [
     {
