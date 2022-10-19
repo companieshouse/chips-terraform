@@ -102,6 +102,7 @@ chips_db_sg = [
   "sgr-staffware-db-ec2-001-*",
   "sgr-chips-ef-batch-asg-001-*",
   "sgr-chips-users-rest-asg-001-*",
+  "sgr-chips-db-batch-asg-001-*",  
   "sgr-chips-uam-ec2-001-*",
   "sgr-bcd-rds-001-*",
   "sgr-ewf-rds-001-*"
