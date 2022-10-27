@@ -17,6 +17,8 @@ db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+backup_plan_tag = "backup14"
+
 # NFS Mounts
 nfs_server = "192.168.255.19"
 nfs_mount_destination_parent_dir = "/-"
