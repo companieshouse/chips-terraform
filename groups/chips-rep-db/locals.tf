@@ -21,6 +21,7 @@ locals {
   chipsbackup_kms_key_id = local.kms_keys_data["chipsbackup"]
   ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
   deployment_cidrs       = jsondecode(data.vault_generic_secret.deployment_cidrs.data_json).cidrs
+  dblink_cidrs           = jsondecode(data.vault_generic_secret.dblink_cidrs.data_json).cidrs
 
   resources_bucket_name       = local.shared_services_s3_data["resources_bucket_name"]
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
@@ -28,7 +29,7 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle, local.additional_app_cidrs)
+  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle, local.additional_app_cidrs, local.dblink_cidrs)
   ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
