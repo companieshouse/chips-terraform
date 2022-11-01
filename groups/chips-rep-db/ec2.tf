@@ -74,8 +74,8 @@ resource "aws_instance" "db_ec2" {
 
   tags = merge(
     local.default_tags,
+    local.aws_backup_plan_tags,
     tomap({
-      "Backup"      = var.backup_plan_tag,
       "Name"        = format("%s-db-%02d", var.application, count.index + 1),
       "Domain"      = local.internal_fqdn,
       "UNQNAME"     = var.oracle_unqname,

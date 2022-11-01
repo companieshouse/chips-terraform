@@ -165,7 +165,13 @@ variable "availability_zones" {
   description = "List of availability zone names (e.g. [eu-west-2a, eu-west-2b]) to deploy instances into, usually to meet constraints such as remote storage locality. Leaving null will deploy across all matching subnets/zones in the provided VPC"
 }
 
-variable "backup_plan_tag" {
+variable "aws_backup_plan_enable" {
+  type        = bool
+  description = "Controls whether the EC2 instances should be covered by an AWS Backup plan (true) or omitted (false)"
+  default     = false
+}
+
+variable "aws_backup_plan_tag" {
   type        = string
   description = "The tag value to control which AWS Backup plan is used. One of [true, backup14, backup21] for daily backups with 7, 14 or 21 days retention respectively"
   default     = "backup21"
