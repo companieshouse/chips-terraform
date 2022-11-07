@@ -81,34 +81,3 @@ resource "aws_ssm_maintenance_window_target" "target" {
   }
   # owner_information - (Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
 }
-
-
-################################################################################
-## DB Failover Runbook Doc
-################################################################################
-
-resource "aws_ssm_document" "failover_db" {
-  name            = "ch-ssm-failover-${var.application}-db"
-  document_type   = "Automation"
-  document_format = "YAML"
-  content = templatefile("templates/db-failover-ssm-document.yaml",
-    {
-      execution_role              = module.ssm_runbook_execution_role.iam_role_arn
-      region_name                 = var.aws_region
-      db_instance_name            = "${var.application}-db-*"
-      command_document_name       = "ch-ssm-run-ansible"
-      command_document_parameters = indent(8, yamlencode(merge(local.failover_ssm_parameters, { Check = "False" })))
-      dns_name                    = aws_route53_record.dns_cname.name
-      route53_zone                = data.aws_route53_zone.private_zone.zone_id
-      failover_approvers          = indent(8, yamlencode(local.failover_approvers))
-      netapp_ips                  = var.netapp_ips
-    }
-  )
-  tags = merge(
-    local.default_tags,
-    map(
-      "Account", var.aws_account,
-      "ServiceTeam", "Platforms"
-    )
-  )
-}
