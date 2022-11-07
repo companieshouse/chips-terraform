@@ -18,6 +18,9 @@ ami_id = "ami-07753d6b2935e32bf"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+aws_backup_plan_enable = true
+aws_backup_plan_tag = "backup14"
+
 cloudwatch_namespace = "CHIPS/STFWARE"
 
 ############################################
