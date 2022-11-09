@@ -118,11 +118,6 @@ data "template_cloudinit_config" "userdata_config" {
   }
 }
 
-data "aws_iam_roles" "failover_approvers" {
-  for_each   = toset(var.failover_approvers)
-  name_regex = each.key
-}
-
 data "aws_security_group" "chips_sg" {
   for_each = toset(var.chips_db_sg)
   filter {

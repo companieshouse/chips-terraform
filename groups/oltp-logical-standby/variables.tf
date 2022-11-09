@@ -255,11 +255,6 @@ variable "oracle_sid" {
   default     = ""
 }
 
-variable "failover_approvers" {
-  type        = list(string)
-  description = "List of aws roles that can approve database failover actions. Provided as regex strings to allow matching of roles names with UID's across environments."
-}
-
 variable "netapp_ips" {
   type        = list(string)
   description = "List of Netapp IP addresses to use for iscsi discovery."
@@ -273,28 +268,4 @@ variable "chips_db_sg" {
   type        = list(any)
   description = "List of CHIPS DB Security Groups"
   default     = []
-}
-
-
-# ------------------------------------------------------------------------------
-# DB CloudWatch Alarm Variables
-# ------------------------------------------------------------------------------
-variable "alarm_actions_enabled" {
-  type        = bool
-  description = "Defines whether SNS-based alarm actions should be enabled (true) or not (false) for alarms"
-}
-
-variable "alarm_topic_name" {
-  type        = string
-  description = "The name of the SNS topic to use for in-hours alarm notifications and clear notifications"
-}
-
-variable "alarm_topic_name_ooh" {
-  type        = string
-  description = "The name of the SNS topic to use for OOH alarm notifications"
-}
-
-variable "db_instance_shortname" {
-  type        = string
-  description = "The shortname or SID for the Oracle DB instance"
 }

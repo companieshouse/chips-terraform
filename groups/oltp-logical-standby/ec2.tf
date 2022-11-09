@@ -3,7 +3,7 @@
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
 
-/* module "db_ec2_security_group" {
+  module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
 
@@ -59,7 +59,7 @@
   ]
 
   egress_rules = ["all-all"]
-} */
+}
 
 # ------------------------------------------------------------------------------
 # EC2

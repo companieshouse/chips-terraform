@@ -35,6 +35,11 @@ locals {
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
+  #For each log map passed, add an extra kv for the log group name
+  cw_logs = { for log, map in var.cloudwatch_logs : log => merge(map, { "log_group_name" = "${var.application}-db-${log}" }) }
+
+  log_groups = compact([for log, map in local.cw_logs : lookup(map, "log_group_name", "")])
+
   ansible_inputs = {
     environment                = var.environment
     region                     = var.aws_region
@@ -71,4 +76,11 @@ locals {
   }
 
   source_security_group_id = [for item in data.aws_security_group.chips_sg : item.id]
+
+  default_tags = {
+    Terraform   = "true"
+    Application = upper(var.application)
+    Region      = var.aws_region
+    Account     = var.aws_account
+  }
 }
