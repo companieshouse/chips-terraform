@@ -168,7 +168,7 @@ cloudwatch_logs = {
 
   "wladmin-chipsdomain" = {
     file_path = "NFSPATH/running-servers/wladmin/logs"
-    file_name = "chipsdomain.out"
+    file_name = "chipsdomain.log"
     log_group_retention = 7
   }
 }
