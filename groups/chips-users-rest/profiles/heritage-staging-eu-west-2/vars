@@ -202,3 +202,5 @@ cloudwatch_logs = {
     log_group_retention = 7
   }
 }
+
+test_access_enable = true
