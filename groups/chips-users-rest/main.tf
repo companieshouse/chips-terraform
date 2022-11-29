@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.179"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.181"
 
   application                      = var.application
   application_type                 = "chips"
@@ -49,6 +49,7 @@ module "chips-users-rest" {
   create_nlb                       = true
   maximum_5xx_threshold            = 5
   maximum_4xx_threshold            = 5
+  test_access_enable               = var.test_access_enable
 
   additional_ingress_with_cidr_blocks = [
     {

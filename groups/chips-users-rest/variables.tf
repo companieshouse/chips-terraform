@@ -153,6 +153,12 @@ variable "domain_name" {
   description = "Domain Name for ACM Certificate"
 }
 
+variable "test_access_enable" {
+  type        = bool
+  description = "Controls whether access from the Test subnets is required (true) or not (false)"
+  default     = false
+}
+
 # ------------------------------------------------------------------------------
 # NFS Mount Variables
 # ------------------------------------------------------------------------------
