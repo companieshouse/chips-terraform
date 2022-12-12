@@ -60,12 +60,14 @@ cloudwatch_logs = {
   }    
 
   "fes-out.log" = {
-    file_path = "NFSPATH/logs/fes-out"
+    file_path = "NFSPATH/running-servers/fes-out"
+    file_name = "*.log"
     log_group_retention = 180
   }
 
   "dps-out.log" = {
-    file_path = "NFSPATH/logs/dps-out"
+    file_path = "NFSPATH/running-servers/dps-out"
+    file_name = "*.log"
     log_group_retention = 180
   } 
 }
