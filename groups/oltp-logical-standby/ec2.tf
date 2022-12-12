@@ -82,7 +82,7 @@ resource "aws_instance" "db_ec2" {
 
   root_block_device {
     volume_size = "200"
-    volume_type = "gp2"
+    volume_type = "gp3"
     encrypted   = true
     kms_key_id  = data.aws_kms_key.ebs.arn
   }
@@ -105,6 +105,26 @@ resource "aws_instance" "db_ec2" {
       user_data_base64
     ]
   }
+}
+
+  resource "aws_ebs_volume" "u-drive" {
+  availability_zone = "eu-west-2a"
+  size = 256
+  type = "gp3"
+  encrypted = true
+
+  tags = {
+    Name = "oltp-logical-standby"
+  }
+    depends_on = [
+    aws_instance.db_ec2
+  ]
+}
+
+resource "aws_volume_attachment" "ebs_attach" {
+  device_name = "/dev/xvds"
+  volume_id   = aws_ebs_volume.u-drive.id
+  instance_id = "$(aws_instance.db_ec2.id,count.index)"
 }
 
 resource "aws_route53_record" "db_dns" {
