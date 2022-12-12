@@ -13,7 +13,7 @@ oracle_unqname = "cdb1"
 oracle_sid = "ENVT14"
 
 db_instance_count = 1
-db_instance_size = "r5.16xlarge"
+db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
