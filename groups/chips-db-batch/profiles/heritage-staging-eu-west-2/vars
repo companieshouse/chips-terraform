@@ -58,4 +58,16 @@ cloudwatch_logs = {
     file_path = "NFSPATH/running-servers/ch-support"
     log_group_retention = 180
   }    
+
+  "fes-out.log" = {
+    file_path = "NFSPATH/running-servers/fes-out"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "dps-out.log" = {
+    file_path = "NFSPATH/running-servers/dps-out"
+    file_name = "*.log"
+    log_group_retention = 180
+  } 
 }
