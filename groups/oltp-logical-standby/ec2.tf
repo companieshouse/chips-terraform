@@ -125,6 +125,10 @@ resource "aws_volume_attachment" "ebs_attach" {
   device_name = "/dev/xvds"
   volume_id   = aws_ebs_volume.u-drive.id
   instance_id = "$(aws_instance.db_ec2.id,count.index)"
+
+      depends_on = [
+    aws_instance.db_ec2
+  ]
 }
 
 resource "aws_route53_record" "db_dns" {
