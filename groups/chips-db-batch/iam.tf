@@ -65,6 +65,14 @@ module "instance_profile" {
       actions = [
         "ssm:GetParameter*"
       ]
+    },
+    {
+      sid       = "CloudwatchMetrics"
+      effect    = "Allow"
+      resources = ["*"]
+      actions = [
+        "cloudwatch:PutMetricData"
+      ]
     }
   ]
 }
