@@ -12,6 +12,16 @@ module "asg_security_group" {
   ingress_cidr_blocks = local.admin_cidrs
   ingress_rules       = ["ssh-tcp"]
 
+  ingress_with_source_security_group_id = [
+    {
+      from_port                = 22
+      to_port                  = 22
+      protocol                 = "tcp"
+      description              = "${var.application} SSH from chips-control"
+      source_security_group_id = data.aws_security_group.chips_control.id
+    }
+  ]
+
   egress_rules = ["all-all"]
 }
 
