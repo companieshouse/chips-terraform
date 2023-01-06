@@ -1,0 +1,183 @@
+description: 'Upon triggering by EventBridge, select a DB Instance ID to failover to, wait until it comes up and then execute an Ansible configuration against the newly started Instance.'
+schemaVersion: '0.3'
+assumeRole: '${execution_role}'
+parameters:
+  AlarmName:
+    type: String
+mainSteps:
+  - name: select_failover_instance
+    action: 'aws:executeScript'
+    outputs:
+      - Name: failover_instance_id
+        Selector: "$.Payload.failover_instance_id"
+        Type: String
+      - Name: triggering_instance_id
+        Selector: "$.Payload.triggering_instance_id"
+        Type: String
+    inputs:
+      Runtime: python3.6
+      Handler: script_handler
+      Script: |-
+        def script_handler(events, context):
+          import boto3
+          import re
+        
+          #extract the instance ID from alarm name that triggered
+          alarm_name = events['AlarmName']  
+          triggering_instance = re.search('^.+-(i-.*)$', alarm_name).group(1)
+
+          ec2 = boto3.client('ec2', region_name='${region_name}')
+
+          db_instances = ec2.describe_instances(
+              Filters=[
+                  {
+                      'Name': 'tag:Name',
+                      'Values': [
+                          '${db_instance_name}',
+                      ]
+                  }
+              ]
+          )
+        
+          # Assumes only ever two instances running, pick up ID that is not that of the triggering instance.
+          for reservation in db_instances['Reservations']:
+              for instance in reservation['Instances']:
+                  if instance['InstanceId'] != triggering_instance:
+                      failover_id = instance['InstanceId']
+                      return { 
+                        "triggering_instance_id": triggering_instance,
+                        "failover_instance_id": failover_id
+                      }
+
+      InputPayload:
+        AlarmName: '{{ AlarmName }}'
+  - name: stop_failed_instance
+    action: 'aws:changeInstanceState'
+    inputs:
+      DesiredState: stopped
+      InstanceIds:
+        - '{{select_failover_instance.triggering_instance_id}}'
+  - name: start_failover_instance
+    action: 'aws:changeInstanceState'
+    inputs:
+      DesiredState: running
+      InstanceIds:
+        - '{{select_failover_instance.failover_instance_id}}'
+  - name: wait
+    action: 'aws:waitForAwsResourceProperty'
+    inputs:
+      Service: ssm
+      Api: DescribeInstanceInformation
+      PropertySelector: '[InstanceInformationList][0][PingStatus]'
+      DesiredValues:
+        - Online
+      InstanceInformationFilterList:
+        - key: InstanceIds
+          valueSet:
+            - '{{select_failover_instance.failover_instance_id}}'
+  - name: trigger_configuration
+    action: 'aws:runCommand'
+    inputs:
+      DocumentName: ${command_document_name}
+      InstanceIds:
+        - '{{select_failover_instance.failover_instance_id}}'
+      Parameters:
+        ${command_document_parameters}
+  - name: approve
+    action: aws:approve
+    timeoutSeconds: 7200
+    onFailure: Abort
+    inputs:
+      MinRequiredApprovals: 1
+      Approvers:
+        ${failover_approvers}
+  - name: run_disk_mounts
+    action: 'aws:runCommand'
+    onFailure: Abort
+    inputs:
+      DocumentName: AWS-RunShellScript
+      InstanceIds:
+        - '{{select_failover_instance.failover_instance_id}}'
+      Parameters:
+        commands: |-
+          #!/bin/bash
+          set -o errexit
+          mkdir -p /CHP/oracle/{arch1,arch2,data,lobdata,redo1,redo2}
+          chown -R oracle:dba /CHP/oracle
+%{ for ip in netapp_ips ~}
+          iscsiadm --mode discovery --op update --type sendtargets --portal ${ip}
+%{ endfor ~}
+          iscsiadm --mode node -l all
+          for i in `vgs | cut -d " " -f 3 | tail -3`; do vgchange -ay $i; done
+          for i in `ls -1 /dev/mapper/vol.oracle.*`;
+            do BLKID=`blkid $i | cut -d " " -f2`;
+              MOUNT=`echo $i | cut -d "_" -f3`;
+              echo "$BLKID        /CHP/oracle/$MOUNT      xfs     defaults        0       0" | tee -a /etc/fstab;
+            done
+          mount -a
+
+  - name: failover_dns
+    action: 'aws:executeScript'
+    inputs:
+      Runtime: python3.6
+      Handler: script_handler
+      InputPayload:
+        InstanceId: '{{select_failover_instance.failover_instance_id}}'
+      Script: |-
+        def script_handler(events, context):
+          import boto3
+
+          #get instance
+          instance_id = events['InstanceId']
+          region = '${region_name}'
+          route53_zone = '${route53_zone}'
+          dns_name = '${dns_name}'
+
+          ec2 = boto3.client('ec2', region_name=region)
+          instance_tags = ec2.describe_tags(
+            Filters=[{
+                'Name': 'resource-id',
+                'Values': [instance_id],
+              }
+            ]
+          )
+          instance_name = ""
+          domain = ""
+          for tag in instance_tags['Tags']:
+            if tag['Key'] == 'Name':
+              instance_name = tag['Value']
+            if tag['Key'] == 'Domain':
+              domain = tag['Value']
+            
+          if instance_name == "":
+            exit("No name tag found on instance")
+          if domain == "":
+            exit("No domain tag found on instance")
+
+          #initiate route53
+          route53 = boto3.client('route53', region_name=region)
+
+          #update route53 entry to point to failover instance
+          response = route53.change_resource_record_sets(
+            HostedZoneId=route53_zone,
+            ChangeBatch={
+              'Comment': 'Failover automation',
+              'Changes': [
+                {
+                  'Action': 'UPSERT',
+                  'ResourceRecordSet': {
+                    'Name': dns_name + "." + domain,
+                    'Type': 'CNAME',
+                    'TTL': 300,
+                    'ResourceRecords': [
+                      {
+                        'Value': instance_name + "." + domain
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          )
+
+          
