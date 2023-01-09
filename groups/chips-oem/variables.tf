@@ -80,9 +80,9 @@ variable "ami_id" {
   default     = null
 }
 
-variable "vpc_sg_cidr_blocks_oracle" {
+variable "vpc_sg_cidr_blocks_oem" {
   type        = list(any)
-  description = "Security group cidr blocks for Oracle"
+  description = "Security group cidr blocks for OEM"
   default     = []
 }
 
