@@ -80,9 +80,9 @@ variable "ami_id" {
   default     = null
 }
 
-variable "vpc_sg_cidr_blocks_oracle" {
+variable "vpc_sg_cidr_blocks_oem" {
   type        = list(any)
-  description = "Security group cidr blocks for Oracle"
+  description = "Security group cidr blocks for OEM"
   default     = []
 }
 
@@ -95,12 +95,12 @@ variable "vpc_sg_cidr_blocks_ssh" {
 # ------------------------------------------------------------------------------
 # EC2 Variables
 # ------------------------------------------------------------------------------
-variable "db_instance_size" {
+variable "instance_size" {
   type        = string
   description = "The size of the ec2 instances"
 }
 
-variable "db_instance_count" {
+variable "instance_count" {
   type        = string
   description = "The number of ec2 instances to create"
 }
@@ -243,18 +243,6 @@ variable "ssm_requirements_file_name" {
   default     = "requirements.yml"
 }
 
-variable "oracle_unqname" {
-  type        = string
-  description = "Value to be inserted into oracle users ORACLE_UNQNAME env variable"
-  default     = ""
-}
-
-variable "oracle_sid" {
-  type        = string
-  description = "Value to be inserted into oracle users ORACLE_SID env variable"
-  default     = ""
-}
-
 variable "netapp_ips" {
   type        = list(string)
   description = "List of Netapp IP addresses to use for iscsi discovery."
@@ -264,8 +252,8 @@ variable "netapp_ips" {
 # ------------------------------------------------------------------------------
 # CHIPS DB SG variables
 # ------------------------------------------------------------------------------
-variable "chips_db_sg" {
+variable "chips_oem_sg" {
   type        = list(any)
-  description = "List of CHIPS DB Security Groups"
+  description = "List of CHIPS OEM Security Groups"
   default     = []
 }

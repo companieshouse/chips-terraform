@@ -52,14 +52,6 @@ data "vault_generic_secret" "internal_cidrs" {
   path = "aws-accounts/network/internal_cidr_ranges"
 }
 
-data "vault_generic_secret" "onprem_app_cidrs" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/onprem_app_cidrs"
-}
-
-data "vault_generic_secret" "deployment_cidrs" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/deployment_cidrs"
-}
-
 data "vault_generic_secret" "ec2_data" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/db/ec2"
 }
@@ -96,7 +88,7 @@ data "aws_route53_zone" "private_zone" {
 data "template_file" "userdata" {
   template = file("${path.module}/templates/user_data.tpl")
 
-  count = var.db_instance_count
+  count = var.instance_count
 
   vars = {
     ENVIRONMENT          = title(var.environment)
@@ -107,7 +99,7 @@ data "template_file" "userdata" {
 }
 
 data "template_cloudinit_config" "userdata_config" {
-  count = var.db_instance_count
+  count = var.instance_count
 
   gzip          = true
   base64_encode = true
@@ -115,14 +107,6 @@ data "template_cloudinit_config" "userdata_config" {
   part {
     content_type = "text/x-shellscript"
     content      = data.template_file.userdata[count.index].rendered
-  }
-}
-
-data "aws_security_group" "chips_sg" {
-  for_each = toset(var.chips_db_sg)
-  filter {
-    name   = "group-name"
-    values = [each.value]
   }
 }
 
