@@ -9,8 +9,6 @@ region  = "euw2"
 # Application details
 application = "chips-oem"
 environment = "live"
-oracle_unqname = ""
-oracle_sid = ""
 
 instance_count = 1
 instance_size = "t3.2xlarge"

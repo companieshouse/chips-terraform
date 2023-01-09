@@ -141,8 +141,6 @@ resource "aws_instance" "oem_ec2" {
     tomap({
       "Name"        = format("%s-%02d", var.application, count.index + 1)
       "Domain"      = local.internal_fqdn,
-      "UNQNAME"     = var.oracle_unqname,
-      "SID"         = var.oracle_sid,
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
     })

@@ -243,18 +243,6 @@ variable "ssm_requirements_file_name" {
   default     = "requirements.yml"
 }
 
-variable "oracle_unqname" {
-  type        = string
-  description = "Value to be inserted into oracle users ORACLE_UNQNAME env variable"
-  default     = ""
-}
-
-variable "oracle_sid" {
-  type        = string
-  description = "Value to be inserted into oracle users ORACLE_SID env variable"
-  default     = ""
-}
-
 variable "netapp_ips" {
   type        = list(string)
   description = "List of Netapp IP addresses to use for iscsi discovery."
