@@ -7,31 +7,15 @@ account = "hlive"
 region  = "euw2"
 
 # Application details
-application = "chips-oem-logstb"
+application = "chips-oem"
 environment = "live"
 oracle_unqname = ""
 oracle_sid = ""
 
-db_instance_count = 1
-db_instance_size = "t3.2xlarge"
+instance_count = 1
+instance_size = "t3.2xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
-
-# NFS Mounts
-nfs_server = "192.168.255.35"
-nfs_mount_destination_parent_dir = "/-"
-nfs_mounts = {
-    # AWS NFS example
-    # batenvp1 = {
-    #   local_mount_point = "/mnt/nfs/batenvp1"
-    # },
-    # On-premise NFS
-    batenvp1_onprem = {
-      local_mount_point = "/mnt/nfs/onsite/batenvp1"
-      nfs_source_mount = "vol/data0/Home/batenvp1"
-      nfs_server_address = "chfas-pl1.internal.ch"
-    }
-  }
 
 ansible_ssm_git_repo_name = "oracle-12-ami"
 ansible_ssm_git_repo_owner = "companieshouse"
@@ -44,18 +28,6 @@ maintenance_window_schedule_expression = "cron(00 01 ? * SUN *)"
 
 netapp_ips = ["10.84.9.97", "10.84.9.211"]
 
-# CHIPS DB Security Groups
-chips_db_sg = [
-  "sgr-chips-rep-db-ec2-001-*",
-  "sgr-staffware-db-ec2-001-*",
-  "sgr-chips-ef-batch-asg-001-*",
-  "sgr-chips-users-rest-asg-001-*",
-  "sgr-chips-db-batch-asg-001-*",
-  "sgr-chips-uam-ec2-001-*",
-  "sgr-gfn-app-001-*",
-  "sgr-ewf-rds-001-*",
-  "sgr-bcd-rds-001-*"
-]
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs

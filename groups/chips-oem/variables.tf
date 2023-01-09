@@ -95,12 +95,12 @@ variable "vpc_sg_cidr_blocks_ssh" {
 # ------------------------------------------------------------------------------
 # EC2 Variables
 # ------------------------------------------------------------------------------
-variable "db_instance_size" {
+variable "instance_size" {
   type        = string
   description = "The size of the ec2 instances"
 }
 
-variable "db_instance_count" {
+variable "instance_count" {
   type        = string
   description = "The number of ec2 instances to create"
 }
@@ -264,8 +264,8 @@ variable "netapp_ips" {
 # ------------------------------------------------------------------------------
 # CHIPS DB SG variables
 # ------------------------------------------------------------------------------
-variable "chips_db_sg" {
+variable "chips_oem_sg" {
   type        = list(any)
-  description = "List of CHIPS DB Security Groups"
+  description = "List of CHIPS OEM Security Groups"
   default     = []
 }

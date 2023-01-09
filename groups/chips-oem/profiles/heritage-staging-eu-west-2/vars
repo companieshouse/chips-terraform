@@ -7,13 +7,13 @@ account = "hstg"
 region  = "euw2"
 
 # Application details
-application = "chips-oem-logstb"
+application = "chips-oem"
 environment = "staging"
 oracle_unqname = "cdb1"
 oracle_sid = "ENVT14"
 
-db_instance_count = 1
-db_instance_size = "t3.2xlarge"
+instance_count = 1
+instance_size = "t3.2xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
@@ -44,8 +44,8 @@ maintenance_window_schedule_expression = "cron(00 01 ? * SUN *)"
 
 netapp_ips = ["10.94.9.185", "10.94.9.123"]
 
-# CHIPS DB Security Groups
-chips_db_sg = [
+# CHIPS OEM Security Groups
+chips_oem_sg = [
   "sgr-chips-rep-db-ec2-001-*",
   "sgr-staffware-db-ec2-001-*",
   "sgr-chips-ef-batch-asg-001-*",

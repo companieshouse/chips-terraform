@@ -15,8 +15,6 @@ locals {
   security_kms_keys_data  = data.vault_generic_secret.security_kms_keys.data
   ssm_data                = data.vault_generic_secret.ssm.data
   chs_subnet_data         = data.vault_generic_secret.chs_subnet.data
-  onprem_app_cidrs        = jsondecode(data.vault_generic_secret.onprem_app_cidrs.data_json).cidrs
-  deployment_cidrs        = jsondecode(data.vault_generic_secret.deployment_cidrs.data_json).cidrs
 
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_logs_key_id        = local.kms_keys_data["ssm"]
@@ -30,8 +28,8 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
-  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs)
+  oem_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
+  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
@@ -74,8 +72,6 @@ locals {
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
-
-  source_security_group_id = [for item in data.aws_security_group.chips_sg : item.id]
 
   default_tags = {
     Terraform   = "true"
