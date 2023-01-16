@@ -57,5 +57,29 @@ cloudwatch_logs = {
   "ch_support_alert.log" = {
     file_path = "NFSPATH/running-servers/ch-support"
     log_group_retention = 180
-  }      
+  }
+
+  "fes-out.log" = {
+    file_path = "NFSPATH/running-servers/fes-out"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "dps-out.log" = {
+    file_path = "NFSPATH/running-servers/dps-out"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "fes-file-loader.log" = {
+    file_path = "NFSPATH/running-servers/fes-file-loader"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "move-scan-files.log" = {
+    file_path = "NFSPATH/running-servers/move-scan-files"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
 }
