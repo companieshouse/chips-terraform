@@ -45,6 +45,13 @@
       protocol    = "tcp"
       description = "Oracle DB port"
       cidr_blocks = local.chs_subnet_data["mm-platform-applications-eu-west-2c"]
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH ports"
+      cidr_blocks = join(",", local.ssh_allowed_ranges)
     }
   ]
 
