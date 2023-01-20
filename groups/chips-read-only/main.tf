@@ -28,25 +28,26 @@ provider "vault" {
 }
 
 module "chips-read-only" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.182"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.183"
 
-  application                      = var.application
-  application_type                 = "chips"
-  aws_region                       = var.aws_region
-  aws_account                      = var.aws_account
-  account                          = var.account
-  region                           = var.region
-  environment                      = var.environment
-  asg_count                        = var.asg_count
-  instance_size                    = var.instance_size
-  enable_instance_refresh          = var.enable_instance_refresh
-  nfs_mount_destination_parent_dir = var.nfs_mount_destination_parent_dir
-  nfs_mounts                       = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
-  cloudwatch_logs                  = var.cloudwatch_logs
-  config_bucket_name               = "shared-services.eu-west-2.configs.ch.gov.uk"
-  alb_idle_timeout                 = 180
-  enable_sns_topic                 = var.enable_sns_topic
-  create_app_target_group          = false
+  application                        = var.application
+  application_type                   = "chips"
+  aws_region                         = var.aws_region
+  aws_account                        = var.aws_account
+  account                            = var.account
+  region                             = var.region
+  environment                        = var.environment
+  asg_count                          = var.asg_count
+  instance_size                      = var.instance_size
+  enable_instance_refresh            = var.enable_instance_refresh
+  nfs_mount_destination_parent_dir   = var.nfs_mount_destination_parent_dir
+  nfs_mounts                         = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
+  cloudwatch_logs                    = var.cloudwatch_logs
+  config_bucket_name                 = "shared-services.eu-west-2.configs.ch.gov.uk"
+  alb_idle_timeout                   = 180
+  enable_sns_topic                   = var.enable_sns_topic
+  create_app_target_group            = false
+  ssh_access_security_group_patterns = var.ssh_access_security_group_patterns
 
   additional_ingress_with_cidr_blocks = [
     {
