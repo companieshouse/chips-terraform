@@ -119,6 +119,12 @@ variable "enable_instance_refresh" {
   description = "Enable or disable instance refresh when the ASG is updated"
 }
 
+variable "ssh_access_security_group_patterns" {
+  type        = list(string)
+  description = "List of source security group name patterns that will have SSH access"
+  default     = ["sgr-chips-control-asg-001-*"]
+}
+
 # ------------------------------------------------------------------------------
 # CHIPS ALB Variables
 # ------------------------------------------------------------------------------

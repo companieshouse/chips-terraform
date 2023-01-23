@@ -18,6 +18,12 @@ instance_size = "t3.large"
 # SNS Topic creation
 enable_sns_topic = true
 
+# Security Groups with SSH access
+ssh_access_security_group_patterns = [
+  "sgr-chips-control-asg-001-*",
+  "sgr-gfn-app-001-*"
+]
+
 # NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
 
