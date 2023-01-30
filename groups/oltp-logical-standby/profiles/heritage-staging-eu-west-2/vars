@@ -53,7 +53,8 @@ chips_db_sg = [
   "sgr-chips-db-batch-asg-001-*",  
   "sgr-chips-uam-ec2-001-*",
   "sgr-bcd-rds-001-*",
-  "sgr-ewf-rds-001-*"
+  "sgr-ewf-rds-001-*",
+  "sgr-chips-oltp-db-ec2-*"
 ]
 
 ############################################
