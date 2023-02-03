@@ -7,7 +7,7 @@ account = "hlive"
 region  = "euw2"
 
 # Application details
-application = "chips-oem"
+application = "chips-reginit"
 environment = "live"
 
 instance_count = 1

@@ -7,7 +7,7 @@ account = "hstg"
 region  = "euw2"
 
 # Application details
-application = "chips-oem"
+application = "chips-reginit"
 environment = "staging"
 
 instance_count = 1

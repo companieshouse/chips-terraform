@@ -3,12 +3,12 @@
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
 
-  module "oem_security_group" {
+  module "reginit_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
 
   name        = "sgr-${var.application}-ec2-001"
-  description = "Security group for the CHIPS OEM EC2 instance"
+  description = "Security group for the CHIPS Reginit EC2 instance"
   vpc_id      = data.aws_vpc.vpc.id
 
   ingress_with_self = [
@@ -17,7 +17,7 @@
     }
   ]
 
-  ingress_cidr_blocks = local.oem_allowed_ranges
+  ingress_cidr_blocks = local.reginit_allowed_ranges
   ingress_rules       = ["oracle-db-tcp"]
 
   ingress_with_cidr_blocks = [
@@ -26,42 +26,42 @@
       to_port     = 1830
       protocol    = "tcp"
       description = "Agent port is unidirectional, OMS to Agent"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 3872
       to_port     = 3872
       protocol    = "tcp"
       description = "Agent port is unidirectional, OMS to Agent"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 1159
       to_port     = 1159
       protocol    = "tcp"
       description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 4889
       to_port     = 4889
       protocol    = "tcp"
       description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 7799
       to_port     = 7799
       protocol    = "tcp"
       description = "User browser host to OMS host through port 7799 for EM 13.5 console HTTPS access, unidirectional"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 7101
       to_port     = 7101
       protocol    = "tcp"
       description = "User browser host to OMS host for WebLogic Server Admin Console access through port 7101, unidirectional"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.reginit_allowed_ranges)
     },
     {
       from_port   = 22
@@ -78,7 +78,7 @@
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
-resource "aws_instance" "oem_ec2" {
+resource "aws_instance" "reginit_ec2" {
   count = var.instance_count
 
   ami = var.ami_id == null ? data.aws_ami.oracle_12.id : var.ami_id
@@ -87,11 +87,11 @@ resource "aws_instance" "oem_ec2" {
   instance_type = var.instance_size
   subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
-  iam_instance_profile = module.oem_instance_profile.aws_iam_instance_profile.name
+  iam_instance_profile = module.reginit_instance_profile.aws_iam_instance_profile.name
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.oem_security_group.this_security_group_id
+    module.reginit_security_group.this_security_group_id
   ]
 
   root_block_device {
@@ -129,7 +129,7 @@ resource "aws_ebs_volume" "u_drive" {
     Name = "chips-reginit"
   }
     depends_on = [
-    aws_instance.oem_ec2
+    aws_instance.reginit_ec2
   ]
 }
 
@@ -138,17 +138,17 @@ resource "aws_volume_attachment" "ebs_attach" {
 
   device_name = "/dev/xvds"
   volume_id   = aws_ebs_volume.u_drive.id
-  instance_id = aws_instance.oem_ec2[count.index].id
+  instance_id = aws_instance.reginit_ec2[count.index].id
 
 }
 
-resource "aws_route53_record" "oem_dns" {
+resource "aws_route53_record" "reginit_dns" {
   count = var.instance_count
 
   zone_id = data.aws_route53_zone.private_zone.zone_id
   name    = format("%s-%02d", var.application, count.index + 1)
   type    = "A"
   ttl     = "300"
-  records = [aws_instance.oem_ec2[count.index].private_ip]
+  records = [aws_instance.reginit_ec2[count.index].private_ip]
 }
 
