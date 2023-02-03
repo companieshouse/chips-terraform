@@ -1,1 +1,1 @@
-# chips-oem
+# chips-reginit

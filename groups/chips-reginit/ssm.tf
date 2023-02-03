@@ -7,7 +7,7 @@ resource "aws_ssm_association" "ansible_check" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.oem_ec2.*.id
+    values = aws_instance.reginit_ec2.*.id
   }
 
   name                        = "ch-ssm-run-ansible"
@@ -32,7 +32,7 @@ resource "aws_ssm_association" "ansible_apply" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.oem_ec2.*.id
+    values = aws_instance.reginit_ec2.*.id
   }
 
   name                        = "ch-ssm-run-ansible"
@@ -77,7 +77,7 @@ resource "aws_ssm_maintenance_window_target" "target" {
 
   targets {
     key    = "InstanceIds"
-    values = aws_instance.oem_ec2.*.id
+    values = aws_instance.reginit_ec2.*.id
   }
   # owner_information - (Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
 }

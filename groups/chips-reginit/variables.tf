@@ -80,9 +80,9 @@ variable "ami_id" {
   default     = null
 }
 
-variable "vpc_sg_cidr_blocks_oem" {
+variable "vpc_sg_cidr_blocks_reginit" {
   type        = list(any)
-  description = "Security group cidr blocks for OEM"
+  description = "Security group cidr blocks for reginit"
   default     = []
 }
 
@@ -252,8 +252,8 @@ variable "netapp_ips" {
 # ------------------------------------------------------------------------------
 # CHIPS DB SG variables
 # ------------------------------------------------------------------------------
-variable "chips_oem_sg" {
+variable "chips_reginit_sg" {
   type        = list(any)
-  description = "List of CHIPS OEM Security Groups"
+  description = "List of CHIPS reginit Security Groups"
   default     = []
 }

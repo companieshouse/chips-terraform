@@ -1,4 +1,4 @@
-module "oem_instance_profile" {
+module "reginit_instance_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
 
   name       = format("%s", var.application)
