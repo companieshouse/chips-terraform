@@ -22,87 +22,52 @@
 
   ingress_with_cidr_blocks = [
     {
-      from_port   = 1159
-      to_port     = 1159
+      from_port   = 1830
+      to_port     = 1830
       protocol    = "tcp"
-      description = "Enterprise Manager Upload HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 4899
-      to_port     = 4908
-      protocol    = "tcp"
-      description = "Enterprise Manager Upload HTTPS"
+      description = "Agent port is unidirectional, OMS to Agent"
       cidr_blocks = join(",", local.oem_allowed_ranges)
     },
     {
       from_port   = 3872
       to_port     = 3872
       protocol    = "tcp"
-      description = "Enterprise Manager Agent"
+      description = "Agent port is unidirectional, OMS to Agent"
+      cidr_blocks = join(",", local.oem_allowed_ranges)
+    },
+    {
+      from_port   = 1159
+      to_port     = 1159
+      protocol    = "tcp"
+      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
+      cidr_blocks = join(",", local.oem_allowed_ranges)
+    },
+    {
+      from_port   = 4889
+      to_port     = 4889
+      protocol    = "tcp"
+      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
       cidr_blocks = join(",", local.oem_allowed_ranges)
     },
     {
       from_port   = 7799
-      to_port     = 7809
+      to_port     = 7799
       protocol    = "tcp"
-      description = "Cloud Control Console HTTPS"
+      description = "User browser host to OMS host through port 7799 for EM 13.5 console HTTPS access, unidirectional"
       cidr_blocks = join(",", local.oem_allowed_ranges)
     },
     {
       from_port   = 7101
-      to_port     = 7200
+      to_port     = 7101
       protocol    = "tcp"
-      description = "WebLogic Admin Server HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 7301
-      to_port     = 7400
-      protocol    = "tcp"
-      description = "Cloud Control Managed Server HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 7401
-      to_port     = 7500
-      protocol    = "tcp"
-      description = "WebLogic Node Manager HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 3801
-      to_port     = 3801
-      protocol    = "tcp"
-      description = "JVM Diagnostics Managed Server"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 51099
-      to_port     = 51099
-      protocol    = "tcp"
-      description = "RMI Registry"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 5503
-      to_port     = 5503
-      protocol    = "tcp"
-      description = "Java Provider"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
-    },
-    {
-      from_port   = 55000
-      to_port     = 55000
-      protocol    = "tcp"
-      description = "Remote Service Controller"
+      description = "User browser host to OMS host for WebLogic Server Admin Console access through port 7101, unidirectional"
       cidr_blocks = join(",", local.oem_allowed_ranges)
     },
     {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      description = "SSH ports"
+      description = "The OMS transfers Agent software to a target server in an Agent Push deployment through this standard OS SSH port, unidirectional"
       cidr_blocks = join(",", local.ssh_allowed_ranges)
     }
   ]
@@ -161,7 +126,7 @@ resource "aws_ebs_volume" "u_drive" {
   encrypted = true
 
   tags = {
-    Name = "chips-oem"
+    Name = "chips-reginit"
   }
     depends_on = [
     aws_instance.oem_ec2
