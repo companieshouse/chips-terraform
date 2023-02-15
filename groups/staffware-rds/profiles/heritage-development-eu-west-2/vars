@@ -10,7 +10,7 @@ environment = "development"
 
 # RDS Instance settings
 identifier                   = "staffware"
-name                         = "staffware"
+name                         = "STAFFDEV"
 instance_class               = "db.m5.2xlarge"
 allocated_storage            = 40
 backup_retention_period      = 2
