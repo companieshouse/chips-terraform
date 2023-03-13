@@ -1,0 +1,116 @@
+# Account details
+aws_profile = "heritage-development-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-development"
+
+# Account shorthand
+account     = "hdev"
+region      = "euw2"
+environment = "training2"
+
+# RDS Instance settings
+identifier                   = "staffware"
+name                         = "ENVT25SW"
+instance_class               = "db.m5.2xlarge"
+allocated_storage            = 40
+backup_retention_period      = 2
+multi_az                     = false
+rds_maintenance_window       = "Wed:00:00-Wed:03:00"
+rds_backup_window            = "03:00-06:00"
+performance_insights_enabled = false
+
+# RDS Engine settings
+major_engine_version       = "19"
+engine_version             = "19"
+license_model              = "license-included"
+auto_minor_version_upgrade = false
+
+# RDS logging
+rds_log_exports = [
+  "alert",
+  "audit",
+  "listener",
+  "trace"
+]
+
+# RDS Param and Option settings
+parameter_group_settings = [
+    {
+      name  = "aq_tm_processes"
+      value = "6"
+    },
+    {
+      name         = "compatible"
+      value        = "19.0.0"
+      apply_method = "pending-reboot"
+    },
+    {
+      name  = "db_file_multiblock_read_count"
+      value = "64"
+    },
+    {
+      name  = "job_queue_processes"
+      value = "1000"
+    },
+    {
+      name  = "nls_length_semantics"
+      value = "CHAR"
+    },
+    {
+      name  = "open_cursors"
+      value = "3000"
+    },
+    {
+      name  = "parallel_max_servers"
+      value = "20"
+    },
+    {
+      name  = "parallel_min_servers"
+      value = "10"
+    },
+    {
+      name         = "pga_aggregate_limit"
+      value        = "2147483648"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "processes"
+      value        = "4400"
+      apply_method = "pending-reboot"
+    },
+    {
+      name  = "remote_dependencies_mode"
+      value = "SIGNATURE"
+    },
+    {
+      name         = "sessions"
+      value        = "6720"
+      apply_method = "pending-reboot"
+    },
+    {
+      name  = "sqlnetora.sqlnet.allowed_logon_version_client"
+      value = "10"
+    },
+    {
+      name  = "sqlnetora.sqlnet.allowed_logon_version_server"
+      value = "10"
+    },
+    {
+      name         = "timed_statistics"
+      value        = "TRUE"
+      apply_method = "pending-reboot"
+    },
+    {
+      name  = "undo_retention"
+      value = "900"
+    },
+    {
+      name  = "workarea_size_policy"
+      value = "AUTO"
+    },
+]
+
+## CloudWatch Alarms
+alarm_actions_enabled  = false
+alarm_topic_name       = ""
+alarm_topic_name_ooh   = ""
