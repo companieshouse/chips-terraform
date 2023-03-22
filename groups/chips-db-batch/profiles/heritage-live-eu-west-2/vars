@@ -82,4 +82,35 @@ cloudwatch_logs = {
     file_name = "*.log"
     log_group_retention = 180
   }
+
+   
+  "dps-in.log" = {
+    file_path = "NFSPATH/running-servers/dps-in"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "bankrupt-ew.log" = {
+    file_path = "NFSPATH/running-servers/bankrupt"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "bankrupt-scotland.log" = {
+    file_path = "NFSPATH/running-servers/bankrupt-scotland"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "charities.log" = {
+    file_path = "NFSPATH/running-servers/charities"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
+
+  "ccm.log" = {
+    file_path = "NFSPATH/running-servers/ccm"
+    file_name = "*.log"
+    log_group_retention = 180
+  }
 }
