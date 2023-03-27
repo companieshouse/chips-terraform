@@ -6,8 +6,8 @@ module "rds_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
 
-  name        = "sgr-${var.identifier}-rds-001"
-  description = "Security group for the ${var.identifier} RDS database"
+  name        = "sgr-${var.identifier}-${var.environment}-rds-001"
+  description = "Security group for the ${var.identifier}-${var.environment} RDS database"
   vpc_id      = data.aws_vpc.vpc.id
 
   ingress_rules            = ["oracle-db-tcp"]
