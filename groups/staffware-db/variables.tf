@@ -147,6 +147,24 @@ variable "aws_backup_plan_tag" {
   default     = "backup21"
 }
 
+variable "u01_volume_device_name" {
+  type        = string
+  description = "The device node used to attach the volume to the instance"
+  default     = "/dev/sdu"
+}
+
+variable "u01_volume_size" {
+  type        = number
+  description = "The size, in GiB, of the U01 EBS volume"
+  default     = 256
+}
+
+variable "u01_volume_type" {
+  type        = string
+  description = "EBS volume type for the U01 volume"
+  default     = "gp2"
+}
+
 # ------------------------------------------------------------------------------
 # Ansible SSM variables
 # ------------------------------------------------------------------------------

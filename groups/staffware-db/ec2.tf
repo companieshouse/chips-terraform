@@ -92,6 +92,28 @@ resource "aws_instance" "db_ec2" {
   }
 }
 
+resource "aws_ebs_volume" "u01" {
+  count = var.db_instance_count
+
+  availability_zone = aws_instance.db_ec2[count.index].availability_zone
+  encrypted         = true
+  kms_key_id        = data.aws_kms_key.ebs.arn
+  size              = var.u01_volume_size
+  type              = var.u01_volume_type
+
+  tags = {
+    "Name" = format("%s-db-%02d-u01", var.application, count.index + 1)
+  }
+}
+
+resource "aws_volume_attachment" "u01_attachment" {
+  count = var.db_instance_count
+
+  device_name = var.u01_volume_device_name
+  instance_id = aws_instance.db_ec2[count.index].id
+  volume_id   = aws_ebs_volume.u01[count.index].id
+}
+
 resource "aws_route53_record" "db_dns" {
   count = var.db_instance_count
 
