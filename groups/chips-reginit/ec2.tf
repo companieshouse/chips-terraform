@@ -142,6 +142,28 @@ resource "aws_volume_attachment" "ebs_attach" {
 
 }
 
+resource "aws_ebs_volume" "data" {
+count = var.instance_count
+
+availability_zone = aws_instance.reginit_ec2[count.index].availability_zone
+encrypted = true
+kms_key_id = data.aws_kms_key.ebs.arn
+size = var.data_volume_size
+type = var.data_volume_type
+
+tags = {
+  "Name" = format("%s-db-%02d-data", var.application, count.index + 1)
+  }
+}
+
+resource "aws_volume_attachment" "data_attachment" {
+count = var.instance_count
+
+device_name = var.data_volume_device_name
+instance_id = aws_instance.reginit_ec2[count.index].id
+volume_id = aws_ebs_volume.data[count.index].id
+}
+
 resource "aws_route53_record" "reginit_dns" {
   count = var.instance_count
 

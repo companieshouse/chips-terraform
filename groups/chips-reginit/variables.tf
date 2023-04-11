@@ -135,6 +135,24 @@ variable "availability_zones" {
   description = "List of availability zone names (e.g. [eu-west-2a, eu-west-2b]) to deploy instances into, usually to meet constraints such as remote storage locality. Leaving null will deploy across all matching subnets/zones in the provided VPC"
 }
 
+variable "data_volume_device_name" {
+type = string
+description = "The device node used to attach the volume to the instance"
+default = "/dev/sdu"
+}
+
+variable "data_volume_size" {
+type = number
+description = "The size, in GiB, of the data EBS volume"
+default = 14000
+}
+
+variable "data_volume_type" {
+type = string
+description = "EBS volume type for the data volume"
+default = "gp3"
+}
+
 # ------------------------------------------------------------------------------
 # NFS Variables
 # ------------------------------------------------------------------------------
