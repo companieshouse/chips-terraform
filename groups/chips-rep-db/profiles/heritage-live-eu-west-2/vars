@@ -105,7 +105,8 @@ chips_rep_db_sg = [
   "sgr-chips-read-only-asg-001-*",
   "sgr-chips-db-batch-asg-001-*",
   "sgr-windows-workloads-bus-obj-1-server-*",
-  "sgr-gfn-app-001-*"
+  "sgr-gfn-app-001-*",
+  "sgr-chips-reginit-*"
 ]
 
 ## Oracle DB CloudWatch Alarms
