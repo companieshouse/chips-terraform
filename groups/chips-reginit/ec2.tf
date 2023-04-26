@@ -107,7 +107,8 @@ resource "aws_instance" "reginit_ec2" {
       "Name"        = format("%s-%02d", var.application, count.index + 1)
       "Domain"      = local.internal_fqdn,
       "ServiceTeam" = "Platforms/DBA",
-      "Terraform"   = true
+      "Terraform"   = true,
+      "Backup"      = "backup21"
     })
   )
 
@@ -127,6 +128,7 @@ resource "aws_ebs_volume" "u_drive" {
 
   tags = {
     Name = "chips-reginit"
+    Backup = "backup21"
   }
     depends_on = [
     aws_instance.reginit_ec2
