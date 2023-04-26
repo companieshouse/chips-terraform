@@ -144,7 +144,7 @@ default = "/dev/sdu"
 variable "data_volume_size" {
 type = number
 description = "The size, in GiB, of the data EBS volume"
-default = 14000
+default = 7000
 }
 
 variable "data_volume_type" {
