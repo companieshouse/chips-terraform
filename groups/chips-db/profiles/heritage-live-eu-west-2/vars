@@ -17,6 +17,9 @@ db_instance_size = "r5.16xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
+aws_backup_plan_enable = true
+aws_backup_plan_tag = "backup21"
+
 # NFS Mounts
 nfs_server = "192.168.255.35"
 nfs_mount_destination_parent_dir = "/-"
