@@ -19,6 +19,20 @@ data "aws_security_group" "rds_shared" {
   }
 }
 
+data "aws_security_group" "chips_devtest_app" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-chips-devtest-asg-001-*"]
+  }
+}
+
+data "aws_security_group" "iprocess_app" {
+  filter {
+    name   = "group-name"
+    values = ["sgr-iprocess-app-${var.environment}-asg-001-*"]
+  }
+}
+
 data "aws_route53_zone" "private_zone" {
   name         = local.internal_fqdn
   private_zone = true
