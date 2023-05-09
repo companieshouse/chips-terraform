@@ -29,6 +29,26 @@ resource "aws_security_group_rule" "oem_rule" {
   security_group_id = module.rds_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "weblogic_app" {
+  description              = "Weblogic app access to DB"
+  from_port                = 1521
+  to_port                  = 1521
+  protocol                 = "tcp"
+  type                     = "ingress"
+  source_security_group_id = data.aws_security_group.chips_devtest_app.id
+  security_group_id        = module.rds_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "chips_iprocess_app" {
+  description              = "iProcess app access to DB"
+  from_port                = 1521
+  to_port                  = 1521
+  protocol                 = "tcp"
+  type                     = "ingress"
+  source_security_group_id = data.aws_security_group.iprocess_app.id
+  security_group_id        = module.rds_security_group.this_security_group_id
+}
+
 # ------------------------------------------------------------------------------
 # RDS Instance
 # ------------------------------------------------------------------------------
