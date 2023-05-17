@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.183"
+  source = "./chips-app"
 
   application                        = var.application
   application_type                   = "chips"
@@ -76,8 +76,5 @@ module "chips-users-rest" {
     }
   ]
 
-  additional_userdata_suffix = <<-EOT
-  su -l ec2-user weblogic-pre-bootstrap.sh
-  su -l ec2-user bootstrap
-  EOT
+  additional_userdata_suffix = join("\n",concat(var.bootstrap_commands, var.post_bootstrap_commands))
 }

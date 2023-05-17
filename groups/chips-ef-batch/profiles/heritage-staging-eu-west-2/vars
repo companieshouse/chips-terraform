@@ -18,6 +18,11 @@ instance_size = "z1d.large"
 # SNS Topic creation
 enable_sns_topic = true
 
+# Post bootstrap commands
+post_bootstrap_commands = [
+  "su -l ec2-user /home/ec2-user/machineagent/start-appd-machine-agent.sh"
+]
+
 # NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
 
