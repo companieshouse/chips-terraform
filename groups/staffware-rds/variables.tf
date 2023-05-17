@@ -74,7 +74,7 @@ variable "parameter_group_settings" {
   description = "A list of parameters that will be set in the RDS instance parameter group"
 }
 
-variable "rds_access_cidrs" {
+variable "rds_application_access_cidrs" {
   type        = list(string)
   description = "A list of CIDR ranges to allow application access from"
   default     = []
