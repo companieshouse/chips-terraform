@@ -193,3 +193,18 @@ variable "enable_sns_topic" {
   description = "A boolean value to indicate whether to deploy SNS topic configuration for CloudWatch actions"
   default     = false
 }
+
+variable "bootstrap_commands" {
+  type        = list(string)
+  default     = [
+    "su -l ec2-user weblogic-pre-bootstrap.sh",
+    "su -l ec2-user bootstrap"
+  ]
+  description = "List of bootstrap commands to run during the instance startup"
+}
+
+variable "post_bootstrap_commands" {
+  type        = list(string)
+  default     = []
+  description = "List of commands to run after the bootstrap commands on instance startup"
+}

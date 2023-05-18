@@ -72,9 +72,6 @@ module "chips-ef-batch" {
     }
   ]
 
-  additional_userdata_suffix = <<-EOT
-  su -l ec2-user weblogic-pre-bootstrap.sh
-  su -l ec2-user bootstrap
-  EOT
+  additional_userdata_suffix = join("\n",concat(var.bootstrap_commands, var.post_bootstrap_commands))
 
 }
