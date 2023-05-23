@@ -40,6 +40,13 @@ module "db_ec2_security_group" {
       protocol    = "tcp"
       description = "SSH ports"
       cidr_blocks = join(",", local.ssh_allowed_ranges)
+    },
+    {
+      from_port   = 1521
+      to_port     = 1521
+      protocol    = "tcp"
+      description = "Oracle DB port from CHS app subnets"
+      cidr_blocks = join(",", local.chs_subnet_data)
     }
   ]
   egress_rules = ["all-all"]

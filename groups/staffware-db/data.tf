@@ -94,6 +94,10 @@ data "vault_generic_secret" "ssm" {
   path = "aws-accounts/${var.aws_account}/ssm"
 }
 
+data "vault_generic_secret" "chs_subnets" {
+  path = "aws-accounts/network/${var.aws_account}/chs/application-subnets"
+}
+
 data "aws_route53_zone" "private_zone" {
   name         = local.internal_fqdn
   private_zone = true
