@@ -43,6 +43,26 @@ module "db_ec2_security_group" {
     }
   ]
 
+  ingress_with_source_security_group_id = [for group in local.source_security_group_id :
+    {
+      from_port                = 3872
+      to_port                  = 3872
+      protocol                 = "tcp"
+      description              = "For OEM Adgent"
+      source_security_group_id = group
+    }
+  ]
+
+    ingress_with_source_security_group_id = [for group in local.source_security_group_id :
+    {
+      from_port                = 4903
+      to_port                  = 4903
+      protocol                 = "tcp"
+      description              = "For OEM Adgent"
+      source_security_group_id = group
+    }
+  ]
+
   egress_rules = ["all-all"]
 }
 
