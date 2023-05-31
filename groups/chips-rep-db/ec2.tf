@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
  to_port = 3872
  protocol = "tcp"
  security_group_id = var.chips_rep_oem_sg
-},
+}
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
  type = "ingress"
@@ -62,7 +62,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
  to_port = 4903
  protocol = "tcp"
  security_group_id = var.chips_rep_oem_sg
-},
+}
 
 resource "aws_security_group_rule" "OEM SSH" {
  type = "ingress"
