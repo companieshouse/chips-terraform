@@ -308,7 +308,7 @@ variable "chips_rep_db_sg" {
 # OEM SG variables
 # ------------------------------------------------------------------------------
 variable "chips_rep_oem_sg" {
-  type        = list(any)
+  type        = string
   description = "OEM Security Group"
   default     = []
 }
