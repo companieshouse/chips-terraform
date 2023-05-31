@@ -111,6 +111,8 @@ chips_rep_db_sg = [
   "sgr-chips-oltp-logstb-db-ec2-001-*"
 ]
 
+# OEM Security Group
+
 chips_rep_oem_sg = [
 "sgr-chips-oem-ec2-001-*"
 ]
