@@ -111,6 +111,9 @@ chips_rep_db_sg = [
   "sgr-chips-oltp-logstb-db-ec2-001-*"
 ]
 
+chips_rep_oem_sg = [
+"sgr-chips-oem-ec2-001-*"
+]
 
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVT14RP"
