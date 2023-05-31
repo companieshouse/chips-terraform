@@ -299,7 +299,7 @@ variable "netapp_ips" {
 # CHIPS DB SG variables
 # ------------------------------------------------------------------------------
 variable "chips_rep_db_sg" {
-  type        = list(any)
+  type        = list(string)
   description = "List of CHIPS DB REP Security Groups"
   default     = []
 }
@@ -308,7 +308,7 @@ variable "chips_rep_db_sg" {
 # OEM SG variables
 # ------------------------------------------------------------------------------
 variable "chips_rep_oem_sg" {
-  type        = list(string)
+  type        = list(any)
   description = "OEM Security Group"
   default     = []
 }
