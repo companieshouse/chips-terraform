@@ -52,7 +52,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
  from_port = 3872
  to_port = 3872
  protocol = "tcp"
- security_group_id = var.chips_rep_oem_sg
+ security_group_id = "${var.chips_rep_oem_sg}"
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -61,7 +61,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
  from_port = 4903
  to_port = 4903
  protocol = "tcp"
- security_group_id = var.chips_rep_oem_sg
+ security_group_id = "${var.chips_rep_oem_sg}"
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
  from_port = 22
  to_port = 2
  protocol = "tcp"
- security_group_id = var.chips_rep_oem_sg
+ security_group_id = "${var.chips_rep_oem_sg}"
 }
 
 # ------------------------------------------------------------------------------
