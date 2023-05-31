@@ -64,7 +64,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
  security_group_id = var.chips_rep_oem_sg
 }
 
-resource "aws_security_group_rule" "OEM SSH" {
+resource "aws_security_group_rule" "OEM_SSH" {
  type = "ingress"
  description = "OEM SSH"
  from_port = 22
