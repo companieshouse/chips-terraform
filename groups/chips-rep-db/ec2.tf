@@ -46,31 +46,38 @@ module "db_ec2_security_group" {
   egress_rules = ["all-all"]
 }
 
+# ------------------------------------------------------------------------------
+# OEM agent 
+# ------------------------------------------------------------------------------
+
 resource "aws_security_group_rule" "Oracle_Management_Agent" {
- type = "ingress"
- description = "Oracle Management Agent"
- from_port = 3872
- to_port = 3872
- protocol = "tcp"
- security_group_id = "${var.chips_rep_oem_sg}"
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 3872
+  to_port                  = 3872
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
- type = "ingress"
- description = "Enterprise Manager Upload Http SSL"
- from_port = 4903
- to_port = 4903
- protocol = "tcp"
- security_group_id = "${var.chips_rep_oem_sg}"
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 4903
+  to_port                  = 4903
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
- type = "ingress"
- description = "OEM SSH"
- from_port = 22
- to_port = 2
- protocol = "tcp"
- security_group_id = "${var.chips_rep_oem_sg}"
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
