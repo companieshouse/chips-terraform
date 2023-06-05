@@ -111,6 +111,40 @@
 }
 
 # ------------------------------------------------------------------------------
+# OEM agent 
+# ------------------------------------------------------------------------------
+
+resource "aws_security_group_rule" "Oracle_Management_Agent" {
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 3872
+  to_port                  = 3872
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 4903
+  to_port                  = 4903
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "OEM_SSH" {
+  type                     = "ingress"
+  description              = "Oracle Management Agent"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
+}
+
+# ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
 resource "aws_instance" "oem_ec2" {

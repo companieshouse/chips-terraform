@@ -113,3 +113,10 @@ data "template_cloudinit_config" "userdata_config" {
 data "vault_generic_secret" "chs_subnet" {
   path = "aws-accounts/network/${var.aws_account}/chs/application-subnets"
 }
+
+data "aws_security_group" "oem" {
+  filter {
+    name   = "tag:Name"
+    values = [var.chips_rep_oem_sg]
+  }
+}
