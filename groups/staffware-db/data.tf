@@ -140,3 +140,10 @@ data "aws_security_group" "staffware_sg" {
     values = [each.value]
   }
 }
+
+data "aws_security_group" "oem" {
+  filter {
+    name   = "tag:Name"
+    values = [var.chips_rep_oem_sg]
+  }
+}
