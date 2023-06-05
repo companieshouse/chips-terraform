@@ -329,3 +329,12 @@ variable "db_instance_shortname" {
   type        = string
   description = "The shortname or SID for the Oracle DB instance"
 }
+
+# ------------------------------------------------------------------------------
+# OEM SG variables
+# ------------------------------------------------------------------------------
+variable "chips_rep_oem_sg" {
+  type        = string
+  description = "OEM Security Group"
+  default     = ""
+}
