@@ -144,3 +144,10 @@ data "aws_security_group" "chips_rep_sg" {
     values = [each.value]
   }
 }
+
+data "aws_security_group" "oem" {
+  filter {
+    name   = "tag:Name"
+    values = [var.chips_rep_oem_sg]
+  }
+}
