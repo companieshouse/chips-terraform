@@ -112,6 +112,9 @@ chips_db_sg = [
   "sgr-chips-oltp-logstb-db-ec2*"
 ]
 
+# OEM Security Group
+chips_rep_oem_sg = "sgr-chips-oem-ec2-001"
+
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVT14"
 alarm_actions_enabled  = false
