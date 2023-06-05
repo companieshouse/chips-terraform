@@ -269,3 +269,12 @@ variable "chips_db_sg" {
   description = "List of CHIPS DB Security Groups"
   default     = []
 }
+
+# ------------------------------------------------------------------------------
+# OEM SG variables
+# ------------------------------------------------------------------------------
+variable "chips_rep_oem_sg" {
+  type        = string
+  description = "OEM Security Group"
+  default     = ""
+}
