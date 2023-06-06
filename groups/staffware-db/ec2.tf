@@ -86,6 +86,16 @@ resource "aws_security_group_rule" "OEM_SSH" {
   security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "OEM_listener" {
+  type                     = "ingress"
+  description              = "Oracle listener"
+  from_port                = 1521
+  to_port                  = 1522
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.oem.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
+}
+
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
