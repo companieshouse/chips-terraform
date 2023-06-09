@@ -49,7 +49,7 @@ data "aws_ami" "oracle_12" {
 }
 
 data "vault_generic_secret" "internal_cidrs" {
-  path = "aws-accounts/network/internal_cidr_ranges"
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/db/ec2/db_cidr_ranges"
 }
 
 data "vault_generic_secret" "ec2_data" {
