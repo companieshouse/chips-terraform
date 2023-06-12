@@ -33,7 +33,7 @@
       to_port     = 4908
       protocol    = "tcp"
       description = "Enterprise Manager Upload HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges, local.http_allowed_ranges)
+      cidr_blocks = join(",", local.oem_allowed_ranges)
     },
     {
       from_port   = 3872
@@ -47,7 +47,7 @@
       to_port     = 7809
       protocol    = "tcp"
       description = "Cloud Control Console HTTPS"
-      cidr_blocks = join(",", local.oem_allowed_ranges)
+      cidr_blocks = join(",", local.oem_allowed_ranges, local.http_allowed_ranges)
     },
     {
       from_port   = 7101
