@@ -4,6 +4,7 @@
 locals {
   internal_cidrs = split(",", local.ec2_data["db_cidr_ranges"])
   ssh_internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
+  http_internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
 
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
 
@@ -31,6 +32,7 @@ locals {
 
   oem_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oem)
   ssh_allowed_ranges    = concat(local.ssh_internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
+  http_allowed_ranges   = concat(local.http_internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
