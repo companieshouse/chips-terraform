@@ -112,6 +112,9 @@ chips_rep_db_sg = [
   "sgr-chips-reginit-*"
 ]
 
+# OEM Security Group
+chips_rep_oem_sg = "sgr-chips-oem-ec2-001"
+
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVP1REP"
 alarm_actions_enabled  = true
