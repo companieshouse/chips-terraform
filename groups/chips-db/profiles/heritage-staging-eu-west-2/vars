@@ -113,7 +113,7 @@ chips_db_sg = [
 ]
 
 # OEM Security Group
-chips_rep_oem_sg = "sgr-chips-oem-ec2-001"
+chips_oltp_oem_sg = "sgr-chips-oem-ec2-001"
 
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVT14"

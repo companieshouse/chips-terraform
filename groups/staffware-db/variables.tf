@@ -277,7 +277,7 @@ variable "staffware_db_sg" {
 # ------------------------------------------------------------------------------
 # OEM SG variables
 # ------------------------------------------------------------------------------
-variable "chips_rep_oem_sg" {
+variable "chips_staff_oem_sg" {
   type        = string
   description = "OEM Security Group"
   default     = ""

@@ -108,8 +108,7 @@ chips_rep_db_sg = [
   "sgr-chips-read-only-asg-001-*",
   "sgr-chips-db-batch-asg-001-*",
   "sgr-windows-workloads-bus-obj-2-server-*",
-  "sgr-chips-oltp-logstb-db-ec2-001-*",
-  "sgr-chips-oem-ec2-001-*"
+  "sgr-chips-oltp-logstb-db-ec2-001-*"
 ]
 
 # OEM Security Group
