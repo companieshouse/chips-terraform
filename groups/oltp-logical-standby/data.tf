@@ -133,6 +133,6 @@ data "vault_generic_secret" "chs_subnet" {
 data "aws_security_group" "oem" {
   filter {
     name   = "tag:Name"
-    values = [var.chips_rep_oem_sg]
+    values = [var.chips_logsb_oem_sg]
   }
 }
