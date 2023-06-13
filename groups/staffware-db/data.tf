@@ -144,6 +144,6 @@ data "aws_security_group" "staffware_sg" {
 data "aws_security_group" "oem" {
   filter {
     name   = "tag:Name"
-    values = [var.chips_rep_oem_sg]
+    values = [var.chips_staff_oem_sg]
   }
 }
