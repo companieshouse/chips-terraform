@@ -26,6 +26,8 @@ maintenance_window_schedule_expression = "cron(00 01 ? * SUN *)"
 
 netapp_ips = ["10.84.9.97", "10.84.9.211"]
 
+# OEM Security Group
+chips_oltp_oem_sg = "sgr-chips-oem-ec2-001"
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs
