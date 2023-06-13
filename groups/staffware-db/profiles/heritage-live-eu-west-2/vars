@@ -96,6 +96,9 @@ staffware_db_sg = [
   "sgr-windows-workloads-bus-obj-1-server*"
 ]
 
+# OEM Security Group
+chips_staff_oem_sg = "sgr-chips-oem-ec2-001"
+
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "STAFLIVE"
 alarm_actions_enabled  = true

@@ -112,6 +112,9 @@ chips_db_sg = [
   "sgr-bcd-rds-001-*"
 ]
 
+# OEM Security Group
+chips_oltp_oem_sg = "sgr-chips-oem-ec2-001"
+
 ## Oracle DB CloudWatch Alarms
 db_instance_shortname  = "ENVP1"
 alarm_actions_enabled  = true

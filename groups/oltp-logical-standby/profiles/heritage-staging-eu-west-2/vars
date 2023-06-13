@@ -58,7 +58,7 @@ chips_db_sg = [
 ]
 
 # OEM Security Group
-chips_rep_oem_sg = "sgr-chips-oem-ec2-001"
+chips_logsb_oem_sg = "sgr-chips-oem-ec2-001"
 
 ############################################
 # Log entries to be aggregated in Cloudwatch Logs

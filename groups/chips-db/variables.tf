@@ -333,7 +333,7 @@ variable "db_instance_shortname" {
 # ------------------------------------------------------------------------------
 # OEM SG variables
 # ------------------------------------------------------------------------------
-variable "chips_rep_oem_sg" {
+variable "chips_oltp_oem_sg" {
   type        = string
   description = "OEM Security Group"
   default     = ""
