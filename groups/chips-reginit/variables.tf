@@ -275,3 +275,12 @@ variable "chips_reginit_sg" {
   description = "List of CHIPS reginit Security Groups"
   default     = []
 }
+
+# ------------------------------------------------------------------------------
+# OEM SG variables
+# ------------------------------------------------------------------------------
+variable "chips_reg_oem_sg" {
+  type        = string
+  description = "OEM Security Group"
+  default     = ""
+}
