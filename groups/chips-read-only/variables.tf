@@ -77,6 +77,12 @@ variable "asg_count" {
   description = "The number of ASGs - typically 1 for dev and 2 for staging/live"
 }
 
+variable "ami_name" {
+  type        = string
+  default     = "docker-ami-*"
+  description = "Name of the AMI to use in the Auto Scaling configuration"
+}
+
 variable "enable_instance_refresh" {
   type        = bool
   default     = false
