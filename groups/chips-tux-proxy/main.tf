@@ -37,6 +37,7 @@ module "chips-tux-proxy" {
   account                            = var.account
   region                             = var.region
   environment                        = var.environment
+  ami_name                           = var.ami_name
   asg_count                          = var.asg_count
   instance_size                      = var.instance_size
   enable_instance_refresh            = var.enable_instance_refresh
