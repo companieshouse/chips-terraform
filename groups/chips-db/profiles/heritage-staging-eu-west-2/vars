@@ -109,7 +109,8 @@ chips_db_sg = [
   "sgr-chips-uam-ec2-001-*",
   "sgr-bcd-rds-001-*",
   "sgr-ewf-rds-001-*",
-  "sgr-chips-oltp-logstb-db-ec2*"
+  "sgr-chips-oltp-logstb-db-ec2*",
+  "sgr-chips-dba-dev-db-ec2-001-*"
 ]
 
 # OEM Security Group
