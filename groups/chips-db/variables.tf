@@ -201,6 +201,11 @@ variable "rman2_volume_type" {
   default     = "gp3"
 }
 
+variable "create_rman_volumes" {
+  type        = bool
+  description = "Defines whether RMAN volumes are created (true) or not (false)"
+  default     = false
+}
 
 # ------------------------------------------------------------------------------
 # NFS Variables

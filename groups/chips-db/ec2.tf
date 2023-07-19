@@ -182,7 +182,7 @@ resource "aws_volume_attachment" "u01_attachment" {
 }
 
 resource "aws_ebs_volume" "rman1" {
-  count = 1
+  count = var.create_rman_volumes ? 1 : 0
 
   availability_zone = aws_instance.db_ec2[count.index].availability_zone
   encrypted         = true
@@ -196,7 +196,7 @@ resource "aws_ebs_volume" "rman1" {
 }
 
 resource "aws_volume_attachment" "rman1_attachment" {
-  count = 1
+  count = var.create_rman_volumes ? 1 : 0
 
   device_name = var.rman1_volume_device_name
   instance_id = aws_instance.db_ec2[count.index].id
@@ -204,7 +204,7 @@ resource "aws_volume_attachment" "rman1_attachment" {
 }
 
 resource "aws_ebs_volume" "rman2" {
-  count = 1
+  count = var.create_rman_volumes ? 1 : 0
 
   availability_zone = aws_instance.db_ec2[count.index].availability_zone
   encrypted         = true
@@ -218,7 +218,7 @@ resource "aws_ebs_volume" "rman2" {
 }
 
 resource "aws_volume_attachment" "rman2_attachment" {
-  count = 1
+  count = var.create_rman_volumes ? 1 : 0
 
   device_name = var.rman2_volume_device_name
   instance_id = aws_instance.db_ec2[count.index].id
