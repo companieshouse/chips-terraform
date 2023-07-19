@@ -181,6 +181,50 @@ resource "aws_volume_attachment" "u01_attachment" {
   volume_id   = aws_ebs_volume.u01[count.index].id
 }
 
+resource "aws_ebs_volume" "rman1" {
+  count = var.db_instance_count
+
+  availability_zone = aws_instance.db_ec2[count.index].availability_zone
+  encrypted         = true
+  kms_key_id        = data.aws_kms_key.ebs.arn
+  size              = var.rman1_volume_size
+  type              = var.rman1_volume_type
+
+  tags = {
+    "Name" = format("%s-db-%02d-rman1", var.application, count.index + 1)
+  }
+}
+
+resource "aws_volume_attachment" "rman1_attachment" {
+  count = var.db_instance_count
+
+  device_name = var.rman1_volume_device_name
+  instance_id = aws_instance.db_ec2[count.index].id
+  volume_id   = aws_ebs_volume.rman1[count.index].id
+}
+
+resource "aws_ebs_volume" "rman2" {
+  count = var.db_instance_count
+
+  availability_zone = aws_instance.db_ec2[count.index].availability_zone
+  encrypted         = true
+  kms_key_id        = data.aws_kms_key.ebs.arn
+  size              = var.rman2_volume_size
+  type              = var.rman2_volume_type
+
+  tags = {
+    "Name" = format("%s-db-%02d-rman2", var.application, count.index + 1)
+  }
+}
+
+resource "aws_volume_attachment" "rman2_attachment" {
+  count = var.db_instance_count
+
+  device_name = var.rman2_volume_device_name
+  instance_id = aws_instance.db_ec2[count.index].id
+  volume_id   = aws_ebs_volume.rman1[count.index].id
+}
+
 resource "aws_route53_record" "db_dns" {
   count = var.db_instance_count
 

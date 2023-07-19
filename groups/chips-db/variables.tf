@@ -165,6 +165,42 @@ variable "u01_volume_type" {
   default     = "gp2"
 }
 
+variable "rman1_volume_device_name" {
+  type        = string
+  description = "The device node used to attach the volume to the instance"
+  default     = "/dev/sdv"
+}
+
+variable "rman1_volume_size" {
+  type        = number
+  description = "The size, in GiB, of the rman1 EBS volume"
+  default     = 16000
+}
+
+variable "rman1_volume_type" {
+  type        = string
+  description = "EBS volume type for the rman1 volume"
+  default     = "gp3"
+}
+
+variable "rman2_volume_device_name" {
+  type        = string
+  description = "The device node used to attach the volume to the instance"
+  default     = "/dev/sdw"
+}
+
+variable "rman2_volume_size" {
+  type        = number
+  description = "The size, in GiB, of the rman2 EBS volume"
+  default     = 16000
+}
+
+variable "rman2_volume_type" {
+  type        = string
+  description = "EBS volume type for the rman2 volume"
+  default     = "gp3"
+}
+
 
 # ------------------------------------------------------------------------------
 # NFS Variables
