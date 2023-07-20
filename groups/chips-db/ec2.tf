@@ -189,6 +189,7 @@ resource "aws_ebs_volume" "rman1" {
   kms_key_id        = data.aws_kms_key.ebs.arn
   size              = var.rman1_volume_size
   type              = var.rman1_volume_type
+  throughput        = 500
 
   tags = {
     "Name" = format("%s-db-%02d-rman1", var.application, count.index + 1)
@@ -211,6 +212,7 @@ resource "aws_ebs_volume" "rman2" {
   kms_key_id        = data.aws_kms_key.ebs.arn
   size              = var.rman2_volume_size
   type              = var.rman2_volume_type
+  throughput        = 500
 
   tags = {
     "Name" = format("%s-db-%02d-rman2", var.application, count.index + 1)

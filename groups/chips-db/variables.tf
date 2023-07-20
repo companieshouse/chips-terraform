@@ -168,7 +168,7 @@ variable "u01_volume_type" {
 variable "rman1_volume_device_name" {
   type        = string
   description = "The device node used to attach the volume to the instance"
-  default     = "/dev/sdv"
+  default     = "/dev/sdx"
 }
 
 variable "rman1_volume_size" {
@@ -186,7 +186,7 @@ variable "rman1_volume_type" {
 variable "rman2_volume_device_name" {
   type        = string
   description = "The device node used to attach the volume to the instance"
-  default     = "/dev/sdw"
+  default     = "/dev/sdy"
 }
 
 variable "rman2_volume_size" {
