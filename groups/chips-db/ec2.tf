@@ -224,7 +224,7 @@ resource "aws_volume_attachment" "rman2_attachment" {
 
   device_name = var.rman2_volume_device_name
   instance_id = aws_instance.db_ec2[count.index].id
-  volume_id   = aws_ebs_volume.rman1[count.index].id
+  volume_id   = aws_ebs_volume.rman2[count.index].id
 }
 
 resource "aws_route53_record" "db_dns" {
