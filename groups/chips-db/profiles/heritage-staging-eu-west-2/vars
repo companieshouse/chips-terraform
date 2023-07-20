@@ -121,3 +121,6 @@ db_instance_shortname  = "ENVT14"
 alarm_actions_enabled  = false
 alarm_topic_name       = ""
 alarm_topic_name_ooh   = ""
+
+# RMAN disk
+create_rman_volumes = true
