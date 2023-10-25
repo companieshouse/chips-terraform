@@ -3,10 +3,23 @@
 # ------------------------------------------------------------------------------
 data "aws_caller_identity" "current" {}
 
+data "aws_ec2_managed_prefix_list" "vpn" {
+  filter {
+    name   = "prefix-list-name"
+    values = [var.vpn_prefix_list_name]
+  }
+}
+
+data "aws_ec2_managed_prefix_list" "on_premise" {
+  filter {
+    name   = "prefix-list-name"
+    values = [var.on_premise_prefix_list_name]
+  }
+}
+
 data "vault_generic_secret" "account_ids" {
   path = "aws-accounts/account-ids"
 }
-
 
 data "aws_subnet_ids" "data" {
   vpc_id = data.aws_vpc.vpc.id

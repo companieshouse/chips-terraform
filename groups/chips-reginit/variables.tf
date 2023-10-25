@@ -29,6 +29,18 @@ variable "aws_account" {
   description = "The name of the AWS Account in which resources will be administered"
 }
 
+variable "on_premise_prefix_list_name" {
+  type        = string
+  description = "Name of the vpn prefix list to lookup"
+  default     = "vpn-cidr-ranges"
+}
+
+variable "vpn_prefix_list_name" {
+  type        = string
+  description = "Name of the vpn prefix list to lookup"
+  default     = "on-premise-cidr-ranges"
+}
+
 # ------------------------------------------------------------------------------
 # AWS Variables - Shorthand
 # ------------------------------------------------------------------------------
