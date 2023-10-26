@@ -14,6 +14,7 @@ variable "vault_password" {
 # ------------------------------------------------------------------------------
 # AWS Variables
 # ------------------------------------------------------------------------------
+
 variable "aws_region" {
   type        = string
   description = "The AWS region in which resources will be administered"
@@ -59,7 +60,6 @@ variable "region" {
 # Application Variables
 # ------------------------------------------------------------------------------
 
-
 variable "application" {
   type        = string
   description = "The name of the application"
@@ -76,10 +76,10 @@ variable "domain_name" {
   description = "Domain Name for ACM Certificate"
 }
 
-
 # ------------------------------------------------------------------------------
 # EC2 Variables
 # ------------------------------------------------------------------------------
+
 variable "ami_name" {
   type        = string
   default     = "oracle-12-*"
@@ -92,21 +92,70 @@ variable "ami_id" {
   default     = null
 }
 
-variable "vpc_sg_cidr_blocks_reginit" {
-  type        = list(any)
-  description = "Security group cidr blocks for reginit"
-  default     = []
-}
-
-variable "vpc_sg_cidr_blocks_ssh" {
-  type        = list(any)
-  description = "Security group cidr blocks for ssh"
-  default     = []
+variable "reginit_ingress_rules" {
+  type = list(object({
+    from_port   = number,
+    to_port     = number,
+    protocol    = string,
+    description = string,
+  }))
+  description = "A list of objects representing ingress rules to apply to reginit instances"
+  default = [
+    {
+      from_port   = 1521
+      to_port     = 1521
+      protocol    = "tcp"
+      description = "Oracle"
+    },
+    {
+      from_port   = 1830
+      to_port     = 1830
+      protocol    = "tcp"
+      description = "Agent port is unidirectional, OMS to Agent"
+    },
+    {
+      from_port   = 3872
+      to_port     = 3872
+      protocol    = "tcp"
+      description = "Agent port is unidirectional, OMS to Agent"
+    },
+    {
+      from_port   = 1159
+      to_port     = 1159
+      protocol    = "tcp"
+      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
+    },
+    {
+      from_port   = 4889
+      to_port     = 4889
+      protocol    = "tcp"
+      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
+    },
+    {
+      from_port   = 7799
+      to_port     = 7799
+      protocol    = "tcp"
+      description = "User browser host to OMS host through port 7799 for EM 13.5 console HTTPS access, unidirectional"
+    },
+    {
+      from_port   = 7101
+      to_port     = 7101
+      protocol    = "tcp"
+      description = "User browser host to OMS host for WebLogic Server Admin Console access through port 7101, unidirectional"
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "The OMS transfers Agent software to a target server in an Agent Push deployment through this standard OS SSH port, unidirectional"
+    }
+  ]
 }
 
 # ------------------------------------------------------------------------------
 # EC2 Variables
 # ------------------------------------------------------------------------------
+
 variable "instance_size" {
   type        = string
   description = "The size of the ec2 instances"
@@ -148,21 +197,21 @@ variable "availability_zones" {
 }
 
 variable "data_volume_device_name" {
-type = string
-description = "The device node used to attach the volume to the instance"
-default = "/dev/sdu"
+  type        = string
+  description = "The device node used to attach the volume to the instance"
+  default     = "/dev/sdu"
 }
 
 variable "data_volume_size" {
-type = number
-description = "The size, in GiB, of the data EBS volume"
-default = 7000
+  type        = number
+  description = "The size, in GiB, of the data EBS volume"
+  default     = 7000
 }
 
 variable "data_volume_type" {
-type = string
-description = "EBS volume type for the data volume"
-default = "gp3"
+  type        = string
+  description = "EBS volume type for the data volume"
+  default     = "gp3"
 }
 
 # ------------------------------------------------------------------------------
