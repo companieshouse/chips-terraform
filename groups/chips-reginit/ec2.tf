@@ -1,83 +1,26 @@
-
 # ------------------------------------------------------------------------------
-# EC2 Sec Group
+# Security group rules
 # ------------------------------------------------------------------------------
 
-  module "reginit_security_group" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
-
+resource "aws_security_group" "reginit" {
   name        = "sgr-${var.application}-ec2-001"
   description = "Security group for the CHIPS Reginit EC2 instance"
   vpc_id      = data.aws_vpc.vpc.id
-
-  ingress_with_self = [
-    {
-      rule = "all-all"
-    }
-  ]
-
-  ingress_cidr_blocks = local.reginit_allowed_ranges
-  ingress_rules       = ["oracle-db-tcp"]
-
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 1830
-      to_port     = 1830
-      protocol    = "tcp"
-      description = "Agent port is unidirectional, OMS to Agent"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 3872
-      to_port     = 3872
-      protocol    = "tcp"
-      description = "Agent port is unidirectional, OMS to Agent"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 1159
-      to_port     = 1159
-      protocol    = "tcp"
-      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 4889
-      to_port     = 4889
-      protocol    = "tcp"
-      description = "Agent or target host communication to OMS host, unidirectional, Agent to OMS"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 7799
-      to_port     = 7799
-      protocol    = "tcp"
-      description = "User browser host to OMS host through port 7799 for EM 13.5 console HTTPS access, unidirectional"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 7101
-      to_port     = 7101
-      protocol    = "tcp"
-      description = "User browser host to OMS host for WebLogic Server Admin Console access through port 7101, unidirectional"
-      cidr_blocks = join(",", local.reginit_allowed_ranges)
-    },
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "The OMS transfers Agent software to a target server in an Agent Push deployment through this standard OS SSH port, unidirectional"
-      cidr_blocks = join(",", local.ssh_allowed_ranges)
-    }
-  ]
-
-  egress_rules = ["all-all"]
 }
 
-# ------------------------------------------------------------------------------
-# OEM agent 
-# ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "reginit_ingress" {
+  for_each = {
+    for rule in var.reginit_ingress_rules : "${rule.protocol}_${rule.from_port}_${rule.to_port}" => rule
+  }
+
+  type              = "ingress"
+  description       = each.value.description
+  from_port         = each.value.from_port
+  to_port           = each.value.to_port
+  protocol          = each.value.protocol
+  security_group_id = aws_security_group.reginit.id
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.vpn.id, data.aws_ec2_managed_prefix_list.on_premise.id]
+}
 
 resource "aws_security_group_rule" "Oracle_Management_Agent" {
   type                     = "ingress"
@@ -86,7 +29,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
   to_port                  = 3872
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.reginit_security_group.this_security_group_id
+  security_group_id        = aws_security_group.reginit.id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -96,7 +39,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
   to_port                  = 4903
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.reginit_security_group.this_security_group_id
+  security_group_id        = aws_security_group.reginit.id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -106,7 +49,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
   to_port                  = 22
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.reginit_security_group.this_security_group_id
+  security_group_id        = aws_security_group.reginit.id
 }
 
 resource "aws_security_group_rule" "OEM_listener" {
@@ -116,12 +59,13 @@ resource "aws_security_group_rule" "OEM_listener" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.reginit_security_group.this_security_group_id
+  security_group_id        = aws_security_group.reginit.id
 }
 
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
+
 resource "aws_instance" "reginit_ec2" {
   count = var.instance_count
 
@@ -135,7 +79,7 @@ resource "aws_instance" "reginit_ec2" {
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.reginit_security_group.this_security_group_id
+    aws_security_group.reginit.id
   ]
 
   root_block_device {
@@ -166,15 +110,15 @@ resource "aws_instance" "reginit_ec2" {
 
 resource "aws_ebs_volume" "u_drive" {
   availability_zone = "eu-west-2a"
-  size = 256
-  type = "gp3"
-  encrypted = true
+  size              = 256
+  type              = "gp3"
+  encrypted         = true
 
   tags = {
-    Name = "chips-reginit"
+    Name   = "chips-reginit"
     Backup = "backup21"
   }
-    depends_on = [
+  depends_on = [
     aws_instance.reginit_ec2
   ]
 }
@@ -189,25 +133,25 @@ resource "aws_volume_attachment" "ebs_attach" {
 }
 
 resource "aws_ebs_volume" "data" {
-count = var.instance_count
+  count = var.instance_count
 
-availability_zone = aws_instance.reginit_ec2[count.index].availability_zone
-encrypted = true
-kms_key_id = data.aws_kms_key.ebs.arn
-size = var.data_volume_size
-type = var.data_volume_type
+  availability_zone = aws_instance.reginit_ec2[count.index].availability_zone
+  encrypted         = true
+  kms_key_id        = data.aws_kms_key.ebs.arn
+  size              = var.data_volume_size
+  type              = var.data_volume_type
 
-tags = {
-  "Name" = format("%s-db-%02d-data", var.application, count.index + 1)
+  tags = {
+    "Name" = format("%s-db-%02d-data", var.application, count.index + 1)
   }
 }
 
 resource "aws_volume_attachment" "data_attachment" {
-count = var.instance_count
+  count = var.instance_count
 
-device_name = var.data_volume_device_name
-instance_id = aws_instance.reginit_ec2[count.index].id
-volume_id = aws_ebs_volume.data[count.index].id
+  device_name = var.data_volume_device_name
+  instance_id = aws_instance.reginit_ec2[count.index].id
+  volume_id   = aws_ebs_volume.data[count.index].id
 }
 
 resource "aws_route53_record" "reginit_dns" {
@@ -219,4 +163,3 @@ resource "aws_route53_record" "reginit_dns" {
   ttl     = "300"
   records = [aws_instance.reginit_ec2[count.index].private_ip]
 }
-
