@@ -112,6 +112,32 @@ resource "aws_security_group_rule" "OEM_listener" {
   security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "test_access" {
+  count = length(var.test_access_cidrs) > 0 ? {
+    for idx, cidr in var.test_access_cidrs : idx => cidr
+  } : {}
+
+  type        = "ingress"
+  description = "Test access"
+  from_port   = 1522
+  to_port     = 1522
+  protocol    = "tcp"
+  cidr_blocks = [each.value]
+}
+
+resource "aws_security_group_rule" "sp_migration" {
+  count = length(var.sp_migration_cidrs) > 0 ? {
+    for idx, cidr in var.sp_migration_cidrs : idx => cidr
+  } : {}
+
+  type        = "ingress"
+  description = "SP migration access"
+  from_port   = 1521
+  to_port     = 1522
+  protocol    = "tcp"
+  cidr_blocks = [each.value]
+}
+
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
