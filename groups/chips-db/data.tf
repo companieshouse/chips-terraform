@@ -147,3 +147,7 @@ data "aws_security_group" "oem" {
     values = [var.chips_oltp_oem_sg]
   }
 }
+
+data "vault_generic_secret" "migration_cidrs" {
+  path = "applications/${aws_profile}/${application}/migration_cidrs"
+}
