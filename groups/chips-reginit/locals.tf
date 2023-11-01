@@ -2,11 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  internal_cidrs = concat(
-    data.aws_ec2_managed_prefix_list.vpn.entries[*].cidr,
-    data.aws_ec2_managed_prefix_list.on_premise.entries[*].cidr
-  )
-
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
 
   deployment_zones = var.availability_zones == null ? [for _, map in data.aws_subnet.data_subnets : map["availability_zone"]] : var.availability_zones
@@ -30,9 +25,6 @@ locals {
   backup_bucket_name          = "chips-rep-backup-heritage-live-eu-west-2"
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
-
-  reginit_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_reginit)
-  ssh_allowed_ranges     = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
