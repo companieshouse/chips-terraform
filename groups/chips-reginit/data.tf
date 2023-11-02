@@ -129,3 +129,7 @@ data "aws_security_group" "oem" {
     values = [var.chips_reg_oem_sg]
   }
 }
+
+data "vault_generic_secret" "sns_url" {
+  path = "applications/${var.aws_account}-${var.aws_region}/monitoring"
+}
