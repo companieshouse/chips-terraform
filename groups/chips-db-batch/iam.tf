@@ -8,6 +8,7 @@ module "instance_profile" {
 
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
+    "alias/kms-bulk-gateway-${var.environment}-sftp",
     local.ssm_kms_key_id
   ]
 
@@ -64,6 +65,30 @@ module "instance_profile" {
       resources = ["arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/chips/*"],
       actions = [
         "ssm:GetParameter*"
+      ]
+    },
+    {
+      sid    = "AllowAccessToBulkGatewayBuckets",
+      effect = "Allow",
+      resources = [
+        "arn:aws:s3:::${local.adhoc_bucket_name}/*",
+        "arn:aws:s3:::${local.adhoc_bucket_name}",
+        "arn:aws:s3:::${local.archive_bucket_name}/*",
+        "arn:aws:s3:::${local.archive_bucket_name}",
+        "arn:aws:s3:::${local.free_bucket_name}/*",
+        "arn:aws:s3:::${local.free_bucket_name}",
+        "arn:aws:s3:::${local.search_bucket_name}/*",
+        "arn:aws:s3:::${local.search_bucket_name}",
+        "arn:aws:s3:::${local.secure_bucket_name}/*",
+        "arn:aws:s3:::${local.secure_bucket_name}"
+      ],
+      actions = [
+        "s3:ListBucket",
+        "s3:PutObject",
+        "s3:PutObjectAcl",
+        "s3:GetObject",
+        "s3:GetObjectAcl",
+        "s3:DeleteObject"
       ]
     },
     {

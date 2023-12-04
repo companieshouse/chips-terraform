@@ -11,10 +11,15 @@ locals {
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
   sns_kms_key_id         = local.kms_keys_data["sns"]
+  bulk_gateway_s3_data   = data.vault_generic_secret.bulk_gateway_s3.data
 
   security_s3_data            = data.vault_generic_secret.security_s3_buckets.data
   session_manager_bucket_name = local.security_s3_data["session-manager-bucket-name"]
-
+  secure_bucket_name          = local.bulk_gateway_s3_data["secure_bucket_name"]
+  search_bucket_name          = local.bulk_gateway_s3_data["search_bucket_name"]
+  free_bucket_name            = local.bulk_gateway_s3_data["free_bucket_name"]
+  archive_bucket_name         = local.bulk_gateway_s3_data["archive_bucket_name"]
+  adhoc_bucket_name           = local.bulk_gateway_s3_data["adhoc_bucket_name"]
   nfs_mounts = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
 
   #For each log map passed, add an extra kv for the log group name and append the NFS directory into the filepath where required
