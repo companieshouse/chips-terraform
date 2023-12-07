@@ -128,12 +128,13 @@ data "template_file" "userdata" {
   template = file("${path.module}/templates/user_data.tpl")
 
   vars = {
-    APPLICATION               = var.component
-    HERITAGE_ENVIRONMENT      = title(var.environment)
-    R53_ZONEID                = data.aws_route53_zone.private_zone.zone_id
-    IPROCESS_APP_INPUTS       = jsonencode(local.iprocess_app_deployment_ansible_inputs)
-    IPROCESS_TNS_INPUTS       = jsonencode(local.iprocess_tnsnames_inputs)
-    IPROCESS_STAFF_DAT_INPUTS = jsonencode(local.iprocess_staff_dat_inputs)
+    APPLICATION                    = var.component
+    HERITAGE_ENVIRONMENT           = title(var.environment)
+    REGION                         = var.aws_region
+    R53_ZONEID                     = data.aws_route53_zone.private_zone.zone_id
+    DEPLOYMENT_ANSIBLE_INPUTS_PATH = "${local.parameter_store_path_prefix}/deployment_ansible_inputs"
+    TNSNAMES_INPUTS_PATH           = "${local.parameter_store_path_prefix}/tnsnames_inputs"
+    STAFF_DAT_INPUTS_PATH          = "${local.parameter_store_path_prefix}/staff_dat_inputs"
   }
 }
 
