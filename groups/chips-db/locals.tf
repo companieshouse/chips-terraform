@@ -112,5 +112,5 @@ locals {
 
   source_security_group_id = [for item in data.aws_security_group.chips_sg : item.id]
 
-  sp_migration_cidrs = data.vault_generic_secret.migration_cidrs.sp_migration_cidrs
+  sp_migration_cidrs = jsondecode(data.vault_generic_secret.migration_cidrs.data_json)["sp_migration_cidrs"]
 }

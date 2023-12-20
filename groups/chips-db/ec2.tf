@@ -113,7 +113,7 @@ resource "aws_security_group_rule" "OEM_listener" {
 }
 
 resource "aws_security_group_rule" "test_access" {
-  count = length(var.test_access_cidrs) > 0 ? {
+  for_each = length(var.test_access_cidrs) > 0 ? {
     for idx, cidr in var.test_access_cidrs : idx => cidr
   } : {}
 
@@ -127,7 +127,7 @@ resource "aws_security_group_rule" "test_access" {
 }
 
 resource "aws_security_group_rule" "sp_migration" {
-  count = length(local.sp_migration_cidrs) > 0 ? {
+  for_each = length(local.sp_migration_cidrs) > 0 ? {
     for idx, cidr in local.sp_migration_cidrs : idx => cidr
   } : {}
 

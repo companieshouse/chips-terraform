@@ -381,7 +381,7 @@ variable "chips_oltp_oem_sg" {
 }
 
 variable "test_access_cidrs" {
-  type        = string
+  type        = list(string)
   description = "A List of the CIDR range used for test access"
-  default     = ""
+  default     = []
 }

@@ -149,5 +149,5 @@ data "aws_security_group" "oem" {
 }
 
 data "vault_generic_secret" "migration_cidrs" {
-  path = "applications/${aws_profile}/${application}/migration_cidrs"
+  path = "applications/${var.aws_profile}/${var.application}/migration_cidrs"
 }
