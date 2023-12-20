@@ -20,7 +20,8 @@ module "iprocess_app_profile" {
   ]) : null
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
-    local.ssm_kms_key_id
+    local.ssm_kms_key_id,
+    local.account_ssm_key_arn
   ]
   custom_statements = [
     {
@@ -59,6 +60,14 @@ module "iprocess_app_profile" {
       resources = ["*"]
       actions = [
         "ec2:Describe*"
+      ]
+    },
+    {
+      sid       = "AllowReadOfParameterStore",
+      effect    = "Allow",
+      resources = ["arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.application}/${var.environment}/*"],
+      actions = [
+        "ssm:GetParameter*"
       ]
     }
   ]

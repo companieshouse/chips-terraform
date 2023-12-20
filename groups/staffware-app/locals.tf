@@ -11,6 +11,7 @@ locals {
   security_kms_keys_data = data.vault_generic_secret.security_kms_keys.data
   logs_kms_key_id        = local.kms_keys_data["logs"]
   sns_kms_key_id         = local.kms_keys_data["sns"]
+  account_ssm_key_arn    = local.kms_keys_data["ssm"]
   ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
 
   security_s3_data            = data.vault_generic_secret.security_s3_buckets.data
@@ -51,6 +52,14 @@ locals {
 
   iprocess_staff_dat_inputs = {
     staff_dat = local.iprocess_app_config_data["staff_dat"]
+  }
+
+  parameter_store_path_prefix = "/${var.application}/${var.environment}"
+
+  parameter_store_secrets = {
+    deployment_ansible_inputs = jsonencode(local.iprocess_app_deployment_ansible_inputs)
+    tnsnames_inputs           = jsonencode(local.iprocess_tnsnames_inputs)
+    staff_dat_inputs          = jsonencode(local.iprocess_staff_dat_inputs)
   }
 
   default_tags = {
