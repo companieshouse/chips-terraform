@@ -13,7 +13,7 @@ environment = "live"
 
 # ASG settings
 asg_count = 1
-instance_size = "t3.medium"
+instance_size = "t3.xlarge"
 
 # SNS Topic creation
 enable_sns_topic = true
