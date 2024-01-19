@@ -40,6 +40,7 @@ resource "aws_security_group_rule" "ssh_access" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
+  cidr_blocks       = [each.value]
   security_group_id = module.db_ec2_security_group.this_security_group_id
 }
 
@@ -54,6 +55,7 @@ resource "aws_security_group_rule" "oracle_access" {
   from_port         = 1521
   to_port           = 1522
   protocol          = "tcp"
+  cidr_blocks       = [each.value]
   security_group_id = module.db_ec2_security_group.this_security_group_id
 }
 
