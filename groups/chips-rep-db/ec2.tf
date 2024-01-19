@@ -32,6 +32,16 @@ module "db_ec2_security_group" {
 # ------------------------------------------------------------------------------
 # SSH Access
 # ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "admin_ssh_access" {
+  type              = "ingress"
+  description       = "Administrative SSH access"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
 resource "aws_security_group_rule" "ssh_access" {
   for_each = toset(local.ssh_allowed_ranges)
 
@@ -47,6 +57,16 @@ resource "aws_security_group_rule" "ssh_access" {
 # ------------------------------------------------------------------------------
 # Oracle Access
 # ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "admin_oracle_access" {
+  type              = "ingress"
+  description       = "Administrative Oracle access"
+  from_port         = 1521
+  to_port           = 1522
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
 resource "aws_security_group_rule" "oracle_access" {
   for_each = toset(local.oracle_allowed_ranges)
 

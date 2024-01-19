@@ -155,3 +155,7 @@ data "aws_security_group" "oem" {
     values = [var.chips_rep_oem_sg]
   }
 }
+
+data "aws_ec2_managed_prefix_list" "admin" {
+  name = "administration-cidr-ranges"
+}
