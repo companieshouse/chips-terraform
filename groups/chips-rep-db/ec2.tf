@@ -16,23 +16,6 @@ module "db_ec2_security_group" {
     }
   ]
 
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 1521
-      to_port     = 1522
-      protocol    = "tcp"
-      description = "Oracle DB port"
-      cidr_blocks = join(",", local.oracle_allowed_ranges)
-    },
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "SSH ports"
-      cidr_blocks = join(",", local.ssh_allowed_ranges)
-    }
-  ]
-
   ingress_with_source_security_group_id = [for group in local.source_security_group_id :
     {
       from_port                = 1521
@@ -44,6 +27,34 @@ module "db_ec2_security_group" {
   ]
 
   egress_rules = ["all-all"]
+}
+
+# ------------------------------------------------------------------------------
+# SSH Access
+# ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "ssh_access" {
+  for_each = toset(local.ssh_allowed_ranges)
+
+  type              = "ingress"
+  description       = "SSH access from ${each.value}"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+# ------------------------------------------------------------------------------
+# Oracle Access
+# ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "oracle_access" {
+  for_each = toset(local.oracle_allowed_ranges)
+
+  type              = "ingress"
+  description       = "Oracle access from ${each.value}"
+  from_port         = 1521
+  to_port           = 1522
+  protocol          = "tcp"
+  security_group_id = module.db_ec2_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
