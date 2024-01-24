@@ -379,3 +379,9 @@ variable "chips_oltp_oem_sg" {
   description = "OEM Security Group"
   default     = ""
 }
+
+variable "test_access_cidrs" {
+  type        = list(string)
+  description = "A List of the CIDR range used for test access"
+  default     = []
+}
