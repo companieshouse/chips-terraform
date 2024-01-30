@@ -2,8 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
-
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
 
   deployment_zones = var.availability_zones == null ? [for _, map in data.aws_subnet.data_subnets : map["availability_zone"]] : var.availability_zones
