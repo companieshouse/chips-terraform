@@ -2,7 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
   additional_app_cidrs = values(data.vault_generic_secret.additional_app_cidrs.data)
   additional_internal_cidrs = values(data.vault_generic_secret.additional_internal_cidrs.data)
 
