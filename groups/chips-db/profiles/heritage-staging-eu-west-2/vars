@@ -124,3 +124,8 @@ alarm_topic_name_ooh   = ""
 
 # RMAN disk
 create_rman_volumes = true
+
+# OLTP DB Test Access CIDR Range
+test_access_cidrs = [
+  "10.50.17.0/24"
+]
