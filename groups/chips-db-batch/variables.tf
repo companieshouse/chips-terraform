@@ -142,3 +142,15 @@ variable "enable_sns_topic" {
   description = "A boolean value to indicate whether to deploy SNS topic configuration for CloudWatch actions"
   default     = false
 }
+
+variable "enforce_imdsv2" {
+  description = "Whether to enforce use of IMDSv2 by setting http_tokens to required on the aws_launch_configuration"
+  type        = bool
+  default     = true
+}
+
+variable "instance_swap_volume_size" {
+  type        = number
+  default     = 5
+  description = "Size of swap volume attached to instances"
+}
