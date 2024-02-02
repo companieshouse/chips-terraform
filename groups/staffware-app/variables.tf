@@ -127,3 +127,21 @@ variable "cloudwatch_namespace" {
   default     = "CHIPS/STFWARE"
   description = "A custom namespace to define for CloudWatch custom metrics such as memory and disk"
 }
+
+variable "instance_swap_volume_size" {
+  type        = number
+  default     = 5
+  description = "Size of swap volume attached to instances"
+}
+
+variable "instance_root_volume_size" {
+  type        = number
+  default     = 100
+  description = "Size of root volume attached to instances"
+}
+
+variable "enforce_imdsv2" {
+  description = "Whether to enforce use of IMDSv2 by setting http_tokens to required on the aws_launch_configuration"
+  type        = bool
+  default     = true
+}
