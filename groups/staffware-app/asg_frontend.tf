@@ -84,11 +84,11 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
 
 # ASG Module
 module "iprocess_app_asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/terraform-aws-autoscaling?ref=tags/1.0.36"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.244"
 
   name = format("%s-001", var.component)
-  # Launch configuration
-  lc_name       = "${var.component}-launchconfig"
+  # Launch template
+  lt_name       = "${var.component}-launchtemplate"
   image_id      = data.aws_ami.iprocess_app.id
   instance_type = var.instance_size
   security_groups = [
@@ -97,12 +97,18 @@ module "iprocess_app_asg" {
   ]
   root_block_device = [
     {
-      volume_size = "100"
-      volume_type = "gp2"
+      volume_size = var.instance_root_volume_size
       encrypted   = true
-      iops        = 0
-    },
+    }
   ]
+  block_device_mappings = [
+    {
+      device_name = "/dev/xvds"
+      volume_size = var.instance_swap_volume_size
+      encrypted   = true
+    }
+  ]
+
   # Auto scaling group
   asg_name                       = "${var.component}-asg"
   vpc_zone_identifier            = data.aws_subnet_ids.application.ids
@@ -120,6 +126,7 @@ module "iprocess_app_asg" {
   termination_policies           = ["OldestLaunchConfiguration"]
   iam_instance_profile           = module.iprocess_app_profile.aws_iam_instance_profile.name
   user_data_base64               = data.template_cloudinit_config.userdata_config.rendered
+  enforce_imdsv2                 = var.enforce_imdsv2
 
   tags_as_map = merge(
     local.default_tags,
