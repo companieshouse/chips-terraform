@@ -33,7 +33,6 @@ locals {
     ORACLE_SID_VALUE     = local.iprocess_app_config_data["oracle_std_sid"]
     DB_ADDRESS           = local.iprocess_app_config_data["db_address"]
     DB_PORT              = local.iprocess_app_config_data["db_port"]
-    SWPRO_PASSWORD       = local.iprocess_app_config_data["swpro_password"]
     region               = var.aws_region
     cw_log_files         = local.cw_logs
     cw_agent_user        = "root"
