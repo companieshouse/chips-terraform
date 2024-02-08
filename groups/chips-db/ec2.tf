@@ -17,16 +17,6 @@ module "db_ec2_security_group" {
     }
   ]
 
-  ingress_with_source_security_group_id = [for group in local.source_security_group_id :
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "Oracle DB CHIPS Security Group"
-      source_security_group_id = group
-    }
-  ]
-
   egress_rules = ["all-all"]
 }
 
@@ -78,6 +68,18 @@ resource "aws_security_group_rule" "oracle_access" {
   protocol          = "tcp"
   cidr_blocks       = [each.value]
   security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "oracle_access_sgs" {
+  for_each = toset(local.source_security_group_id)
+
+  type                     = "ingress"
+  description              = "Oracle access from ${each.value}"
+  from_port                = 1521
+  to_port                  = 1522
+  protocol                 = "tcp"
+  source_security_group_id = each.value
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
