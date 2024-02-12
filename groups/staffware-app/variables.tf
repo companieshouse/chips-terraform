@@ -145,3 +145,9 @@ variable "enforce_imdsv2" {
   type        = bool
   default     = true
 }
+
+variable "instance_root_volume_type" {
+  type        = string
+  default     = "gp3"
+  description = "The EC2 instance root volume type"
+}

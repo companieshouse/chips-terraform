@@ -97,7 +97,9 @@ module "iprocess_app_asg" {
   ]
   root_block_device = [
     {
+      device_name = "/dev/sda1"
       volume_size = var.instance_root_volume_size
+      volume_type = var.instance_root_volume_type
       encrypted   = true
     }
   ]
