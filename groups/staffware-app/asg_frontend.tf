@@ -84,7 +84,7 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
 
 # ASG Module
 module "iprocess_app_asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.244"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.248"
 
   name = format("%s-001", var.component)
   # Launch template
@@ -97,7 +97,9 @@ module "iprocess_app_asg" {
   ]
   root_block_device = [
     {
+      device_name = "/dev/sda1"
       volume_size = var.instance_root_volume_size
+      volume_type = var.instance_root_volume_type
       encrypted   = true
     }
   ]
