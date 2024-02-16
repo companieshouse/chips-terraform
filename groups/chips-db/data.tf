@@ -54,10 +54,6 @@ data "aws_ami" "oracle_12" {
   }
 }
 
-data "vault_generic_secret" "internal_cidrs" {
-  path = "aws-accounts/network/internal_cidr_ranges"
-}
-
 data "vault_generic_secret" "onprem_app_cidrs" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/onprem_app_cidrs"
 }
@@ -146,6 +142,10 @@ data "aws_security_group" "oem" {
     name   = "tag:Name"
     values = [var.chips_oltp_oem_sg]
   }
+}
+
+data "aws_ec2_managed_prefix_list" "admin" {
+  name = "administration-cidr-ranges"
 }
 
 data "vault_generic_secret" "migration_cidrs" {

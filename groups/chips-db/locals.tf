@@ -2,8 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
-
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
 
   deployment_zones = var.availability_zones == null ? [for _, map in data.aws_subnet.data_subnets : map["availability_zone"]] : var.availability_zones
@@ -30,8 +28,12 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle)
-  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs)
+  chs_subnet_cidrs = [
+    for subnet, cidr in local.chs_subnet_data : cidr
+  ]
+
+  oracle_allowed_ranges = concat(var.vpc_sg_cidr_blocks_oracle, local.chs_subnet_cidrs, local.onprem_app_cidrs)
+  ssh_allowed_ranges    = concat(var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs)
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
