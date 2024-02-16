@@ -16,34 +16,69 @@ module "db_ec2_security_group" {
     }
   ]
 
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 1521
-      to_port     = 1522
-      protocol    = "tcp"
-      description = "Oracle DB port"
-      cidr_blocks = join(",", local.oracle_allowed_ranges)
-    },
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "SSH ports"
-      cidr_blocks = join(",", local.ssh_allowed_ranges)
-    }
-  ]
-
-  ingress_with_source_security_group_id = [for group in local.source_security_group_id :
-    {
-      from_port                = 1521
-      to_port                  = 1522
-      protocol                 = "tcp"
-      description              = "Oracle DB CHIPS REP Security Group"
-      source_security_group_id = group
-    }
-  ]
-
   egress_rules = ["all-all"]
+}
+
+# ------------------------------------------------------------------------------
+# SSH Access
+# ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "admin_ssh_access" {
+  type              = "ingress"
+  description       = "Administrative SSH access"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "ssh_access" {
+  for_each = toset(local.ssh_allowed_ranges)
+
+  type              = "ingress"
+  description       = "SSH access from ${each.value}"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = [each.value]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+# ------------------------------------------------------------------------------
+# Oracle Access
+# ------------------------------------------------------------------------------
+resource "aws_security_group_rule" "admin_oracle_access" {
+  type              = "ingress"
+  description       = "Administrative Oracle access"
+  from_port         = 1521
+  to_port           = 1522
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "oracle_access" {
+  for_each = toset(local.oracle_allowed_ranges)
+
+  type              = "ingress"
+  description       = "Oracle access from ${each.value}"
+  from_port         = 1521
+  to_port           = 1522
+  protocol          = "tcp"
+  cidr_blocks       = [each.value]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "oracle_access_sgs" {
+  for_each = toset(local.source_security_group_id)
+
+  type                     = "ingress"
+  description              = "Oracle access from ${each.value}"
+  from_port                = 1521
+  to_port                  = 1522
+  protocol                 = "tcp"
+  source_security_group_id = each.value
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------

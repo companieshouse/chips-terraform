@@ -2,7 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
   additional_app_cidrs = values(data.vault_generic_secret.additional_app_cidrs.data)
   additional_internal_cidrs = values(data.vault_generic_secret.additional_internal_cidrs.data)
 
@@ -21,6 +20,7 @@ locals {
   ssm_logs_key_id        = local.kms_keys_data["ssm"]
   chipsbackup_kms_key_id = local.kms_keys_data["chipsbackup"]
   ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
+  cdp_cidrs              = jsondecode(data.vault_generic_secret.cdp_cidrs.data_json).cidrs
   deployment_cidrs       = jsondecode(data.vault_generic_secret.deployment_cidrs.data_json).cidrs
   dblink_cidrs           = jsondecode(data.vault_generic_secret.dblink_cidrs.data_json).cidrs
 
@@ -30,8 +30,18 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_oracle, local.additional_app_cidrs, local.dblink_cidrs, local.additional_internal_cidrs )
-  ssh_allowed_ranges    = concat(local.internal_cidrs, var.vpc_sg_cidr_blocks_ssh, local.deployment_cidrs, local.additional_internal_cidrs)
+  oracle_allowed_ranges = concat(
+    var.vpc_sg_cidr_blocks_oracle,
+    local.additional_app_cidrs,
+    local.dblink_cidrs,
+    local.additional_internal_cidrs,
+    local.cdp_cidrs
+  )
+  ssh_allowed_ranges    = concat(
+    var.vpc_sg_cidr_blocks_ssh,
+    local.deployment_cidrs,
+    local.additional_internal_cidrs
+  )
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 

@@ -54,10 +54,6 @@ data "aws_ami" "oracle_12" {
   }
 }
 
-data "vault_generic_secret" "internal_cidrs" {
-  path = "aws-accounts/network/internal_cidr_ranges"
-}
-
 data "vault_generic_secret" "deployment_cidrs" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/deployment_cidrs"
 }
@@ -68,6 +64,10 @@ data "vault_generic_secret" "additional_app_cidrs" {
 
 data "vault_generic_secret" "additional_internal_cidrs" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/additional_internal_cidrs"
+}
+
+data "vault_generic_secret" "cdp_cidrs" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/cdp_cidrs"
 }
 
 data "vault_generic_secret" "dblink_cidrs" {
@@ -154,4 +154,8 @@ data "aws_security_group" "oem" {
     name   = "tag:Name"
     values = [var.chips_rep_oem_sg]
   }
+}
+
+data "aws_ec2_managed_prefix_list" "admin" {
+  name = "administration-cidr-ranges"
 }
