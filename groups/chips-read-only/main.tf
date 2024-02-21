@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-read-only" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.245"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.251"
 
   application                        = var.application
   application_type                   = "chips"
