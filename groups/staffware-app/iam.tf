@@ -72,3 +72,8 @@ module "iprocess_app_profile" {
     }
   ]
 }
+
+resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
+  role       = module.iprocess_app_profile.aws_iam_role.name
+}
