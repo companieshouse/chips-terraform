@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "oltp-logstb_topic" {
-  name = "chips-dev_topic"
+  name = "oltp-logstb_topic"
 }
 
 resource "aws_sns_topic_subscription" "oltp-logstb_Subscription" {
