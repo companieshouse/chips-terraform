@@ -195,7 +195,7 @@ resource "aws_ebs_volume" "u2-drive" {
   ]
 }
 
-resource "aws_volume_attachment" "ebs_attach" {
+resource "aws_volume_attachment" "second_ebs_attach" {
   count = var.db_instance_count
 
   device_name = "/dev/xvdt"
