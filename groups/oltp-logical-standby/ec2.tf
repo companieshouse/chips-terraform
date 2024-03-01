@@ -158,7 +158,7 @@ resource "aws_instance" "db_ec2" {
   }
 }
 
-  resource "aws_ebs_volume" "u-drive" {
+resource "aws_ebs_volume" "u-drive" {
   availability_zone = "eu-west-2a"
   size = 256
   type = "gp3"
@@ -177,6 +177,29 @@ resource "aws_volume_attachment" "ebs_attach" {
 
   device_name = "/dev/xvds"
   volume_id   = aws_ebs_volume.u-drive.id
+  instance_id = aws_instance.db_ec2[count.index].id
+
+}
+
+resource "aws_ebs_volume" "u2-drive" {
+  availability_zone = "eu-west-2a"
+  size = 256
+  type = "gp3"
+  encrypted = true
+
+  tags = {
+    Name = "oltp-logical-standby"
+  }
+    depends_on = [
+    aws_instance.db_ec2
+  ]
+}
+
+resource "aws_volume_attachment" "second_ebs_attach" {
+  count = var.db_instance_count
+
+  device_name = "/dev/xvdt"
+  volume_id   = aws_ebs_volume.u2-drive.id
   instance_id = aws_instance.db_ec2[count.index].id
 
 }
