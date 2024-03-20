@@ -1,0 +1,53 @@
+# Account details
+aws_profile = "heritage-staging-eu-west-2"
+aws_region  = "eu-west-2"
+aws_account = "heritage-staging"
+
+# Account shorthand
+account = "hstg"
+region  = "euw2"
+
+# Application details
+application = "chips-db-agents"
+environment = "staging"
+
+# ASG settings
+asg_count = 1
+instance_size = "t3.small"
+
+# NFS Mounts
+nfs_mount_destination_parent_dir = "/mnt/nfs"
+
+cloudwatch_logs = {
+  "audit.log" = {
+    file_path = "/var/log/audit"
+    log_group_retention = 7
+  }
+
+  "messages" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+  
+  "secure" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "yum.log" = {
+    file_path = "/var/log"
+    log_group_retention = 7
+  }
+
+  "ssm-errors" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "errors.log"
+    log_group_retention = 7
+  }
+
+  "ssm-agent" = {
+    file_path = "/var/log/amazon/ssm"
+    file_name = "amazon-ssm-agent.log"
+    log_group_retention = 7
+  }
+}
