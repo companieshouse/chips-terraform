@@ -90,6 +90,7 @@ staffware_db_sg = [
   "sgr-chips-users-rest-asg-*",
   "sgr-chips-ef-batch-asg-*",
   "sgr-chips-db-batch-asg-001-*",
+  "sgr-chips-db-agents-asg-001-*",
   "sgr-chips-oltp-db-ec2-001-*",
   "sgr-chips-rep-db-ec2-001-*",
   "sgr-chips-oltp-logstb-db-ec2*"
