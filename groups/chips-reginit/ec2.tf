@@ -62,6 +62,15 @@ resource "aws_security_group_rule" "OEM_listener" {
   security_group_id        = aws_security_group.reginit.id
 }
 
+resource "aws_security_group_rule" "egress" {
+  type              = "egress"
+  description       = "egress traffic"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.reginit.id
+}
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
