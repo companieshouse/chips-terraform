@@ -130,3 +130,6 @@ create_rman_volumes = true
 test_access_cidrs = [
   "10.50.17.0/24"
 ]
+
+# Inspector scan policy toggle
+enable_inspector_scanning_policy = true
