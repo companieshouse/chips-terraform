@@ -165,6 +165,12 @@ variable "u01_volume_type" {
   default     = "gp2"
 }
 
+variable "inspector_policy" {
+  type        = bool
+  description = "Defines whether inspector policy is attached to instance profile to enable scanning (true) or not (false)"
+  default     = false
+}
+
 # ------------------------------------------------------------------------------
 # Ansible SSM variables
 # ------------------------------------------------------------------------------
