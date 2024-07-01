@@ -83,7 +83,7 @@ module "reginit_instance_profile" {
 }
 
 resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
-  count      = var.inspector_policy ? 1 : 0
+  count      = var.enable_inspector_scanning_policy ? 1 : 0
   
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
   role       = module.reginit_instance_profile.aws_iam_role.name

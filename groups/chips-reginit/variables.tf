@@ -214,7 +214,7 @@ variable "data_volume_type" {
   default     = "gp3"
 }
 
-variable "inspector_policy" {
+variable "enable_inspector_scanning_policy" {
   type        = bool
   description = "Defines whether inspector policy is attached to instance profile to enable scanning (true) or not (false)"
   default     = false

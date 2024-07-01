@@ -246,7 +246,7 @@ data "aws_iam_policy_document" "eventbridge_ssm_execution_policy_document" {
 }
 
 resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
-  count      = var.inspector_policy ? 1 : 0
+  count      = var.enable_inspector_scanning_policy ? 1 : 0
   
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
   role       = module.db_instance_profile.aws_iam_role.name
