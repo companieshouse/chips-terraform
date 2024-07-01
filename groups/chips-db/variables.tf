@@ -207,6 +207,12 @@ variable "create_rman_volumes" {
   default     = false
 }
 
+variable "enable_inspector_scanning_policy" {
+  type        = bool
+  description = "Defines whether inspector policy is attached to instance profile to enable scanning (true) or not (false)"
+  default     = false
+}
+
 # ------------------------------------------------------------------------------
 # NFS Variables
 # ------------------------------------------------------------------------------
