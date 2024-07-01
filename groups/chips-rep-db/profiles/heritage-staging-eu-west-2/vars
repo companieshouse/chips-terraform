@@ -120,3 +120,6 @@ db_instance_shortname  = "ENVT14RP"
 alarm_actions_enabled  = false
 alarm_topic_name       = ""
 alarm_topic_name_ooh   = ""
+
+# Inspector scan policy toggle
+enable_inspector_scanning_policy = true
