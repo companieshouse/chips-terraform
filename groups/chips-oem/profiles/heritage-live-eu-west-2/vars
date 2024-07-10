@@ -63,3 +63,6 @@ cloudwatch_logs = {
     log_group_retention = 180
   }
 }
+
+# Inspector scan policy toggle
+enable_inspector_scanning_policy = true

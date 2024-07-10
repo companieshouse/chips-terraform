@@ -121,3 +121,6 @@ db_instance_shortname  = "ENVP1REP"
 alarm_actions_enabled  = true
 alarm_topic_name       = "Email_Alerts"
 alarm_topic_name_ooh   = "Phonecall_Alerts"
+
+# Inspector scan policy toggle
+enable_inspector_scanning_policy = true
