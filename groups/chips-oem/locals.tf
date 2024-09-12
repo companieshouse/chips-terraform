@@ -2,6 +2,8 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
+  e5_fin_ip = values(data.vault_generic_secret.e5_fin.data)
+  e5_arc_ip = values(data.vault_generic_secret.e5_arc.data)
   internal_cidrs = split(",", local.ec2_data["db_cidr_ranges"])
   ssh_internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
   http_internal_cidrs = values(data.vault_generic_secret.internal_cidrs.data)
