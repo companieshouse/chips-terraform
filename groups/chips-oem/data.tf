@@ -114,10 +114,6 @@ data "vault_generic_secret" "chs_subnet" {
   path = "aws-accounts/network/${var.aws_account}/chs/application-subnets"
 }
 
-data "vault_generic_secret" "e5_fin" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/SOMENAME"
-}
-
-data "vault_generic_secret" "e5_arc" {
-  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/SOMENAME"
+data "vault_generic_secret" "e5_oem" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/monitoring"
 }

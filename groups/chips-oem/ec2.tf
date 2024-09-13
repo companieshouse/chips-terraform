@@ -40,7 +40,7 @@
       to_port     = 3872
       protocol    = "tcp"
       description = "Enterprise Manager Agent"
-      cidr_blocks = join(",", local.oem_allowed_ranges, local.e5_fin_ip, local.e5_arc_ip)
+      cidr_blocks = join(",", local.oem_allowed_ranges, local.e5_oem)
     },
     {
       from_port   = 7799
@@ -103,7 +103,7 @@
       to_port     = 22
       protocol    = "tcp"
       description = "SSH ports"
-      cidr_blocks = join(",", local.ssh_allowed_ranges, local.e5_fin_ip, local.e5_arc_ip)
+      cidr_blocks = join(",", local.ssh_allowed_ranges, local.e5_oem)
     }
   ]
 
