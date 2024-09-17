@@ -114,7 +114,7 @@ module "instance_profile" {
         "s3:GetObjectAcl",
         "s3:DeleteObject"
       ]
-    }
+    },
     {
       sid       = "CloudwatchMetrics"
       effect    = "Allow"
