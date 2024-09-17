@@ -117,3 +117,7 @@ data "vault_generic_secret" "chs_subnet" {
 data "vault_generic_secret" "e5_oem" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/monitoring"
 }
+
+data "vault_generic_secret" "sns_url" {
+  path = "applications/${var.aws_account}-${var.aws_region}/monitoring"
+}
