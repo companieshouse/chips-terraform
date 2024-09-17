@@ -59,6 +59,10 @@ data "vault_generic_secret" "nfs_mounts" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application_type}/app/nfs_mounts"
 }
 
+data "vault_generic_secret" "bus_perf_dashboard_s3" {
+  path = "applications/${var.aws_account}-${var.aws_region}/performance-analytics/app/s3" 
+}
+
 data "vault_generic_secret" "bulk_gateway_s3" {
   path = "applications/${var.aws_account}-${var.aws_region}/bulk-gateway/app/s3" 
 }
