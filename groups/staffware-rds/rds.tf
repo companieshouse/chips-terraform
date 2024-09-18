@@ -29,16 +29,6 @@ resource "aws_security_group_rule" "oem_rule" {
   security_group_id = module.rds_security_group.this_security_group_id
 }
 
-resource "aws_security_group_rule" "weblogic_app" {
-  description              = "Weblogic app access to DB"
-  from_port                = 1521
-  to_port                  = 1521
-  protocol                 = "tcp"
-  type                     = "ingress"
-  source_security_group_id = data.aws_security_group.chips_devtest_app.id
-  security_group_id        = module.rds_security_group.this_security_group_id
-}
-
 resource "aws_security_group_rule" "chips_iprocess_app" {
   description              = "iProcess app access to DB"
   from_port                = 1521
@@ -59,6 +49,18 @@ resource "aws_security_group_rule" "application_access" {
   type              = "ingress"
   cidr_blocks       = var.rds_application_access_cidrs
   security_group_id = module.rds_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "additional_source_sg_access" {
+  for_each = tomap(local.additional_source_groups)
+
+  description              = "Access from ${each.key}"
+  from_port                = 1521
+  to_port                  = 1521
+  protocol                 = "tcp"
+  type                     = "ingress"
+  source_security_group_id = each.value
+  security_group_id        = module.rds_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
