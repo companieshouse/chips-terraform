@@ -75,6 +75,7 @@ module "staffware_rds" {
   engine                     = "oracle-se2"
   major_engine_version       = var.major_engine_version
   engine_version             = var.engine_version
+  ca_cert_identifier         = var.ca_cert_identifier
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   license_model              = var.license_model
   instance_class             = var.instance_class
