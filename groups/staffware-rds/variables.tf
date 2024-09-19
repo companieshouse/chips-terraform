@@ -86,10 +86,10 @@ variable "rds_onpremise_access" {
   default     = []
 }
 
-variable "rds_additional_sg_patterns" {
+variable "rds_access_sg_patterns" {
   type        = list(string)
   description = "List of source security group name patterns that will have access to port 1521"
-  default     = ["sgr-chips-*-asg-001-*"]
+  default     = []
 }
 
 variable "performance_insights_enabled" {
