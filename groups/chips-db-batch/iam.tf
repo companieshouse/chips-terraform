@@ -92,10 +92,10 @@ module "instance_profile" {
       ]
     },
     {
-      sid    = "AllowListToBusPerfDashboardBucket",
+      sid    = "AllowListToResourceBucket",
       effect = "Allow",
       resources = [
-        "arn:aws:s3:::${local.perf_dashboard_bucket_name}"
+        "arn:aws:s3:::${local.resource_bucket_name}"
       ],
       actions = [
         "s3:ListBucket",
@@ -105,7 +105,7 @@ module "instance_profile" {
       sid    = "AllowAccessToBusPerfDashboardBucket",
       effect = "Allow",
       resources = [
-        "arn:aws:s3:::${local.perf_dashboard_bucket_name}/performance-analytics/*"
+        "arn:aws:s3:::${local.resource_bucket_name}/performance-analytics/*"
       ],
       actions = [
         "s3:PutObject",
