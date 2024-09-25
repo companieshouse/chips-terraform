@@ -20,6 +20,7 @@ locals {
   free_bucket_name            = local.bulk_gateway_s3_data["free_bucket_name"]
   archive_bucket_name         = local.bulk_gateway_s3_data["archive_bucket_name"]
   adhoc_bucket_name           = local.bulk_gateway_s3_data["adhoc_bucket_name"]
+  resource_bucket_name        = local.bus_perf_dashboard_s3_data["resource_bucket_name"]
   nfs_mounts = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
 
   #For each log map passed, add an extra kv for the log group name and append the NFS directory into the filepath where required

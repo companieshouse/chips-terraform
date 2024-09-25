@@ -92,6 +92,30 @@ module "instance_profile" {
       ]
     },
     {
+      sid    = "AllowListToResourceBucket",
+      effect = "Allow",
+      resources = [
+        "arn:aws:s3:::${local.resource_bucket_name}"
+      ],
+      actions = [
+        "s3:ListBucket",
+      ]
+    },
+    {
+      sid    = "AllowAccessToBusPerfDashboardBucket",
+      effect = "Allow",
+      resources = [
+        "arn:aws:s3:::${local.resource_bucket_name}/performance-analytics/*"
+      ],
+      actions = [
+        "s3:PutObject",
+        "s3:PutObjectAcl",
+        "s3:GetObject",
+        "s3:GetObjectAcl",
+        "s3:DeleteObject"
+      ]
+    },
+    {
       sid       = "CloudwatchMetrics"
       effect    = "Allow"
       resources = ["*"]
