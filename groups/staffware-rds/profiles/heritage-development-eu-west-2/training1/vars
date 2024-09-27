@@ -25,6 +25,11 @@ engine_version             = "19"
 license_model              = "license-included"
 auto_minor_version_upgrade = false
 
+rds_access_sg_patterns = [
+  "sgr-chips-devtest-asg-001-*",
+  "sgr-iprocess-app-training1-asg-001-*"
+]
+
 # RDS logging
 rds_log_exports = [
   "alert",

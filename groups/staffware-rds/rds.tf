@@ -29,26 +29,6 @@ resource "aws_security_group_rule" "oem_rule" {
   security_group_id = module.rds_security_group.this_security_group_id
 }
 
-resource "aws_security_group_rule" "weblogic_app" {
-  description              = "Weblogic app access to DB"
-  from_port                = 1521
-  to_port                  = 1521
-  protocol                 = "tcp"
-  type                     = "ingress"
-  source_security_group_id = data.aws_security_group.chips_devtest_app.id
-  security_group_id        = module.rds_security_group.this_security_group_id
-}
-
-resource "aws_security_group_rule" "chips_iprocess_app" {
-  description              = "iProcess app access to DB"
-  from_port                = 1521
-  to_port                  = 1521
-  protocol                 = "tcp"
-  type                     = "ingress"
-  source_security_group_id = data.aws_security_group.iprocess_app.id
-  security_group_id        = module.rds_security_group.this_security_group_id
-}
-
 resource "aws_security_group_rule" "application_access" {
   count = length(var.rds_application_access_cidrs) > 0 ? 1 : 0
 
@@ -59,6 +39,18 @@ resource "aws_security_group_rule" "application_access" {
   type              = "ingress"
   cidr_blocks       = var.rds_application_access_cidrs
   security_group_id = module.rds_security_group.this_security_group_id
+}
+
+resource "aws_security_group_rule" "source_sg_access" {
+  for_each = tomap(local.rds_access_source_groups)
+
+  description              = "Access from ${each.key}"
+  from_port                = 1521
+  to_port                  = 1521
+  protocol                 = "tcp"
+  type                     = "ingress"
+  source_security_group_id = each.value
+  security_group_id        = module.rds_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -75,6 +67,7 @@ module "staffware_rds" {
   engine                     = "oracle-se2"
   major_engine_version       = var.major_engine_version
   engine_version             = var.engine_version
+  ca_cert_identifier         = var.ca_cert_identifier
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   license_model              = var.license_model
   instance_class             = var.instance_class

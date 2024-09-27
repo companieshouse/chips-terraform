@@ -86,6 +86,12 @@ variable "rds_onpremise_access" {
   default     = []
 }
 
+variable "rds_access_sg_patterns" {
+  type        = list(string)
+  description = "List of source security group name patterns that will have access to port 1521"
+  default     = []
+}
+
 variable "performance_insights_enabled" {
   type        = bool
   description = "Whether performance insights are required (true) or not (false). Typically enabled for Live resources."
@@ -154,6 +160,12 @@ variable "auto_minor_version_upgrade" {
   type        = bool
   description = "True/False value to allow AWS to apply minor version updates to RDS without approval from owner"
   default     = true
+}
+
+variable "ca_cert_identifier" {
+  type        = string
+  description = "Specifies the identifier of the CA certificate for the DB instance"
+  default     = "rds-ca-rsa2048-g1"
 }
 
 # ------------------------------------------------------------------------------
