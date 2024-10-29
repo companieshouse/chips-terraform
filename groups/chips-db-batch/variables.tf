@@ -33,12 +33,12 @@ variable "aws_account" {
 # AWS Variables - Shorthand
 # ------------------------------------------------------------------------------
 
-variable "account" {
+variable "short_account" {
   type        = string
   description = "Short version of the name of the AWS Account in which resources will be administered"
 }
 
-variable "region" {
+variable "short_region" {
   type        = string
   description = "Short version of the name of the AWS region in which resources will be administered"
 }
