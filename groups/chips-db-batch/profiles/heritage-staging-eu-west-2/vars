@@ -4,8 +4,8 @@ aws_region  = "eu-west-2"
 aws_account = "heritage-staging"
 
 # Account shorthand
-account = "hstg"
-region  = "euw2"
+short_account = "hstg"
+short_region  = "euw2"
 
 # Application details
 application = "chips-db-batch"
