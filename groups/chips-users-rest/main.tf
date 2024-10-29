@@ -35,8 +35,8 @@ module "chips-users-rest" {
   application_type                   = "chips"
   aws_region                         = var.aws_region
   aws_account                        = var.aws_account
-  account                            = var.account
-  region                             = var.region
+  short_account                      = var.short_account
+  short_region                       = var.short_region
   environment                        = var.environment
   ami_name                           = var.ami_name
   asg_count                          = var.asg_count
