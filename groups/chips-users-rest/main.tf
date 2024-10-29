@@ -1,18 +1,19 @@
 terraform {
-  required_version = ">= 0.13.0, < 0.14"
+  required_version = ">= 0.13.0, < 2.0"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 0.3, < 4.0"
+      version = ">= 0.3, < 6.0"
     }
     vault = {
       source  = "hashicorp/vault"
-      version = ">= 2.0.0"
+      version = ">= 2.0.0, < 5.0"
     }
   }
   backend "s3" {}
 }
+
 
 provider "aws" {
   region = var.aws_region
@@ -28,7 +29,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.251"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.292"
 
   application                        = var.application
   application_type                   = "chips"
