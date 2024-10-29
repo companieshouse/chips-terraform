@@ -4,8 +4,8 @@ aws_region  = "eu-west-2"
 aws_account = "heritage-live"
 
 # Account shorthand
-account = "hlive"
-region  = "euw2"
+short_account = "hlive"
+short_region  = "euw2"
 
 # Application details
 application = "chips-ef-batch"

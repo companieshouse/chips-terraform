@@ -4,8 +4,8 @@ aws_region  = "eu-west-2"
 aws_account = "heritage-development"
 
 # Account shorthand
-account = "hdev"
-region  = "euw2"
+short_account = "hdev"
+short_region  = "euw2"
 
 # Application details
 application = "chips-users-rest"
