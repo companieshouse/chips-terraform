@@ -105,6 +105,10 @@ parameter_group_settings = [
       value = "10"
     },
     {
+      name  = "sqlnetora.sqlnet.expire_time"
+      value = "10"
+    },
+    {
       name         = "timed_statistics"
       value        = "TRUE"
       apply_method = "pending-reboot"
