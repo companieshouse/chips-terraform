@@ -29,7 +29,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.307"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.317"
 
   application                        = var.application
   application_type                   = "chips"
@@ -53,6 +53,7 @@ module "chips-users-rest" {
   maximum_4xx_threshold              = 5
   test_access_enable                 = var.test_access_enable
   ssh_access_security_group_patterns = var.ssh_access_security_group_patterns
+  additional_alb_ingress_cidr_blocks = local.client_cidrs
 
   additional_ingress_with_cidr_blocks = [
     {
