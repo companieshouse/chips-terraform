@@ -13,7 +13,7 @@ oracle_unqname = "cdb1"
 oracle_sid = "ENVT14"
 
 db_instance_count = 2
-db_instance_size = "r5.16xlarge"
+db_instance_size = "r5.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
@@ -133,3 +133,5 @@ test_access_cidrs = [
 
 # Inspector scan policy toggle
 enable_inspector_scanning_policy = true
+
+concourse_access_enabled = true

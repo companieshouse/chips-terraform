@@ -154,6 +154,18 @@ resource "aws_security_group_rule" "sp_migration" {
   security_group_id = module.db_ec2_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "shared_services_access" {
+  count = var.concourse_access_enabled ? 1 : 0
+  
+  type              = "ingress"
+  description       = "access from shared service concourse"
+  from_port         = 1521
+  to_port           = 1522
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.shared_services_cidrs.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
@@ -231,7 +243,7 @@ resource "aws_ebs_volume" "rman1" {
   kms_key_id        = data.aws_kms_key.ebs.arn
   size              = var.rman1_volume_size
   type              = var.rman1_volume_type
-  throughput        = 500
+  throughput        = 125
 
   tags = {
     "Name" = format("%s-db-%02d-rman1", var.application, count.index + 1)

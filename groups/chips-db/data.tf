@@ -151,3 +151,7 @@ data "aws_ec2_managed_prefix_list" "admin" {
 data "vault_generic_secret" "migration_cidrs" {
   path = "applications/${var.aws_profile}/${var.application}/migration_cidrs"
 }
+
+data "aws_ec2_managed_prefix_list" "shared_services_cidrs" {
+  name = "shared-services-management-cidrs"
+}
