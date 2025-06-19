@@ -391,3 +391,9 @@ variable "test_access_cidrs" {
   description = "A List of the CIDR range used for test access"
   default     = []
 }
+
+variable "concourse_access_enabled" {
+  default     = false
+  description = "defines whether access from shared service concourse will be permitted"
+  type        = bool
+}

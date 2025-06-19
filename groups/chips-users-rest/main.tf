@@ -53,7 +53,7 @@ module "chips-users-rest" {
   maximum_4xx_threshold              = 5
   test_access_enable                 = var.test_access_enable
   ssh_access_security_group_patterns = var.ssh_access_security_group_patterns
-  additional_alb_ingress_cidr_blocks = local.client_cidrs
+  additional_alb_ingress_cidr_blocks = local.allowed_ranges
 
   additional_ingress_with_cidr_blocks = [
     {
