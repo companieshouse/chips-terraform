@@ -31,7 +31,8 @@ rds_application_access_cidrs = [
 
 rds_access_sg_patterns = [
   "sgr-chips-*-asg-001-*",
-  "sgr-iprocess-app-development-asg-001-*"
+  "sgr-iprocess-app-development-asg-001-*",
+  "development-chips-e2e-*"
 ]
 
 # RDS logging
