@@ -30,6 +30,7 @@ rds_application_access_cidrs = [
 ]
 
 rds_access_sg_patterns = [
+  "development-chips-e2e-*",
   "sgr-chips-*-asg-001-*",
   "sgr-iprocess-app-development-asg-001-*"
 ]
