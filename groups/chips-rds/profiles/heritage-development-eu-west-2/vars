@@ -110,6 +110,10 @@ parameter_group_settings = [
     },
 ]
 
+oracle_ingress_sg_patterns = [
+  "sgr-chips-devtest-asg*"
+]
+
 ## CloudWatch Alarms
 alarm_actions_enabled  = false
 alarm_topic_name       = ""

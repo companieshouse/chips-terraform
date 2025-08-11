@@ -36,6 +36,17 @@ data "vault_generic_secret" "chips_rds" {
   path = "applications/${var.aws_profile}/chips/rds"
 }
 
-data "vault_generic_secret" "internal_cidrs" {
-  path = "aws-accounts/network/internal_cidr_ranges"
+data "aws_ec2_managed_prefix_list" "admin" {
+  name = "administration-cidr-ranges"
+}
+
+data "aws_ec2_managed_prefix_list" "concourse" {
+  name = "shared-services-management-cidrs"
+}
+
+data "aws_security_groups" "oracle_ingress" {
+  filter {
+    name   = "group-name"
+    values = var.oracle_ingress_sg_patterns
+  }
 }

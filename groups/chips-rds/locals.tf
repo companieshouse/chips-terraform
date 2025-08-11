@@ -2,10 +2,18 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  admin_cidrs    = values(data.vault_generic_secret.internal_cidrs.data)
   chips_rds_data = data.vault_generic_secret.chips_rds.data
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
+
+  oem_ingress_prefix_list_ids = [
+    data.aws_ec2_managed_prefix_list.admin.id
+  ]
+
+  oracle_ingress_prefix_list_ids = [
+    data.aws_ec2_managed_prefix_list.admin.id,
+    data.aws_ec2_managed_prefix_list.concourse.id
+  ]
 
   default_tags = {
     Terraform = "true"
