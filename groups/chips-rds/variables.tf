@@ -167,3 +167,9 @@ variable "alarm_topic_name_ooh" {
   type        = string
   description = "The name of the SNS topic to use for OOH alarm notifications"
 }
+
+variable "oracle_ingress_sg_patterns" {
+  default     = []
+  description = "A list of security group name patterns that will bne permitted to connect to the Oracle service"
+  type        = list(string)
+}

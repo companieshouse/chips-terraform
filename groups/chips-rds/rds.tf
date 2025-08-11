@@ -9,21 +9,52 @@ module "rds_security_group" {
   name        = "sgr-chips-rds-001"
   description = "Security group for the chips RDS database"
   vpc_id      = data.aws_vpc.vpc.id
+}
 
-  ingress_cidr_blocks = local.admin_cidrs
-  ingress_rules       = ["oracle-db-tcp"]
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 5500
-      to_port     = 5500
-      protocol    = "tcp"
-      description = "Oracle Enterprise Manager"
-      cidr_blocks = join(",", local.admin_cidrs)
-    }
-  ]
-  ingress_with_source_security_group_id = []
+resource "aws_security_group_rule" "egress_all" {
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "Permit egress traffic to all desintations"
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = module.rds_security_group.this_security_group_id
+  to_port           = 0
+}
 
-  egress_rules = ["all-all"]
+resource "aws_security_group_rule" "ingress_oem_prefix_list" {
+  for_each = toset(local.oem_ingress_prefix_list_ids)
+
+  type              = "ingress"
+  description       = "Permit OEM access from ${each.value}"
+  from_port         = 5500
+  protocol          = "tcp"
+  prefix_list_ids   = [each.value]
+  security_group_id = module.rds_security_group.this_security_group_id
+  to_port           = 5500
+}
+
+resource "aws_security_group_rule" "ingress_oracle_prefix_list" {
+  for_each = toset(local.oracle_ingress_prefix_list_ids)
+
+  type              = "ingress"
+  description       = "Permit Oracle access from ${each.value}"
+  from_port         = 1521
+  protocol          = "tcp"
+  prefix_list_ids   = [each.value]
+  security_group_id = module.rds_security_group.this_security_group_id
+  to_port           = 1521
+}
+
+resource "aws_security_group_rule" "ingress_oracle_sg" {
+  for_each = toset(data.aws_security_groups.oracle_ingress.ids)
+
+  type                     = "ingress"
+  description              = "Permit Oracle access from ${each.value}"
+  from_port                = 1521
+  protocol                 = "tcp"
+  source_security_group_id = each.value
+  security_group_id        = module.rds_security_group.this_security_group_id
+  to_port                  = 1521
 }
 
 # ------------------------------------------------------------------------------
@@ -55,6 +86,7 @@ module "chips_rds" {
   password = local.chips_rds_data["admin-password"]
   port     = "1521"
 
+  ca_cert_identifier        = "rds-ca-rsa2048-g1"
   deletion_protection       = true
   maintenance_window        = var.rds_maintenance_window
   backup_window             = var.rds_backup_window
