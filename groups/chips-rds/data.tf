@@ -50,3 +50,8 @@ data "aws_security_groups" "oracle_ingress" {
     values = var.oracle_ingress_sg_patterns
   }
 }
+
+data "vault_generic_secret" "staging_dba_dev" {
+  path = "applications/${var.aws_profile}/chips/dba_dev"
+  
+}
