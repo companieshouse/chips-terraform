@@ -57,6 +57,17 @@ resource "aws_security_group_rule" "ingress_oracle_sg" {
   to_port                  = 1521
 }
 
+resource "aws_security_group_rule" "staging_dba_dev_ingress" {
+  type              = "ingress"
+  description       = "Oracle access from staging-dba-dev instance"
+  from_port         = 1521
+  to_port           = 1521
+  protocol          = "tcp"
+  cidr_blocks       = [data.vault_generic_secret.staging_dba_dev.data["dba-dev-ip"]]
+  security_group_id = module.rds_security_group.this_security_group_id
+
+}
+
 # ------------------------------------------------------------------------------
 # RDS Instance
 # ------------------------------------------------------------------------------
