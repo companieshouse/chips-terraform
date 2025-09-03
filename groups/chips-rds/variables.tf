@@ -170,6 +170,6 @@ variable "alarm_topic_name_ooh" {
 
 variable "oracle_ingress_sg_patterns" {
   default     = []
-  description = "A list of security group name patterns that will bne permitted to connect to the Oracle service"
+  description = "A list of security group name patterns that will be permitted to connect to the Oracle service"
   type        = list(string)
 }

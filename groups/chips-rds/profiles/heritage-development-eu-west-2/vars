@@ -111,7 +111,8 @@ parameter_group_settings = [
 ]
 
 oracle_ingress_sg_patterns = [
-  "sgr-chips-devtest-asg*"
+  "sgr-chips-devtest-asg*",
+  "sgr-chips-uam*"
 ]
 
 ## CloudWatch Alarms
