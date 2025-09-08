@@ -112,6 +112,8 @@ parameter_group_settings = [
 
 oracle_ingress_sg_patterns = [
   "sgr-chips-devtest-asg*",
+  "sgr-chips-training1-asg*",
+  "sgr-chips-training2-asg*",
   "sgr-chips-uam-ec2*"
 ]
 
