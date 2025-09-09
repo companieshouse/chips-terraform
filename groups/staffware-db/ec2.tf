@@ -135,6 +135,11 @@ resource "aws_instance" "db_ec2" {
     })
   )
 
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 2
+  }
+
   lifecycle {
     ignore_changes = [
       user_data,
