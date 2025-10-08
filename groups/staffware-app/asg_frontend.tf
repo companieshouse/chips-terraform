@@ -47,33 +47,33 @@ module "iprocess_app_asg_security_group" {
 }
 
 resource "aws_security_group_rule" "admin_rpc" {
+  description       = "Client inbound RPC port from admin prefix list"
   type              = "ingress"
   from_port         = 111
   to_port           = 111
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
   security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
-  description       = "Client inbound RPC port from admin prefix list"
 }
 
 resource "aws_security_group_rule" "admin_client_range" {
+  description       = "Client inbound connection port range from admin prefix list"
   type              = "ingress"
   from_port         = 31000
   to_port           = 31049
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
   security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
-  description       = "Client inbound connection port range from admin prefix list"
 }
 
 resource "aws_security_group_rule" "admin_weblogic_range" {
+  description       = "On-premise WebLogic inbound port range from admin prefix list"
   type              = "ingress"
   from_port         = 30511
   to_port           = 30514
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
   security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
-  description       = "On-premise WebLogic inbound port range from admin prefix list"
 }
 
 resource "aws_cloudwatch_log_group" "iprocess_app" {
