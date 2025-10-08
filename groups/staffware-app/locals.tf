@@ -2,7 +2,6 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  admin_cidrs              = values(data.vault_generic_secret.internal_cidrs.data)
   s3_releases              = data.vault_generic_secret.s3_releases.data
   iprocess_app_ec2_data    = data.vault_generic_secret.iprocess_app_ec2_data.data
   iprocess_app_config_data = data.vault_generic_secret.iprocess_app_config_data.data
