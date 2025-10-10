@@ -11,6 +11,7 @@ locals {
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
   sns_kms_key_id         = local.kms_keys_data["sns"]
+  account_ssm_key_arn    = local.kms_keys_data["ssm"]
   bulk_gateway_s3_data   = data.vault_generic_secret.bulk_gateway_s3.data
   bus_perf_dashboard_s3_data = data.vault_generic_secret.bus_perf_dashboard_s3.data
 
