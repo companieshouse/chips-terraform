@@ -9,7 +9,8 @@ module "instance_profile" {
   kms_key_refs = [
     "alias/${var.short_account}/${var.short_region}/ebs",
     "alias/kms-bulk-gateway-${var.environment}-sftp",
-    local.ssm_kms_key_id
+    local.ssm_kms_key_id,
+    local.account_ssm_key_arn
   ]
 
   cw_log_group_arns = length(local.log_groups) > 0 ? [format(
