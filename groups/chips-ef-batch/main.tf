@@ -28,7 +28,7 @@ provider "vault" {
 }
 
 module "chips-ef-batch" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.317"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=update-chips-sg-rule-to-inc-admin-prefix-list"
 
   application                        = var.application
   application_type                   = var.application_type
