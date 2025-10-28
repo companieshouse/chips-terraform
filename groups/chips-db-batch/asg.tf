@@ -9,9 +9,6 @@ module "asg_security_group" {
   description = "Security group for the ${var.application} asg"
   vpc_id      = data.aws_vpc.vpc.id
 
-  ingress_cidr_blocks = local.admin_cidrs
-  ingress_rules       = ["ssh-tcp"]
-
   ingress_with_source_security_group_id = [
     {
       from_port                = 22
@@ -23,6 +20,17 @@ module "asg_security_group" {
   ]
 
   egress_rules = ["all-all"]
+}
+
+resource "aws_security_group_rule" "admin_ingress_ssh" {
+
+  description       = "Allow SSH traffic from admin prefix list"
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.asg_security_group.security_group_id
 }
 
 # ASG Module
