@@ -13,7 +13,7 @@ environment = "staging"
 
 # ASG settings
 asg_count = 1
-instance_size = "t3.small"
+instance_size = "t4g.small"
 
 # NFS Mounts
 nfs_mount_destination_parent_dir = "/mnt/nfs"
