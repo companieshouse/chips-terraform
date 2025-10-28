@@ -109,3 +109,4 @@ data "template_cloudinit_config" "userdata_config" {
 data "aws_ec2_managed_prefix_list" "admin" {
   name = "administration-cidr-ranges"
 }
+
