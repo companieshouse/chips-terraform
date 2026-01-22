@@ -5,7 +5,7 @@
 
   module "oem_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0.0"
 
   name        = "sgr-${var.application}-ec2-001"
   description = "Security group for the CHIPS OEM EC2 instance"
@@ -186,4 +186,3 @@ resource "aws_route53_record" "oem_dns" {
   ttl     = "300"
   records = [aws_instance.oem_ec2[count.index].private_ip]
 }
-

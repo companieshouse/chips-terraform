@@ -43,7 +43,7 @@ resource "aws_iam_role" "s3_integration" {
 }
 
 resource "aws_db_instance_role_association" "s3_integration" {
-  db_instance_identifier = module.chips_rds.this_db_instance_id
+  db_instance_identifier = module.chips_rds.db_instance_identifier
   feature_name           = "S3_INTEGRATION"
   role_arn               = aws_iam_role.s3_integration.arn
 }

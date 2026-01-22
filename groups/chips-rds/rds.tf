@@ -4,7 +4,7 @@
 module "rds_security_group" {
 
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0.0"
 
   name        = "sgr-chips-rds-001"
   description = "Security group for the chips RDS database"
@@ -17,7 +17,7 @@ resource "aws_security_group_rule" "egress_all" {
   description       = "Permit egress traffic to all desintations"
   from_port         = 0
   protocol          = "-1"
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
   to_port           = 0
 }
 
@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "ingress_oem_prefix_list" {
   from_port         = 5500
   protocol          = "tcp"
   prefix_list_ids   = [each.value]
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
   to_port           = 5500
 }
 
@@ -41,7 +41,7 @@ resource "aws_security_group_rule" "ingress_oracle_prefix_list" {
   from_port         = 1521
   protocol          = "tcp"
   prefix_list_ids   = [each.value]
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
   to_port           = 1521
 }
 
@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "ingress_oracle_sg" {
   from_port                = 1521
   protocol                 = "tcp"
   source_security_group_id = each.value
-  security_group_id        = module.rds_security_group.this_security_group_id
+  security_group_id        = module.rds_security_group.security_group_id
   to_port                  = 1521
 }
 
@@ -64,7 +64,7 @@ resource "aws_security_group_rule" "staging_dba_dev_ingress" {
   to_port           = 1521
   protocol          = "tcp"
   cidr_blocks       = [data.vault_generic_secret.staging_dba_dev.data["dba-dev-ip"]]
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
 
 }
 
@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "staging_dba_dev_ingress" {
 # ------------------------------------------------------------------------------
 module "chips_rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "2.23.0"
+  version = "~> 6.0.0"
 
   create_db_parameter_group = true
   create_db_subnet_group    = true
@@ -92,7 +92,7 @@ module "chips_rds" {
   storage_encrypted          = true
   kms_key_id                 = data.aws_kms_key.rds.arn
 
-  name     = upper(var.name)
+  db_name     = upper(var.name)
   username = local.chips_rds_data["admin-username"]
   password = local.chips_rds_data["admin-password"]
   port     = "1521"
@@ -103,7 +103,10 @@ module "chips_rds" {
   backup_window             = var.rds_backup_window
   backup_retention_period   = var.backup_retention_period
   skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.identifier}-final-deletion-snapshot"
+  parameter_group_description = "Database parameter group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  db_subnet_group_description = "Database subnet group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  option_group_description = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+
 
   # Enhanced Monitoring
   monitoring_interval             = "30"
@@ -116,12 +119,12 @@ module "chips_rds" {
 
   # RDS Security Group
   vpc_security_group_ids = [
-    module.rds_security_group.this_security_group_id,
+    module.rds_security_group.security_group_id,
     data.aws_security_group.rds_shared.id
   ]
 
   # DB subnet group
-  subnet_ids = data.aws_subnet_ids.data.ids
+  subnet_ids = data.aws_subnets.data.ids
 
   # DB Parameter group
   family = "oracle-se2-${var.major_engine_version}"
@@ -132,7 +135,7 @@ module "chips_rds" {
     {
       option_name                    = "OEM"
       port                           = "5500"
-      vpc_security_group_memberships = [module.rds_security_group.this_security_group_id]
+      vpc_security_group_memberships = [module.rds_security_group.security_group_id]
     },
     {
       option_name = "JVM"
@@ -167,19 +170,19 @@ module "chips_rds" {
     "delete" : "80m",
     "update" : "80m"
   }
-
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "${upper(var.identifier)}-DBA-Support"
-    )
+    {
+      ServiceTeam = "${upper(var.identifier)}-DBA-Support",
+      Name        = "rds-${var.identifier}-${var.environment}-001"
+    }
   )
 }
 
 module "rds_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
-  db_instance_id         = module.chips_rds.this_db_instance_id
+  db_instance_id         = module.chips_rds.db_instance_identifier
   db_instance_shortname  = upper(var.name)
   alarm_actions_enabled  = var.alarm_actions_enabled
   alarm_name_prefix      = "Oracle RDS"
