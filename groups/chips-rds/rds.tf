@@ -91,6 +91,7 @@ module "chips_rds" {
   multi_az                   = var.multi_az
   storage_encrypted          = true
   kms_key_id                 = data.aws_kms_key.rds.arn
+  manage_master_user_password = false
 
   db_name     = upper(var.name)
   username = local.chips_rds_data["admin-username"]
