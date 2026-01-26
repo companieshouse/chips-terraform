@@ -21,8 +21,11 @@ data "vault_generic_secret" "account_ids" {
   path = "aws-accounts/account-ids"
 }
 
-data "aws_subnet_ids" "data" {
-  vpc_id = data.aws_vpc.vpc.id
+data "aws_subnets" "data" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
   filter {
     name   = "tag:Name"
     values = ["sub-data-*"]
@@ -30,7 +33,7 @@ data "aws_subnet_ids" "data" {
 }
 
 data "aws_subnet" "data_subnets" {
-  for_each = data.aws_subnet_ids.data.ids
+  for_each = data.aws_subnet.data.ids
 
   id = each.value
 }
