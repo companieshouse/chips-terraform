@@ -95,18 +95,8 @@ data "aws_route53_zone" "private_zone" {
   private_zone = true
 }
 
-data "template_file" "userdata" {
-  template = file("${path.module}/templates/user_data.tpl")
-
-  count = var.db_instance_count
-
-  vars = {
-    ENVIRONMENT          = title(var.environment)
-    APPLICATION_NAME     = var.application
-    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s-db-%02d", var.application, count.index + 1) }))
-    ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
-  }
-}
+/* Replaced the deprecated `template_file` data source with the
+   built-in `templatefile()` function for Terraform 1.3 compatibility. */
 
 data "template_cloudinit_config" "userdata_config" {
   count = var.db_instance_count
@@ -116,7 +106,12 @@ data "template_cloudinit_config" "userdata_config" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.userdata[count.index].rendered
+    content = templatefile("${path.module}/templates/user_data.tpl", {
+      ENVIRONMENT          = title(var.environment)
+      APPLICATION_NAME     = var.application
+      ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s-db-%02d", var.application, count.index + 1) }))
+      ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
+    })
   }
 }
 

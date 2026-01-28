@@ -1,5 +1,5 @@
 module "db_instance_profile" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
+  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s-db", var.application)
   enable_SSM = true
@@ -89,7 +89,7 @@ module "db_instance_profile" {
 
 module "ssm_runbook_execution_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "4.17.1"
+  version = "5.4.0"
 
   role_name               = "ch-ssm-failover-${var.application}-db"
   create_role             = true
@@ -247,7 +247,7 @@ data "aws_iam_policy_document" "eventbridge_ssm_execution_policy_document" {
 }
 
 resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
-  count      = var.enable_inspector_scanning_policy ? 1 : 0
+  count = var.enable_inspector_scanning_policy ? 1 : 0
 
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
   role       = module.db_instance_profile.aws_iam_role.name

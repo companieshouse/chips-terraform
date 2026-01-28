@@ -1,7 +1,7 @@
 module "cloudwatch_sns_notifications" {
 
   source  = "terraform-aws-modules/sns/aws"
-  version = "3.3.0"
+  version = "6.2.1"
 
   name              = "chips-cloudwatch-emails"
   display_name      = "chips-cloudwatch-alarms-emails-only"
@@ -18,7 +18,7 @@ module "cloudwatch_sns_notifications" {
 module "cloudwatch_sns_notifications_ooh" {
 
   source  = "terraform-aws-modules/sns/aws"
-  version = "3.3.0"
+  version = "6.2.1"
 
   name              = "chips-cloudwatch-ooh"
   display_name      = "chips-cloudwatch-alarms-ooh-only"

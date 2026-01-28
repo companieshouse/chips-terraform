@@ -5,7 +5,7 @@
 
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
@@ -156,7 +156,7 @@ resource "aws_security_group_rule" "sp_migration" {
 
 resource "aws_security_group_rule" "shared_services_access" {
   count = var.concourse_access_enabled ? 1 : 0
-  
+
   type              = "ingress"
   description       = "access from shared service concourse"
   from_port         = 1521
@@ -304,7 +304,7 @@ resource "aws_route53_record" "dns_cname" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.365"
   count  = var.db_instance_count
 
   name_prefix               = "chips-oltp"
