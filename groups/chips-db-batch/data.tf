@@ -63,11 +63,11 @@ data "vault_generic_secret" "nfs_mounts" {
 }
 
 data "vault_generic_secret" "bus_perf_dashboard_s3" {
-  path = "applications/${var.aws_account}-${var.aws_region}/performance-analytics/app/s3" 
+  path = "applications/${var.aws_account}-${var.aws_region}/performance-analytics/app/s3"
 }
 
 data "vault_generic_secret" "bulk_gateway_s3" {
-  path = "applications/${var.aws_account}-${var.aws_region}/bulk-gateway/app/s3" 
+  path = "applications/${var.aws_account}-${var.aws_region}/bulk-gateway/app/s3"
 }
 
 data "aws_ami" "ami" {
@@ -92,10 +92,10 @@ data "aws_ami" "ami" {
 data "template_file" "userdata" {
   template = file("${path.module}/templates/user_data.tpl")
   vars = {
-    ANSIBLE_INPUTS             = jsonencode(local.userdata_ansible_inputs)
-    DNS_DOMAIN                 = local.internal_fqdn
-    DNS_ZONE_ID                = data.aws_route53_zone.private_zone.zone_id
-    HERITAGE_ENVIRONMENT       = title(var.environment)
+    ANSIBLE_INPUTS       = jsonencode(local.userdata_ansible_inputs)
+    DNS_DOMAIN           = local.internal_fqdn
+    DNS_ZONE_ID          = data.aws_route53_zone.private_zone.zone_id
+    HERITAGE_ENVIRONMENT = title(var.environment)
   }
 }
 
