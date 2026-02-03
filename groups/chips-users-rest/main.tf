@@ -72,3 +72,4 @@ module "chips-users-rest" {
 
   additional_userdata_suffix = join("\n",concat(var.bootstrap_commands, var.post_bootstrap_commands))
 }
+
