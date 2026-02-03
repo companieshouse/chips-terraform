@@ -5,7 +5,7 @@
 
   module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"

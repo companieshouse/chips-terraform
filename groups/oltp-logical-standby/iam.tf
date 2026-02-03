@@ -1,5 +1,5 @@
 module "db_instance_profile" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
+  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s-db", var.application)
   enable_SSM = true
