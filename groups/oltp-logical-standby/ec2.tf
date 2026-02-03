@@ -225,3 +225,4 @@ resource "aws_route53_record" "dns_cname" {
     ignore_changes = [records]
   }
 }
+
