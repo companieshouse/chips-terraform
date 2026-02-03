@@ -93,7 +93,7 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
 
 # ASG Module
 module "iprocess_app_asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.248"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.365"
 
   name = format("%s-001", var.component)
   # Launch template
@@ -151,7 +151,7 @@ module "iprocess_app_asg" {
 # iProcess ASG CloudWatch Alarms
 #--------------------------------------------
 module "asg_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.363"
+  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.365"
 
   autoscaling_group_name = module.iprocess_app_asg.this_autoscaling_group_name
   prefix                 = "${var.aws_account}-${var.application}-fe-asg-alarms"
