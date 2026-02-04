@@ -9,11 +9,11 @@ module "cloudwatch_sns_notifications" {
   kms_master_key_id = local.sns_kms_key_id
 
   tags = merge(
-    local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
-  )
+  local.default_tags,
+  {
+    ServiceTeam = "CSI"
+  }
+)
 }
 
 module "cloudwatch_sns_ooh" {
@@ -27,9 +27,9 @@ module "cloudwatch_sns_ooh" {
   kms_master_key_id = local.sns_kms_key_id
 
   tags = merge(
-    local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
-  )
+  local.default_tags,
+  {
+    ServiceTeam = "CSI"
+  }
+)
 }

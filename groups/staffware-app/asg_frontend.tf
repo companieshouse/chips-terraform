@@ -39,11 +39,11 @@ module "iprocess_app_asg_security_group" {
   egress_rules = ["all-all"]
 
   tags = merge(
-    local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
-  )
+  local.default_tags,
+  {
+    ServiceTeam = "CSI"
+  }
+)
 }
 
 resource "aws_security_group_rule" "admin_rpc" {
@@ -84,11 +84,11 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
   kms_key_id        = lookup(each.value, "kms_key_id", local.logs_kms_key_id)
 
   tags = merge(
-    local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
-  )
+  local.default_tags,
+  {
+    ServiceTeam = "CSI"
+  }
+)
 }
 
 # ASG Module
@@ -122,7 +122,7 @@ module "iprocess_app_asg" {
 
   # Auto scaling group
   asg_name                       = "${var.component}-asg"
-  vpc_zone_identifier            = data.aws_subnet_ids.application.ids
+  vpc_zone_identifier            = data.aws_subnets.application.ids
   health_check_type              = "EC2"
   min_size                       = var.min_size
   max_size                       = var.max_size
@@ -141,9 +141,9 @@ module "iprocess_app_asg" {
 
   tags_as_map = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    tomap({
+      "ServiceTeam" = "CSI"
+    })
   )
 }
 

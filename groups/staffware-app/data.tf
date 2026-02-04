@@ -40,7 +40,7 @@ data "aws_subnets" "application" {
 }
 
 data "aws_subnet" "data" {
-  for_each = data.aws_subnets.data.ids
+  for_each = toset(data.aws_subnets.data.ids)
 
   id = each.value
 }
