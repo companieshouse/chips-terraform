@@ -178,8 +178,8 @@ variable "enable_sns_topic" {
 }
 
 variable "bootstrap_commands" {
-  type        = list(string)
-  default     = [
+  type = list(string)
+  default = [
     "su -l ec2-user weblogic-pre-bootstrap.sh",
     "su -l ec2-user bootstrap"
   ]

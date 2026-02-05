@@ -3,7 +3,7 @@
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
 
-  module "oem_security_group" {
+module "oem_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.0.0"
 
@@ -156,14 +156,14 @@ resource "aws_instance" "oem_ec2" {
 
 resource "aws_ebs_volume" "u_drive" {
   availability_zone = "eu-west-2a"
-  size = 256
-  type = "gp3"
-  encrypted = true
+  size              = 256
+  type              = "gp3"
+  encrypted         = true
 
   tags = {
     Name = "chips-oem"
   }
-    depends_on = [
+  depends_on = [
     aws_instance.oem_ec2
   ]
 }

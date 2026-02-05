@@ -57,5 +57,5 @@ data "aws_security_groups" "oracle_ingress" {
 
 data "vault_generic_secret" "staging_dba_dev" {
   path = "applications/${var.aws_profile}/chips/dba_dev"
-  
+
 }

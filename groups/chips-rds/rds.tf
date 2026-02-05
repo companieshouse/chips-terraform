@@ -78,35 +78,35 @@ module "chips_rds" {
   create_db_parameter_group = true
   create_db_subnet_group    = true
 
-  identifier                 = "rds-${var.identifier}-${var.environment}-001"
-  engine                     = "oracle-se2"
-  major_engine_version       = var.major_engine_version
-  engine_version             = var.engine_version
-  auto_minor_version_upgrade = var.auto_minor_version_upgrade
-  license_model              = var.license_model
-  instance_class             = var.instance_class
-  allocated_storage          = var.allocated_storage
-  storage_type               = var.storage_type
-  iops                       = var.iops
-  multi_az                   = var.multi_az
-  storage_encrypted          = true
-  kms_key_id                 = data.aws_kms_key.rds.arn
+  identifier                  = "rds-${var.identifier}-${var.environment}-001"
+  engine                      = "oracle-se2"
+  major_engine_version        = var.major_engine_version
+  engine_version              = var.engine_version
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  license_model               = var.license_model
+  instance_class              = var.instance_class
+  allocated_storage           = var.allocated_storage
+  storage_type                = var.storage_type
+  iops                        = var.iops
+  multi_az                    = var.multi_az
+  storage_encrypted           = true
+  kms_key_id                  = data.aws_kms_key.rds.arn
   manage_master_user_password = false
 
-  db_name     = upper(var.name)
+  db_name  = upper(var.name)
   username = local.chips_rds_data["admin-username"]
   password = local.chips_rds_data["admin-password"]
   port     = "1521"
 
-  ca_cert_identifier        = "rds-ca-rsa2048-g1"
-  deletion_protection       = true
-  maintenance_window        = var.rds_maintenance_window
-  backup_window             = var.rds_backup_window
-  backup_retention_period   = var.backup_retention_period
-  skip_final_snapshot       = false
+  ca_cert_identifier          = "rds-ca-rsa2048-g1"
+  deletion_protection         = true
+  maintenance_window          = var.rds_maintenance_window
+  backup_window               = var.rds_backup_window
+  backup_retention_period     = var.backup_retention_period
+  skip_final_snapshot         = false
   parameter_group_description = "Database parameter group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
   db_subnet_group_description = "Database subnet group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
-  option_group_description = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  option_group_description    = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
 
 
   # Enhanced Monitoring
@@ -183,10 +183,10 @@ module "chips_rds" {
 module "rds_cloudwatch_alarms" {
   source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
-  db_instance_id         = module.chips_rds.db_instance_identifier
-  db_instance_shortname  = upper(var.name)
-  alarm_actions_enabled  = var.alarm_actions_enabled
-  alarm_name_prefix      = "Oracle RDS"
-  alarm_topic_name       = var.alarm_topic_name
-  alarm_topic_name_ooh   = var.alarm_topic_name_ooh
+  db_instance_id        = module.chips_rds.db_instance_identifier
+  db_instance_shortname = upper(var.name)
+  alarm_actions_enabled = var.alarm_actions_enabled
+  alarm_name_prefix     = "Oracle RDS"
+  alarm_topic_name      = var.alarm_topic_name
+  alarm_topic_name_ooh  = var.alarm_topic_name_ooh
 }

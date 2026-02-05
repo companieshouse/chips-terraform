@@ -10,8 +10,8 @@ data "aws_iam_policy_document" "rds_assume_role" {
 }
 
 resource "aws_iam_role_policy" "s3_integration" {
-  name        = "ipol-rds-${var.identifier}-policy"
-  role        = aws_iam_role.s3_integration.id
+  name = "ipol-rds-${var.identifier}-policy"
+  role = aws_iam_role.s3_integration.id
 
   policy = <<EOF
 {
