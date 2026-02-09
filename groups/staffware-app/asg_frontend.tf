@@ -39,11 +39,11 @@ module "iprocess_app_asg_security_group" {
   egress_rules = ["all-all"]
 
   tags = merge(
-  local.default_tags,
-  {
-    ServiceTeam = "CSI"
-  }
-)
+    local.default_tags,
+    {
+      ServiceTeam = "CSI"
+    }
+  )
 }
 
 resource "aws_security_group_rule" "admin_rpc" {
@@ -84,11 +84,11 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
   kms_key_id        = lookup(each.value, "kms_key_id", local.logs_kms_key_id)
 
   tags = merge(
-  local.default_tags,
-  {
-    ServiceTeam = "CSI"
-  }
-)
+    local.default_tags,
+    {
+      ServiceTeam = "CSI"
+    }
+  )
 }
 
 # ASG Module
