@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 module "iprocess_app_asg_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.3.1"
 
   name        = "sgr-${var.component}-asg-001"
   description = "Security group for the ${var.component} asg"
@@ -40,9 +40,9 @@ module "iprocess_app_asg_security_group" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    {
+      ServiceTeam = "CSI"
+    }
   )
 }
 
@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "admin_rpc" {
   to_port           = 111
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
+  security_group_id = module.iprocess_app_asg_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "admin_client_range" {
@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "admin_client_range" {
   to_port           = 31049
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
+  security_group_id = module.iprocess_app_asg_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "admin_weblogic_range" {
@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "admin_weblogic_range" {
   to_port           = 30514
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.iprocess_app_asg_security_group.this_security_group_id
+  security_group_id = module.iprocess_app_asg_security_group.security_group_id
 }
 
 resource "aws_cloudwatch_log_group" "iprocess_app" {
@@ -85,15 +85,15 @@ resource "aws_cloudwatch_log_group" "iprocess_app" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    {
+      ServiceTeam = "CSI"
+    }
   )
 }
 
 # ASG Module
 module "iprocess_app_asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.248"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.365"
 
   name = format("%s-001", var.component)
   # Launch template
@@ -101,7 +101,7 @@ module "iprocess_app_asg" {
   image_id      = data.aws_ami.iprocess_app.id
   instance_type = var.instance_size
   security_groups = [
-    module.iprocess_app_asg_security_group.this_security_group_id,
+    module.iprocess_app_asg_security_group.security_group_id,
     data.aws_security_group.nagios_shared.id
   ]
   root_block_device = [
@@ -122,7 +122,7 @@ module "iprocess_app_asg" {
 
   # Auto scaling group
   asg_name                       = "${var.component}-asg"
-  vpc_zone_identifier            = data.aws_subnet_ids.application.ids
+  vpc_zone_identifier            = data.aws_subnets.application.ids
   health_check_type              = "EC2"
   min_size                       = var.min_size
   max_size                       = var.max_size
@@ -141,9 +141,9 @@ module "iprocess_app_asg" {
 
   tags_as_map = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    tomap({
+      "ServiceTeam" = "CSI"
+    })
   )
 }
 
@@ -151,7 +151,7 @@ module "iprocess_app_asg" {
 # iProcess ASG CloudWatch Alarms
 #--------------------------------------------
 module "asg_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.116"
+  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.365"
 
   autoscaling_group_name = module.iprocess_app_asg.this_autoscaling_group_name
   prefix                 = "${var.aws_account}-${var.application}-fe-asg-alarms"
