@@ -100,13 +100,13 @@ resource "aws_instance" "reginit_ec2" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "Name"        = format("%s-%02d", var.application, count.index + 1)
       "Domain"      = local.internal_fqdn,
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true,
       "Backup"      = "backup21"
-    })
+    }
   )
 
   lifecycle {

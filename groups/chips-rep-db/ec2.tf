@@ -295,10 +295,10 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
-    })
+    }
   )
 }
 

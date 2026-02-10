@@ -111,6 +111,8 @@ locals {
     Application = upper(var.application)
     Region      = var.aws_region
     Account     = var.aws_account
+    Environment = var.environment
+    Repository  = "chips-terraform"
   }
 
   aws_backup_plan_tags = var.aws_backup_plan_enable ? {
