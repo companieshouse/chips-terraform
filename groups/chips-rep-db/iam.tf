@@ -197,10 +197,10 @@ resource "aws_iam_role" "eventbridge_ssm_execution_role" {
 EOF
   tags = merge(
     local.default_tags,
-    map(
-      "Account", var.aws_account,
-      "ServiceTeam", "Platform"
-    )
+    {
+      Account =var.aws_account,
+      ServiceTeam ="Platform"
+    }
   )
 }
 
