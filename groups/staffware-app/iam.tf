@@ -2,7 +2,7 @@ module "iprocess_app_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.59"
 
   name              = "${var.component}-profile"
-  enable_SSM        = true
+  enable_ssm        = true
   s3_buckets_write  = [local.session_manager_bucket_name]
   instance_asg_arns = [module.iprocess_app_asg.this_autoscaling_group_arn]
   cw_log_group_arns = length(local.log_groups) > 0 ? flatten([

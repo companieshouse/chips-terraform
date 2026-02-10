@@ -74,7 +74,7 @@ module "instance_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s-profile", var.application)
-  enable_SSM = true
+  enable_ssm = true
 
   s3_buckets_write = [local.session_manager_bucket_name]
 
