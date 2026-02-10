@@ -2,7 +2,7 @@ module "oem_instance_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s", var.application)
-  enable_SSM = true
+  enable_ssm = true
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id,
