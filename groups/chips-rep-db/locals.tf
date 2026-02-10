@@ -30,18 +30,19 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(
+  oracle_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_oracle,
     local.additional_app_cidrs,
     local.dblink_cidrs,
     local.additional_internal_cidrs,
     local.cdp_cidrs
-  )
-  ssh_allowed_ranges    = concat(
+  ))
+
+  ssh_allowed_ranges    = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_ssh,
     local.deployment_cidrs,
     local.additional_internal_cidrs
-  )
+  ))
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
