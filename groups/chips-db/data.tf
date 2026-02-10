@@ -14,8 +14,11 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-data "aws_subnet_ids" "data" {
-  vpc_id = data.aws_vpc.vpc.id
+data "aws_subnets" "data" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
   filter {
     name   = "tag:Name"
     values = ["sub-data-*"]

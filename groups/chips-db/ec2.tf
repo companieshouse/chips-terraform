@@ -30,7 +30,7 @@ resource "aws_security_group_rule" "admin_ssh_access" {
   to_port           = 22
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "ssh_access" {
@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "ssh_access" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ resource "aws_security_group_rule" "admin_oracle_access" {
   to_port           = 1522
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_access" {
@@ -67,7 +67,7 @@ resource "aws_security_group_rule" "oracle_access" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_access_sgs" {
@@ -79,7 +79,7 @@ resource "aws_security_group_rule" "oracle_access_sgs" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = each.value
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
   to_port                  = 3872
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -103,7 +103,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
   to_port                  = 4903
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -113,7 +113,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
   to_port                  = 22
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_listener" {
@@ -123,7 +123,7 @@ resource "aws_security_group_rule" "OEM_listener" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "test_access" {
@@ -137,7 +137,7 @@ resource "aws_security_group_rule" "test_access" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "sp_migration" {
@@ -151,7 +151,7 @@ resource "aws_security_group_rule" "sp_migration" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "shared_services_access" {
@@ -163,7 +163,7 @@ resource "aws_security_group_rule" "shared_services_access" {
   to_port           = 1522
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.shared_services_cidrs.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------

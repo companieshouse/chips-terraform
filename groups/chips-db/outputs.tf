@@ -6,7 +6,7 @@ resource "vault_generic_secret" "chips-db-outputs" {
   path = "applications/${var.aws_profile}/${var.application}/outputs"
 
   data_json = jsonencode({
-    chips-sns-topic-emails = module.cloudwatch_sns_notifications.sns_topic_arn
-    chips-sns-topic-ooh    = module.cloudwatch_sns_notifications_ooh.sns_topic_arn
+    chips-sns-topic-emails = module.cloudwatch_sns_notifications.this_sns_topic_arn
+    chips-sns-topic-ooh    = module.cloudwatch_sns_notifications_ooh.this_sns_topic_arn
   })
 }
