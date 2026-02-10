@@ -391,7 +391,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.177"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
   db_instance_id          = "chips-oltp-db"
   db_instance_shortname   = var.db_instance_shortname
