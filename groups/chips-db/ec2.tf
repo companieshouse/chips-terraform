@@ -182,7 +182,7 @@ resource "aws_instance" "db_ec2" {
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.db_ec2_security_group.this_security_group_id
+    module.db_ec2_security_group.security_group_id
   ]
 
   root_block_device {
