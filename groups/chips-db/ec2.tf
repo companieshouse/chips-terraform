@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "admin_ssh_access" {
 }
 
 resource "aws_security_group_rule" "ssh_access" {
-  for_each = toset(local.ssh_allowed_ranges)
+  for_each = toset(nonsensitive(local.ssh_allowed_ranges))
 
   type              = "ingress"
   description       = "SSH access from ${each.value}"
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "admin_oracle_access" {
 }
 
 resource "aws_security_group_rule" "oracle_access" {
-  for_each = toset(local.oracle_allowed_ranges)
+  for_each = toset(nonsensitive(local.oracle_allowed_ranges))
 
   type              = "ingress"
   description       = "Oracle access from ${each.value}"
