@@ -10,10 +10,10 @@ module "rds_security_group" {
   description = "Security group for the ${var.identifier}-${var.environment} RDS database"
   vpc_id      = data.aws_vpc.vpc.id
 
-  ingress_rules            = ["oracle-db-tcp"]
-  ingress_prefix_list_ids  = [data.aws_ec2_managed_prefix_list.administration.id]
+  ingress_rules           = ["oracle-db-tcp"]
+  ingress_prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
 
-  ingress_with_cidr_blocks = []
+  ingress_with_cidr_blocks              = []
   ingress_with_source_security_group_id = []
 
   egress_rules = ["all-all"]
@@ -83,11 +83,11 @@ module "staffware_rds" {
   password = local.staffware_rds_data["admin-password"]
   port     = "1521"
 
-  deletion_protection             = true
-  maintenance_window              = var.rds_maintenance_window
-  backup_window                   = var.rds_backup_window
-  backup_retention_period         = var.backup_retention_period
-  skip_final_snapshot             = false
+  deletion_protection              = true
+  maintenance_window               = var.rds_maintenance_window
+  backup_window                    = var.rds_backup_window
+  backup_retention_period          = var.backup_retention_period
+  skip_final_snapshot              = false
   final_snapshot_identifier_prefix = var.identifier
 
   # Enhanced Monitoring
@@ -157,10 +157,10 @@ module "staffware_rds" {
 module "rds_cloudwatch_alarms" {
   source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.365"
 
-  db_instance_id         = module.staffware_rds.db_instance_identifier
-  db_instance_shortname  = upper(var.name)
-  alarm_actions_enabled  = var.alarm_actions_enabled
-  alarm_name_prefix      = "Oracle RDS"
-  alarm_topic_name       = var.alarm_topic_name
-  alarm_topic_name_ooh   = var.alarm_topic_name_ooh
+  db_instance_id        = module.staffware_rds.db_instance_identifier
+  db_instance_shortname = upper(var.name)
+  alarm_actions_enabled = var.alarm_actions_enabled
+  alarm_name_prefix     = "Oracle RDS"
+  alarm_topic_name      = var.alarm_topic_name
+  alarm_topic_name_ooh  = var.alarm_topic_name_ooh
 }
