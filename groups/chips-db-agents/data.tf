@@ -6,8 +6,11 @@ data "aws_vpc" "vpc" {
   }
 }
 
-data "aws_subnet_ids" "application" {
-  vpc_id = data.aws_vpc.vpc.id
+data "aws_subnets" "application" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
   filter {
     name   = "tag:Name"
     values = ["sub-application-*"]
@@ -15,7 +18,7 @@ data "aws_subnet_ids" "application" {
 }
 
 data "aws_subnet" "application" {
-  for_each = data.aws_subnet_ids.application.ids
+  for_each = toset(data.aws_subnets.application.ids)
   id       = each.value
 }
 
@@ -71,22 +74,17 @@ data "aws_ami" "ami" {
   }
 }
 
-data "template_file" "userdata" {
-  template = file("${path.module}/templates/user_data.tpl")
-  vars = {
-    ANSIBLE_INPUTS       = jsonencode(local.userdata_ansible_inputs)
-    DNS_DOMAIN           = local.internal_fqdn
-    DNS_ZONE_ID          = data.aws_route53_zone.private_zone.zone_id
-    HERITAGE_ENVIRONMENT = title(var.environment)
-  }
-}
-
 data "template_cloudinit_config" "userdata_config" {
   gzip          = true
   base64_encode = true
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.userdata.rendered
+    content      = templatefile("${path.module}/templates/user_data.tpl", {
+      ANSIBLE_INPUTS       = jsonencode(local.userdata_ansible_inputs)
+      DNS_DOMAIN           = local.internal_fqdn
+      DNS_ZONE_ID          = data.aws_route53_zone.private_zone.zone_id
+      HERITAGE_ENVIRONMENT = title(var.environment)
+    })
   }
 }
