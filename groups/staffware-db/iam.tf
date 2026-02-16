@@ -2,7 +2,7 @@ module "db_instance_profile" {
   source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
 
   name       = format("%s-db", var.application)
-  enable_SSM = true
+  enable_ssm = true
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id,

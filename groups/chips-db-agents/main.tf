@@ -1,29 +1,29 @@
 # CHIPS Security Group
 module "asg_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.3"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-asg-001"
   description = "Security group for the ${var.application} asg"
   vpc_id      = data.aws_vpc.vpc.id
 
-  ingress_rules            = ["ssh-tcp"]
-  ingress_prefix_list_ids  = [data.aws_ec2_managed_prefix_list.administration.id]
+  ingress_rules           = ["ssh-tcp"]
+  ingress_prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
 
   egress_rules = ["all-all"]
 }
 
 # ASG Module
 module "asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.244"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.365"
 
   count = var.asg_count
 
   name = format("%s%s", var.application, count.index)
 
-  lt_name         = format("%s%s-launchtemplate", var.application, count.index)
-  image_id        = data.aws_ami.ami.id
-  instance_type   = var.instance_size
+  lt_name       = format("%s%s-launchtemplate", var.application, count.index)
+  image_id      = data.aws_ami.ami.id
+  instance_type = var.instance_size
   security_groups = [
     module.asg_security_group.security_group_id,
   ]
@@ -56,7 +56,7 @@ module "asg" {
   refresh_min_healthy_percentage = 50
   key_name                       = aws_key_pair.keypair.key_name
   enforce_imdsv2                 = var.enforce_imdsv2
-  
+
   iam_instance_profile = module.instance_profile.aws_iam_instance_profile.name
   user_data_base64     = data.template_cloudinit_config.userdata_config.rendered
 
@@ -71,10 +71,10 @@ module "asg" {
 
 # IAM module
 module "instance_profile" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.59"
+  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s-profile", var.application)
-  enable_SSM = true
+  enable_ssm = true
 
   s3_buckets_write = [local.session_manager_bucket_name]
 

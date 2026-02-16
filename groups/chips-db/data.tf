@@ -14,8 +14,11 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-data "aws_subnet_ids" "data" {
-  vpc_id = data.aws_vpc.vpc.id
+data "aws_subnets" "data" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
   filter {
     name   = "tag:Name"
     values = ["sub-data-*"]
@@ -23,7 +26,7 @@ data "aws_subnet_ids" "data" {
 }
 
 data "aws_subnet" "data_subnets" {
-  for_each = data.aws_subnet_ids.data.ids
+  for_each = toset(data.aws_subnets.data.ids)
 
   id = each.value
 }
@@ -95,18 +98,8 @@ data "aws_route53_zone" "private_zone" {
   private_zone = true
 }
 
-data "template_file" "userdata" {
-  template = file("${path.module}/templates/user_data.tpl")
-
-  count = var.db_instance_count
-
-  vars = {
-    ENVIRONMENT          = title(var.environment)
-    APPLICATION_NAME     = var.application
-    ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s-db-%02d", var.application, count.index + 1) }))
-    ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
-  }
-}
+/* Replaced the deprecated `template_file` data source with the
+   built-in `templatefile()` function for Terraform 1.3 compatibility. */
 
 data "template_cloudinit_config" "userdata_config" {
   count = var.db_instance_count
@@ -116,7 +109,12 @@ data "template_cloudinit_config" "userdata_config" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.userdata[count.index].rendered
+    content = templatefile("${path.module}/templates/user_data.tpl", {
+      ENVIRONMENT          = title(var.environment)
+      APPLICATION_NAME     = var.application
+      ANSIBLE_INPUTS       = jsonencode(merge(local.ansible_inputs, { hostname = format("%s-db-%02d", var.application, count.index + 1) }))
+      ISCSI_INITIATOR_NAME = local.iscsi_initiator_names[count.index]
+    })
   }
 }
 

@@ -5,7 +5,7 @@
 
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
@@ -30,11 +30,11 @@ resource "aws_security_group_rule" "admin_ssh_access" {
   to_port           = 22
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "ssh_access" {
-  for_each = toset(local.ssh_allowed_ranges)
+  for_each = toset(nonsensitive(local.ssh_allowed_ranges))
 
   type              = "ingress"
   description       = "SSH access from ${each.value}"
@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "ssh_access" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -55,11 +55,11 @@ resource "aws_security_group_rule" "admin_oracle_access" {
   to_port           = 1522
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_access" {
-  for_each = toset(local.oracle_allowed_ranges)
+  for_each = toset(nonsensitive(local.oracle_allowed_ranges))
 
   type              = "ingress"
   description       = "Oracle access from ${each.value}"
@@ -67,7 +67,7 @@ resource "aws_security_group_rule" "oracle_access" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_access_sgs" {
@@ -79,7 +79,7 @@ resource "aws_security_group_rule" "oracle_access_sgs" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = each.value
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
   to_port                  = 3872
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -103,7 +103,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
   to_port                  = 4903
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -113,7 +113,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
   to_port                  = 22
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_listener" {
@@ -123,7 +123,7 @@ resource "aws_security_group_rule" "OEM_listener" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "test_access" {
@@ -137,7 +137,7 @@ resource "aws_security_group_rule" "test_access" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "sp_migration" {
@@ -151,19 +151,19 @@ resource "aws_security_group_rule" "sp_migration" {
   to_port           = 1522
   protocol          = "tcp"
   cidr_blocks       = [each.value]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "shared_services_access" {
   count = var.concourse_access_enabled ? 1 : 0
-  
+
   type              = "ingress"
   description       = "access from shared service concourse"
   from_port         = 1521
   to_port           = 1522
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.shared_services_cidrs.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ resource "aws_instance" "db_ec2" {
   user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.db_ec2_security_group.this_security_group_id
+    module.db_ec2_security_group.security_group_id
   ]
 
   root_block_device {
@@ -304,7 +304,7 @@ resource "aws_route53_record" "dns_cname" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.365"
   count  = var.db_instance_count
 
   name_prefix               = "chips-oltp"
@@ -337,11 +337,11 @@ module "cloudwatch-alarms" {
   used_swap_memory_threshold = "50" # Percentage
 
   alarm_actions = [
-    module.cloudwatch_sns_notifications.sns_topic_arn
+    module.cloudwatch_sns_notifications.topic_arn
   ]
 
   ok_actions = [
-    module.cloudwatch_sns_notifications.sns_topic_arn
+    module.cloudwatch_sns_notifications.topic_arn
   ]
 
   depends_on = [
@@ -391,7 +391,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.177"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
   db_instance_id          = "chips-oltp-db"
   db_instance_shortname   = var.db_instance_shortname
