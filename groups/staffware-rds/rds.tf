@@ -58,7 +58,7 @@ resource "aws_security_group_rule" "source_sg_access" {
 # ------------------------------------------------------------------------------
 module "staffware_rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "2.23.0"
+  version = "6.13.1"
 
   create_db_parameter_group = true
   create_db_subnet_group    = true
@@ -78,17 +78,17 @@ module "staffware_rds" {
   storage_encrypted          = true
   kms_key_id                 = data.aws_kms_key.rds.arn
 
-  name     = upper(var.name)
+  db_name  = upper(var.name)
   username = local.staffware_rds_data["admin-username"]
   password = local.staffware_rds_data["admin-password"]
   port     = "1521"
 
-  deletion_protection       = true
-  maintenance_window        = var.rds_maintenance_window
-  backup_window             = var.rds_backup_window
-  backup_retention_period   = var.backup_retention_period
-  skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.identifier}-final-deletion-snapshot"
+  deletion_protection             = true
+  maintenance_window              = var.rds_maintenance_window
+  backup_window                   = var.rds_backup_window
+  backup_retention_period         = var.backup_retention_period
+  skip_final_snapshot             = false
+  final_snapshot_identifier_prefix = var.identifier
 
   # Enhanced Monitoring
   monitoring_interval             = "30"
@@ -106,7 +106,7 @@ module "staffware_rds" {
   ]
 
   # DB subnet group
-  subnet_ids = data.aws_subnet_ids.data.ids
+  subnet_ids = data.aws_subnets.data.ids
 
   # DB Parameter group
   family = "oracle-se2-${var.major_engine_version}"
@@ -148,16 +148,16 @@ module "staffware_rds" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "${upper(var.identifier)}-DBA-Support"
-    )
+    {
+      "ServiceTeam" = "${upper(var.identifier)}-DBA-Support"
+    }
   )
 }
 
 module "rds_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.365"
 
-  db_instance_id         = module.staffware_rds.this_db_instance_id
+  db_instance_id         = module.staffware_rds.db_instance_identifier
   db_instance_shortname  = upper(var.name)
   alarm_actions_enabled  = var.alarm_actions_enabled
   alarm_name_prefix      = "Oracle RDS"

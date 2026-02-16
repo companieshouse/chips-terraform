@@ -3,5 +3,5 @@ resource "aws_route53_record" "staffware_rds" {
   name    = "${var.name}db"
   type    = "CNAME"
   ttl     = "300"
-  records = [module.staffware_rds.this_db_instance_address]
+  records = [module.staffware_rds.db_instance_address]
 }
