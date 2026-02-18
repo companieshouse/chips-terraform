@@ -127,7 +127,7 @@ data "template_file" "userdata" {
   }
 }
 
-data "template_cloudinit_config" "userdata_config" {
+data "cloudinit_config" "userdata_config" {
   count = var.db_instance_count
 
   gzip          = true

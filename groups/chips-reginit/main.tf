@@ -13,6 +13,11 @@ terraform {
       source  = "hashicorp/vault"
       version = ">= 3.0.0, < 5.0.0"
     }
+
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = ">= 2.0, < 3.0"
+    }
   }
   backend "s3" {}
 }
