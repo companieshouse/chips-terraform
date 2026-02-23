@@ -2,7 +2,7 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  additional_app_cidrs = values(data.vault_generic_secret.additional_app_cidrs.data)
+  additional_app_cidrs      = values(data.vault_generic_secret.additional_app_cidrs.data)
   additional_internal_cidrs = values(data.vault_generic_secret.additional_internal_cidrs.data)
 
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
@@ -38,7 +38,7 @@ locals {
     local.cdp_cidrs
   ))
 
-  ssh_allowed_ranges    = nonsensitive(concat(
+  ssh_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_ssh,
     local.deployment_cidrs,
     local.additional_internal_cidrs
@@ -117,7 +117,7 @@ locals {
   }
 
   aws_backup_plan_tags = var.aws_backup_plan_enable ? {
-    Backup      = var.aws_backup_plan_tag
+    Backup = var.aws_backup_plan_tag
   } : {}
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))

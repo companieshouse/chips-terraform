@@ -103,7 +103,7 @@ resource "aws_ssm_document" "failover_db" {
   tags = merge(
     local.default_tags,
     {
-      Account = var.aws_account,
+      Account     = var.aws_account,
       ServiceTeam = "Platforms"
     }
   )
