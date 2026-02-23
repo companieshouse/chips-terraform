@@ -2,7 +2,7 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  additional_app_cidrs = values(data.vault_generic_secret.additional_app_cidrs.data)
+  additional_app_cidrs      = values(data.vault_generic_secret.additional_app_cidrs.data)
   additional_internal_cidrs = values(data.vault_generic_secret.additional_internal_cidrs.data)
 
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
@@ -30,18 +30,19 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(
+  oracle_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_oracle,
     local.additional_app_cidrs,
     local.dblink_cidrs,
     local.additional_internal_cidrs,
     local.cdp_cidrs
-  )
-  ssh_allowed_ranges    = concat(
+  ))
+
+  ssh_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_ssh,
     local.deployment_cidrs,
     local.additional_internal_cidrs
-  )
+  ))
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
@@ -72,14 +73,14 @@ locals {
       tokenInfo  = "{{ssm-secure:${aws_ssm_parameter.github.name}}}"
     })
 
-    InstallDependencies = "False"
-    InstallRequirements = "True"
+    InstallDependencies = False
+    InstallRequirements = True
     PlaybookFile        = var.ssm_playbook_file_name
     RequirementsFile    = var.ssm_requirements_file_name
 
     ExtraVariables     = "SSM=True" #space separated vars
     ExtraVariablesJson = jsonencode(local.ansible_inputs)
-    Check              = "True"
+    Check              = True
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
@@ -94,14 +95,14 @@ locals {
       tokenInfo  = null
     })
 
-    InstallDependencies = "False"
-    InstallRequirements = "True"
+    InstallDependencies = False
+    InstallRequirements = True
     PlaybookFile        = var.ssm_playbook_file_name
     RequirementsFile    = var.ssm_requirements_file_name
 
     ExtraVariables     = "SSM=True" #space separated vars
     ExtraVariablesJson = jsonencode(local.ansible_inputs)
-    Check              = "True"
+    Check              = True
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
@@ -111,10 +112,12 @@ locals {
     Application = upper(var.application)
     Region      = var.aws_region
     Account     = var.aws_account
+    Environment = var.environment
+    Repository  = "chips-terraform"
   }
 
   aws_backup_plan_tags = var.aws_backup_plan_enable ? {
-    Backup      = var.aws_backup_plan_tag
+    Backup = var.aws_backup_plan_tag
   } : {}
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))

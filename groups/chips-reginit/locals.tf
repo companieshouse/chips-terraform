@@ -56,14 +56,14 @@ locals {
       tokenInfo  = "{{ssm-secure:${aws_ssm_parameter.github.name}}}"
     })
 
-    InstallDependencies = "False"
-    InstallRequirements = "True"
+    InstallDependencies = False
+    InstallRequirements = True
     PlaybookFile        = var.ssm_playbook_file_name
     RequirementsFile    = var.ssm_requirements_file_name
 
     ExtraVariables     = "SSM=True" #space separated vars
     ExtraVariablesJson = jsonencode(local.ansible_inputs)
-    Check              = "True"
+    Check              = True
     Verbose            = var.ansible_ssm_verbose_level
     TimeoutSeconds     = "3600"
   }
@@ -73,5 +73,7 @@ locals {
     Application = upper(var.application)
     Region      = var.aws_region
     Account     = var.aws_account
+    Environment = var.environment
+    Repository  = "chips-terraform"
   }
 }
