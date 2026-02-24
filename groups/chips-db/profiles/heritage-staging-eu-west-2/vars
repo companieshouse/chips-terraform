@@ -135,3 +135,4 @@ test_access_cidrs = [
 enable_inspector_scanning_policy = true
 
 concourse_access_enabled = true
+goldengate_migration = true
