@@ -11,3 +11,4 @@ locals {
     allowed_ranges = concat(local.client_cidrs,local.shared_services_management_cidrs)
 
 }
+
