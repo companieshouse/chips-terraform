@@ -125,7 +125,7 @@ resource "aws_instance" "db_ec2" {
   subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
   iam_instance_profile = module.db_instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
+  user_data_base64     = data.cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
     module.db_ec2_security_group.security_group_id
