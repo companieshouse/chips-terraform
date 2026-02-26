@@ -160,9 +160,13 @@ resource "aws_ebs_volume" "u_drive" {
   type              = "gp3"
   encrypted         = true
 
-  tags = {
-    Name = "chips-oem"
-  }
+  tags = merge(
+    local.default_tags,
+    tomap({
+      "Name" = "chips-oem"
+    })
+  )
+  
   depends_on = [
     aws_instance.oem_ec2
   ]
