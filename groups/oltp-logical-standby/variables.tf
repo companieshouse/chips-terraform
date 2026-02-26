@@ -1,17 +1,4 @@
 # ------------------------------------------------------------------------------
-# Vault Variables
-# ------------------------------------------------------------------------------
-variable "vault_username" {
-  type        = string
-  description = "Username for connecting to Vault - usually supplied through TF_VARS"
-}
-
-variable "vault_password" {
-  type        = string
-  description = "Password for connecting to Vault - usually supplied through TF_VARS"
-}
-
-# ------------------------------------------------------------------------------
 # AWS Variables
 # ------------------------------------------------------------------------------
 variable "aws_region" {
@@ -278,3 +265,4 @@ variable "chips_logsb_oem_sg" {
   description = "OEM Security Group"
   default     = ""
 }
+
