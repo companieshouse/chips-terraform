@@ -1,8 +1,8 @@
 module "oem_instance_profile" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
+  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s", var.application)
-  enable_SSM = true
+  enable_ssm = true
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id,
@@ -83,8 +83,8 @@ module "oem_instance_profile" {
 }
 
 resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
-  count      = var.enable_inspector_scanning_policy ? 1 : 0
-  
+  count = var.enable_inspector_scanning_policy ? 1 : 0
+
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
   role       = module.oem_instance_profile.aws_iam_role.name
 }

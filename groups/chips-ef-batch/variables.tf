@@ -1,17 +1,4 @@
 # ------------------------------------------------------------------------------
-# Vault Variables
-# ------------------------------------------------------------------------------
-variable "vault_username" {
-  type        = string
-  description = "Username for connecting to Vault - usually supplied through TF_VARS"
-}
-
-variable "vault_password" {
-  type        = string
-  description = "Password for connecting to Vault - usually supplied through TF_VARS"
-}
-
-# ------------------------------------------------------------------------------
 # AWS Variables
 # ------------------------------------------------------------------------------
 variable "aws_region" {
@@ -191,8 +178,8 @@ variable "enable_sns_topic" {
 }
 
 variable "bootstrap_commands" {
-  type        = list(string)
-  default     = [
+  type = list(string)
+  default = [
     "su -l ec2-user weblogic-pre-bootstrap.sh",
     "su -l ec2-user bootstrap"
   ]
