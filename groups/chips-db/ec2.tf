@@ -178,6 +178,18 @@ resource "aws_security_group_rule" "oracle_goldengate_migration" {
   security_group_id = module.db_ec2_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "oracle_goldengate_admin" {
+  count = var.goldengate_migration ? 1 : 0
+
+  type              = "ingress"
+  description       = "access from admin cidrs"
+  from_port         = 9000
+  to_port           = 9005
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
+  security_group_id = module.db_ec2_security_group.this_security_group_id
+}
+
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
