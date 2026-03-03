@@ -74,7 +74,7 @@ data "aws_ami" "ami" {
   }
 }
 
-data "template_cloudinit_config" "userdata_config" {
+data "cloudinit_config" "userdata_config" {
   gzip          = true
   base64_encode = true
 

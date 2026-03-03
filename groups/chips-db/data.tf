@@ -101,7 +101,7 @@ data "aws_route53_zone" "private_zone" {
 /* Replaced the deprecated `template_file` data source with the
    built-in `templatefile()` function for Terraform 1.3 compatibility. */
 
-data "template_cloudinit_config" "userdata_config" {
+data "cloudinit_config" "userdata_config" {
   count = var.db_instance_count
 
   gzip          = true
