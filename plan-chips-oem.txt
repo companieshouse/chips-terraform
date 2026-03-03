@@ -1,0 +1,825 @@
+Info: Validating AWS CLI version
+Info: Attempting to validate ECR login
+Info: Docker login succeeded
+Info: Using variable: VAULT_ADDR
+Info: Using variable: TF_VAR_vault_password
+Info: Using variable: TF_VAR_hashicorp_vault_password
+Info: Using variable: TF_VAR_vault_username
+Info: Using variable: TF_VAR_hashicorp_vault_username
+Info: Attempting to pull latest image from ECR
+Info: Preparing terraform environment
+Info: Terraform version: v1.3.10
+Info: AWS CLI profile: heritage-staging-eu-west-2
+Info: Region: eu-west-2
+Info: State bucket: heritage-staging-eu-west-2.terraform-state.ch.gov.uk
+Info: Workspace prefix: chips-terraform
+Info: Workspace: common-eu-west-2
+Info: State file: chips-oem.tfstate
+Info: State file path: heritage-staging-eu-west-2.terraform-state.ch.gov.uk/chips-terraform/common-eu-west-2/chips-oem.tfstate
+Info: Incorrect workspace selected 'default', clearing state..
+Downloading git::ssh://git@github.com/companieshouse/terraform-modules?ref=tags%2F1.0.365 for oem_instance_profile...
+- oem_instance_profile in .terraform/modules/oem_instance_profile/aws/instance_profile
+Downloading registry.terraform.io/terraform-aws-modules/security-group/aws 5.0.0 for oem_security_group...
+- oem_security_group in .terraform/modules/oem_security_group
+Info: Executing command 'terraform init -backend-config=bucket=heritage-staging-eu-west-2.terraform-state.ch.gov.uk -backend-config=key=chips-oem.tfstate -backend-config=region=eu-west-2 -backend-config=workspace_key_prefix=chips-terraform'
+Initializing modules...
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Finding hashicorp/cloudinit versions matching ">= 2.0.0, < 3.0.0"...
+- Finding latest version of hashicorp/template...
+- Finding hashicorp/aws versions matching ">= 3.29.0, >= 5.0.0, < 6.0.0"...
+- Finding hashicorp/vault versions matching ">= 3.0.0, < 5.0.0"...
+- Installing hashicorp/cloudinit v2.3.7...
+- Installed hashicorp/cloudinit v2.3.7 (signed by HashiCorp)
+- Installing hashicorp/template v2.2.0...
+- Installed hashicorp/template v2.2.0 (signed by HashiCorp)
+- Installing hashicorp/aws v5.100.0...
+- Installed hashicorp/aws v5.100.0 (signed by HashiCorp)
+- Installing hashicorp/vault v4.8.0...
+- Installed hashicorp/vault v4.8.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+Info: Selected workspace 'common-eu-west-2'
+Info: Executing command 'terraform plan -var-file=/home/tfrunner/src/groups/chips-oem/profiles/heritage-staging-eu-west-2/vars'
+data.vault_generic_secret.sns_url: Reading...
+data.vault_generic_secret.kms_keys: Reading...
+data.vault_generic_secret.ec2_data: Reading...
+data.vault_generic_secret.chs_subnet: Reading...
+data.vault_generic_secret.account_ids: Reading...
+data.vault_generic_secret.internal_cidrs: Reading...
+data.vault_generic_secret.e5_oem: Reading...
+data.vault_generic_secret.security_s3_buckets: Reading...
+data.vault_generic_secret.security_kms_keys: Reading...
+data.vault_generic_secret.sns_url: Read complete after 1s [id=applications/heritage-staging-eu-west-2/monitoring]
+data.vault_generic_secret.ssm: Reading...
+data.vault_generic_secret.kms_keys: Read complete after 1s [id=aws-accounts/heritage-staging/kms]
+data.vault_generic_secret.shared_services_s3: Reading...
+data.vault_generic_secret.chs_subnet: Read complete after 1s [id=aws-accounts/network/heritage-staging/chs/application-subnets]
+data.vault_generic_secret.ec2_data: Read complete after 1s [id=applications/heritage-staging-eu-west-2/chips-oem/db/ec2]
+data.template_file.userdata[0]: Reading...
+data.vault_generic_secret.security_kms_keys: Read complete after 1s [id=aws-accounts/security/kms]
+data.template_file.userdata[0]: Read complete after 0s [id=5bf68029772c76906d312dfb438e3a0d3d01f33a8bce771c603283b279e69fe1]
+data.vault_generic_secret.e5_oem: Read complete after 1s [id=applications/heritage-staging-eu-west-2/chips-oem/monitoring]
+data.cloudinit_config.userdata_config[0]: Reading...
+data.vault_generic_secret.internal_cidrs: Read complete after 1s [id=aws-accounts/network/internal_cidr_ranges]
+data.cloudinit_config.userdata_config[0]: Read complete after 0s [id=705556243]
+data.vault_generic_secret.account_ids: Read complete after 1s [id=aws-accounts/account-ids]
+data.vault_generic_secret.security_s3_buckets: Read complete after 1s [id=aws-accounts/security/s3]
+data.vault_generic_secret.ssm: Read complete after 0s [id=aws-accounts/heritage-staging/ssm]
+data.vault_generic_secret.shared_services_s3: Read complete after 0s [id=aws-accounts/shared-services/s3]
+module.oem_instance_profile.data.aws_iam_policy.ssm[0]: Reading...
+data.aws_kms_key.ebs: Reading...
+data.aws_route53_zone.private_zone: Reading...
+data.aws_ami.oracle_12: Reading...
+module.oem_instance_profile.aws_iam_role.this: Refreshing state... [id=irol-chips-oem]
+aws_ssm_parameter.github: Refreshing state... [id=github-token-chips-oem]
+data.aws_caller_identity.current: Reading...
+aws_key_pair.ec2_keypair: Refreshing state... [id=chips-oem]
+module.oem_instance_profile.data.aws_kms_key.this[1]: Reading...
+aws_sns_topic.chips-oem_topic: Refreshing state... [id=arn:aws:sns:eu-west-2:973538526606:chips-oem_topic]
+data.aws_caller_identity.current: Read complete after 0s [id=973538526606]
+module.oem_instance_profile.data.aws_kms_key.this[3]: Reading...
+module.oem_instance_profile.data.aws_kms_key.this[1]: Read complete after 0s [id=cfa6bb4b-c2f7-4453-9740-4e1c641e52ed]
+module.oem_instance_profile.data.aws_kms_key.this[3]: Read complete after 0s [id=8a959ae0-0c14-4875-9c6c-c479e8a4dffa]
+data.aws_kms_key.ebs: Read complete after 0s [id=cd72616f-8c15-4037-b3f7-8ee4e376dfd7]
+module.oem_instance_profile.data.aws_kms_key.this[2]: Reading...
+module.oem_instance_profile.data.aws_kms_key.this[0]: Reading...
+data.aws_vpc.vpc: Reading...
+aws_ssm_maintenance_window.maintenance_window: Refreshing state... [id=mw-00ce7e1b8cb714bb2]
+module.oem_instance_profile.data.aws_kms_key.this[2]: Read complete after 1s [id=41327508-0c60-4bfc-9ea0-e1c2b7c48c1c]
+module.oem_instance_profile.data.aws_kms_key.this[0]: Read complete after 1s [id=cd72616f-8c15-4037-b3f7-8ee4e376dfd7]
+module.oem_instance_profile.data.aws_iam_policy_document.this: Reading...
+module.oem_instance_profile.data.aws_iam_policy_document.this: Read complete after 0s [id=3527618285]
+module.oem_instance_profile.aws_iam_policy.this: Refreshing state... [id=arn:aws:iam::973538526606:policy/ipol-chips-oem]
+data.aws_ami.oracle_12: Read complete after 1s [id=ami-03641ba7ed70ce503]
+aws_sns_topic_subscription.chips-oem_Subscriptionhttps: Refreshing state... [id=arn:aws:sns:eu-west-2:973538526606:chips-oem_topic:40512fe7-4fa6-4276-b134-b2228b52426e]
+aws_sns_topic_subscription.chips-oem_Subscription["linuxsupport@companieshouse.gov.uk"]: Refreshing state... [id=arn:aws:sns:eu-west-2:973538526606:chips-oem_topic:b3f600e1-0083-4624-822a-42ecc055d5f9]
+module.oem_instance_profile.data.aws_iam_policy.ssm[0]: Read complete after 1s [id=arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+module.oem_instance_profile.aws_iam_role_policy_attachment.this_ssm: Refreshing state... [id=irol-chips-oem-20230321112927880800000002]
+aws_iam_role_policy_attachment.inspector_cis_scanning_policy_attach[0]: Refreshing state... [id=irol-chips-oem-20240917102930873800000001]
+module.oem_instance_profile.aws_iam_instance_profile.this: Refreshing state... [id=iprof-chips-oem]
+module.oem_instance_profile.aws_iam_role_policy_attachment.this: Refreshing state... [id=irol-chips-oem-20230321112928291500000003]
+data.aws_vpc.vpc: Read complete after 2s [id=vpc-0090dcc14027fe9ae]
+data.aws_subnets.data: Reading...
+module.oem_security_group.aws_security_group.this_name_prefix[0]: Refreshing state... [id=sg-0667bfc9223436800]
+data.aws_subnets.data: Read complete after 0s [id=eu-west-2]
+data.aws_subnet.data_subnets["subnet-051651ea06fe5f131"]: Reading...
+data.aws_subnet.data_subnets["subnet-01fb26e5fe0cc2f39"]: Reading...
+data.aws_subnet.data_subnets["subnet-01219a504d9b35d05"]: Reading...
+module.oem_security_group.aws_security_group_rule.ingress_rules[0]: Refreshing state... [id=sgrule-1594059407]
+module.oem_security_group.aws_security_group_rule.egress_rules[0]: Refreshing state... [id=sgrule-1343566597]
+module.oem_security_group.aws_security_group_rule.ingress_with_self[0]: Refreshing state... [id=sgrule-580385466]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[11]: Refreshing state... [id=sgrule-2368223248]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[4]: Refreshing state... [id=sgrule-2063324980]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[5]: Refreshing state... [id=sgrule-2728306113]
+data.aws_subnet.data_subnets["subnet-051651ea06fe5f131"]: Read complete after 0s [id=subnet-051651ea06fe5f131]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[0]: Refreshing state... [id=sgrule-1059499986]
+data.aws_subnet.data_subnets["subnet-01fb26e5fe0cc2f39"]: Read complete after 0s [id=subnet-01fb26e5fe0cc2f39]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[2]: Refreshing state... [id=sgrule-247059542]
+data.aws_route53_zone.private_zone: Read complete after 2s [id=Z09662441AP96GH8FOJJ5]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[3]: Refreshing state... [id=sgrule-4028772581]
+data.aws_subnet.data_subnets["subnet-01219a504d9b35d05"]: Read complete after 1s [id=subnet-01219a504d9b35d05]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[9]: Refreshing state... [id=sgrule-2907264326]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[1]: Refreshing state... [id=sgrule-2307559821]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[7]: Refreshing state... [id=sgrule-3730619098]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[8]: Refreshing state... [id=sgrule-1441202908]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[10]: Refreshing state... [id=sgrule-3184968120]
+module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[6]: Refreshing state... [id=sgrule-1041681255]
+aws_instance.oem_ec2[0]: Refreshing state... [id=i-04951cb9790c9a76e]
+aws_ssm_maintenance_window_target.target: Refreshing state... [id=a53b98a9-7695-465a-b292-c0d738c95af9]
+aws_route53_record.oem_dns[0]: Refreshing state... [id=Z09662441AP96GH8FOJJ5_chips-oem-01_A]
+aws_ebs_volume.u_drive: Refreshing state... [id=vol-004df1de0e264e1ef]
+aws_ssm_association.ansible_check: Refreshing state... [id=4a64d722-b8f6-4810-ac8c-b56ff0a25b5a]
+aws_volume_attachment.ebs_attach[0]: Refreshing state... [id=vai-4111435115]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the last "terraform apply" which may have affected this plan:
+
+  # aws_instance.oem_ec2[0] has changed
+  ~ resource "aws_instance" "oem_ec2" {
+      + disable_api_stop                     = false
+        id                                   = "i-04951cb9790c9a76e"
+      + placement_partition_number           = 0
+        tags                                 = {
+            "Account"     = "heritage-staging"
+            "Application" = "CHIPS-OEM"
+            "Domain"      = "staging.heritage.aws.internal"
+            "Name"        = "chips-oem-01"
+            "Region"      = "eu-west-2"
+            "ServiceTeam" = "Platforms/DBA"
+            "Terraform"   = "true"
+        }
+        # (29 unchanged attributes hidden)
+
+      + cpu_options {
+          + core_count       = 4
+          + threads_per_core = 2
+        }
+
+      + ebs_block_device {
+          + delete_on_termination = false
+          + device_name           = "/dev/xvds"
+          + encrypted             = true
+          + iops                  = 3000
+          + kms_key_id            = "arn:aws:kms:eu-west-2:973538526606:key/79ca4fda-e196-492b-b87c-fdae8f9e3ef3"
+          + tags                  = {
+              + "Name" = "chips-oem"
+            }
+          + tags_all              = {
+              + "Name" = "chips-oem"
+            }
+          + throughput            = 125
+          + volume_id             = "vol-004df1de0e264e1ef"
+          + volume_size           = 256
+          + volume_type           = "gp3"
+        }
+      - ebs_block_device {
+          - delete_on_termination = false -> null
+          - device_name           = "/dev/xvds" -> null
+          - encrypted             = true -> null
+          - iops                  = 3000 -> null
+          - kms_key_id            = "arn:aws:kms:eu-west-2:973538526606:key/79ca4fda-e196-492b-b87c-fdae8f9e3ef3" -> null
+          - tags                  = {
+              - "Name" = "chips-oem"
+            } -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-004df1de0e264e1ef" -> null
+          - volume_size           = 256 -> null
+          - volume_type           = "gp3" -> null
+        }
+
+      + maintenance_options {
+          + auto_recovery = "default"
+        }
+
+      ~ metadata_options {
+          + http_protocol_ipv6          = "disabled"
+            # (4 unchanged attributes hidden)
+        }
+
+      + private_dns_name_options {
+          + enable_resource_name_dns_a_record    = false
+          + enable_resource_name_dns_aaaa_record = false
+          + hostname_type                        = "ip-name"
+        }
+
+      ~ root_block_device {
+            tags                  = {}
+          + tags_all              = {}
+            # (9 unchanged attributes hidden)
+        }
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # module.oem_instance_profile.aws_iam_instance_profile.this has changed
+  ~ resource "aws_iam_instance_profile" "this" {
+        id          = "iprof-chips-oem"
+        name        = "iprof-chips-oem"
+        tags        = {}
+        # (6 unchanged attributes hidden)
+    }
+
+  # module.oem_instance_profile.aws_iam_policy.this has changed
+  ~ resource "aws_iam_policy" "this" {
+      + attachment_count = 1
+        id               = "arn:aws:iam::973538526606:policy/ipol-chips-oem"
+        name             = "ipol-chips-oem"
+        tags             = {}
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.oem_instance_profile.aws_iam_role.this has changed
+  ~ resource "aws_iam_role" "this" {
+        id                    = "irol-chips-oem"
+        name                  = "irol-chips-oem"
+        tags                  = {}
+        # (9 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+  # module.oem_security_group.aws_security_group.this_name_prefix[0] has changed
+  ~ resource "aws_security_group" "this_name_prefix" {
+        id                     = "sg-0667bfc9223436800"
+      ~ ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "10.100.9.183/32",
+                  - "10.100.9.90/32",
+                  - "10.100.10.238/32",
+                  - "10.100.10.164/32",
+                ]
+              - description      = "Enterprise Manager Agent"
+              - from_port        = 3872
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 3872
+            },
+          - {
+              - cidr_blocks      = [
+                  - "10.100.9.183/32",
+                  - "10.100.9.90/32",
+                  - "10.100.10.238/32",
+                  - "10.100.10.164/32",
+                ]
+              - description      = "Enterprise Manager Upload HTTPS"
+              - from_port        = 4899
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 4908
+            },
+          - {
+              - cidr_blocks      = [
+                  - "10.100.9.183/32",
+                  - "10.100.9.90/32",
+                  - "10.100.10.238/32",
+                  - "10.100.10.164/32",
+                ]
+              - description      = "SSH ports"
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+          + {
+              + cidr_blocks      = [
+                  + "10.100.9.183/32",
+                  + "10.100.9.90/32",
+                  + "10.100.10.238/32",
+                  + "10.100.10.42/32",
+                ]
+              + description      = "Enterprise Manager Agent"
+              + from_port        = 3872
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 3872
+            },
+          + {
+              + cidr_blocks      = [
+                  + "10.100.9.183/32",
+                  + "10.100.9.90/32",
+                  + "10.100.10.238/32",
+                  + "10.100.10.42/32",
+                ]
+              + description      = "Enterprise Manager Upload HTTPS"
+              + from_port        = 4899
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 4908
+            },
+          + {
+              + cidr_blocks      = [
+                  + "10.100.9.183/32",
+                  + "10.100.9.90/32",
+                  + "10.100.10.238/32",
+                  + "10.100.10.42/32",
+                ]
+              + description      = "SSH ports"
+              + from_port        = 22
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 22
+            },
+          + {
+              + cidr_blocks      = [
+                  + "10.40.250.0/24",
+                ]
+              + description      = "iboss - added manually"
+              + from_port        = 22
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 22
+            },
+          + {
+              + cidr_blocks      = [
+                  + "10.40.250.0/24",
+                ]
+              + description      = "iboss - added manually"
+              + from_port        = 7799
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 7809
+            },
+            # (20 unchanged elements hidden)
+        ]
+        name                   = "sgr-chips-oem-ec2-001-20230321112923544300000001"
+        tags                   = {
+            "Name" = "sgr-chips-oem-ec2-001"
+        }
+        # (8 unchanged attributes hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using ignore_changes, the following plan may include actions to undo or respond to these changes.
+
+
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # aws_ebs_volume.u_drive will be updated in-place
+  ~ resource "aws_ebs_volume" "u_drive" {
+      + final_snapshot       = false
+        id                   = "vol-004df1de0e264e1ef"
+      ~ tags                 = {
+          + "Account"     = "heritage-staging"
+          + "Application" = "CHIPS-OEM"
+          + "Region"      = "eu-west-2"
+          + "Terraform"   = "true"
+            # (1 unchanged element hidden)
+        }
+      ~ tags_all             = {
+          + "Account"     = "heritage-staging"
+          + "Application" = "CHIPS-OEM"
+          + "Region"      = "eu-west-2"
+          + "Terraform"   = "true"
+            # (1 unchanged element hidden)
+        }
+        # (10 unchanged attributes hidden)
+    }
+
+  # aws_instance.oem_ec2[0] must be replaced
+-/+ resource "aws_instance" "oem_ec2" {
+      ~ ami                                  = "ami-004f537f16c7539c0" -> "ami-03641ba7ed70ce503" # forces replacement
+      ~ arn                                  = "arn:aws:ec2:eu-west-2:973538526606:instance/i-04951cb9790c9a76e" -> (known after apply)
+      ~ associate_public_ip_address          = false -> (known after apply)
+      ~ availability_zone                    = "eu-west-2a" -> (known after apply)
+      ~ cpu_core_count                       = 4 -> (known after apply)
+      ~ cpu_threads_per_core                 = 2 -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      ~ id                                   = "i-04951cb9790c9a76e" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "running" -> (known after apply)
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-08f0416530b139c04" -> (known after apply)
+      ~ private_dns                          = "ip-10-94-6-125.eu-west-2.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.94.6.125" -> (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Account"     = "heritage-staging"
+            "Application" = "CHIPS-OEM"
+            "Domain"      = "staging.heritage.aws.internal"
+            "Name"        = "chips-oem-01"
+            "Region"      = "eu-west-2"
+            "ServiceTeam" = "Platforms/DBA"
+            "Terraform"   = "true"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_replace_on_change          = false
+        # (9 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification {
+          ~ capacity_reservation_preference = "open" -> (known after apply)
+
+          + capacity_reservation_target {
+              + capacity_reservation_id                 = (known after apply)
+              + capacity_reservation_resource_group_arn = (known after apply)
+            }
+        }
+
+      ~ cpu_options {
+          + amd_sev_snp      = (known after apply)
+          ~ core_count       = 4 -> (known after apply)
+          ~ threads_per_core = 2 -> (known after apply)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      + ebs_block_device {
+          + delete_on_termination = (known after apply)
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + snapshot_id           = (known after apply)
+          + tags                  = (known after apply)
+          + tags_all              = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = (known after apply)
+          + volume_type           = (known after apply)
+        }
+      - ebs_block_device {
+          - delete_on_termination = false -> null
+          - device_name           = "/dev/xvds" -> null
+          - encrypted             = true -> null
+          - iops                  = 3000 -> null
+          - kms_key_id            = "arn:aws:kms:eu-west-2:973538526606:key/79ca4fda-e196-492b-b87c-fdae8f9e3ef3" -> null
+          - tags                  = {
+              - "Name" = "chips-oem"
+            } -> null
+          - tags_all              = {
+              - "Name" = "chips-oem"
+            } -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-004df1de0e264e1ef" -> null
+          - volume_size           = 256 -> null
+          - volume_type           = "gp3" -> null
+        }
+
+      ~ enclave_options {
+          ~ enabled = false -> (known after apply)
+        }
+
+      + ephemeral_block_device {
+          + device_name  = (known after apply)
+          + no_device    = (known after apply)
+          + virtual_name = (known after apply)
+        }
+
+      + instance_market_options {
+          + market_type = (known after apply)
+
+          + spot_options {
+              + instance_interruption_behavior = (known after apply)
+              + max_price                      = (known after apply)
+              + spot_instance_type             = (known after apply)
+              + valid_until                    = (known after apply)
+            }
+        }
+
+      ~ maintenance_options {
+          ~ auto_recovery = "default" -> (known after apply)
+        }
+
+      ~ metadata_options {
+          ~ http_endpoint               = "enabled" -> (known after apply)
+          ~ http_protocol_ipv6          = "disabled" -> (known after apply)
+          ~ http_put_response_hop_limit = 1 -> (known after apply)
+          ~ http_tokens                 = "optional" -> (known after apply)
+          ~ instance_metadata_tags      = "disabled" -> (known after apply)
+        }
+
+      + network_interface {
+          + delete_on_termination = (known after apply)
+          + device_index          = (known after apply)
+          + network_card_index    = (known after apply)
+          + network_interface_id  = (known after apply)
+        }
+
+      ~ private_dns_name_options {
+          ~ enable_resource_name_dns_a_record    = false -> (known after apply)
+          ~ enable_resource_name_dns_aaaa_record = false -> (known after apply)
+          ~ hostname_type                        = "ip-name" -> (known after apply)
+        }
+
+      ~ root_block_device {
+          ~ device_name           = "/dev/sda1" -> (known after apply)
+          ~ iops                  = 3000 -> (known after apply)
+          - tags                  = {} -> null
+          ~ tags_all              = {} -> (known after apply)
+          ~ throughput            = 125 -> (known after apply)
+          ~ volume_id             = "vol-0214da78f27b3622e" -> (known after apply)
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # aws_key_pair.ec2_keypair will be updated in-place
+  ~ resource "aws_key_pair" "ec2_keypair" {
+        id              = "chips-oem"
+      + key_name_prefix = ""
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ public_key      = (sensitive value)
+        tags            = {}
+        # (6 unchanged attributes hidden)
+    }
+
+  # aws_route53_record.oem_dns[0] will be updated in-place
+  ~ resource "aws_route53_record" "oem_dns" {
+        id                               = "Z09662441AP96GH8FOJJ5_chips-oem-01_A"
+        name                             = "chips-oem-01"
+      ~ records                          = [
+          - "10.94.6.125",
+        ] -> (known after apply)
+        # (5 unchanged attributes hidden)
+    }
+
+  # aws_sns_topic_subscription.chips-oem_Subscription["linuxsupport@companieshouse.gov.uk"] will be created
+  + resource "aws_sns_topic_subscription" "chips-oem_Subscription" {
+      + arn                             = (known after apply)
+      + confirmation_timeout_in_minutes = 1
+      + confirmation_was_authenticated  = (known after apply)
+      + endpoint                        = "linuxsupport@companieshouse.gov.uk"
+      + endpoint_auto_confirms          = false
+      + filter_policy_scope             = (known after apply)
+      + id                              = (known after apply)
+      + owner_id                        = (known after apply)
+      + pending_confirmation            = (known after apply)
+      + protocol                        = "email"
+      + raw_message_delivery            = false
+      + topic_arn                       = "arn:aws:sns:eu-west-2:973538526606:chips-oem_topic"
+    }
+
+  # aws_sns_topic_subscription.chips-oem_Subscriptionhttps will be created
+  + resource "aws_sns_topic_subscription" "chips-oem_Subscriptionhttps" {
+      + arn                             = (known after apply)
+      + confirmation_timeout_in_minutes = 1
+      + confirmation_was_authenticated  = (known after apply)
+      + endpoint                        = (sensitive value)
+      + endpoint_auto_confirms          = false
+      + filter_policy_scope             = (known after apply)
+      + id                              = (known after apply)
+      + owner_id                        = (known after apply)
+      + pending_confirmation            = (known after apply)
+      + protocol                        = "https"
+      + raw_message_delivery            = false
+      + topic_arn                       = "arn:aws:sns:eu-west-2:973538526606:chips-oem_topic"
+    }
+
+  # aws_ssm_association.ansible_check will be updated in-place
+  ~ resource "aws_ssm_association" "ansible_check" {
+      + automation_target_parameter_name = ""
+      + compliance_severity              = ""
+        id                               = "4a64d722-b8f6-4810-ac8c-b56ff0a25b5a"
+      + instance_id                      = ""
+      + max_concurrency                  = ""
+      + max_errors                       = ""
+        name                             = "ch-ssm-run-ansible"
+      + sync_compliance                  = ""
+        tags                             = {}
+        # (8 unchanged attributes hidden)
+
+      ~ output_location {
+          # Warning: this attribute value will be marked as sensitive and will not
+          # display in UI output after applying this change. The value is unchanged.
+          ~ s3_bucket_name = (sensitive value)
+            # (2 unchanged attributes hidden)
+        }
+
+      ~ targets {
+          ~ values = [
+              - "i-04951cb9790c9a76e",
+            ] -> (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # aws_ssm_maintenance_window_target.target will be updated in-place
+  ~ resource "aws_ssm_maintenance_window_target" "target" {
+        id            = "a53b98a9-7695-465a-b292-c0d738c95af9"
+        name          = "chips-oem-maintenance-window-target"
+        # (3 unchanged attributes hidden)
+
+      ~ targets {
+          ~ values = [
+              - "i-04951cb9790c9a76e",
+            ] -> (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # aws_ssm_parameter.github will be updated in-place
+  ~ resource "aws_ssm_parameter" "github" {
+      + allowed_pattern = ""
+      + description     = ""
+        id              = "github-token-chips-oem"
+        name            = "github-token-chips-oem"
+        tags            = {}
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ value           = (sensitive value)
+        # (7 unchanged attributes hidden)
+    }
+
+  # aws_volume_attachment.ebs_attach[0] must be replaced
+-/+ resource "aws_volume_attachment" "ebs_attach" {
+      ~ id          = "vai-4111435115" -> (known after apply)
+      ~ instance_id = "i-04951cb9790c9a76e" -> (known after apply) # forces replacement
+        # (2 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_rules[0] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_rules" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-1594059407"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[0] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-1059499986"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[1] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-2307559821"
+      + security_group_rule_id = ""
+        # (8 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[2] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-247059542"
+      + security_group_rule_id = ""
+        # (8 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[3] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-4028772581"
+      + security_group_rule_id = ""
+        # (9 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[4] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-2063324980"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[5] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-2728306113"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[6] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-1041681255"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[7] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-3730619098"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[8] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-1441202908"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[9] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-2907264326"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[10] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-3184968120"
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.oem_security_group.aws_security_group_rule.ingress_with_cidr_blocks[11] will be updated in-place
+  ~ resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+      # Warning: this attribute value will be marked as sensitive and will not
+      # display in UI output after applying this change. The value is unchanged.
+      ~ cidr_blocks            = (sensitive value)
+        id                     = "sgrule-2368223248"
+      + security_group_rule_id = ""
+        # (8 unchanged attributes hidden)
+    }
+
+Plan: 4 to add, 19 to change, 2 to destroy.
+
+
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
