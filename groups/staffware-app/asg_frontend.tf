@@ -136,7 +136,7 @@ module "iprocess_app_asg" {
   key_name                       = aws_key_pair.iprocess_app_keypair.key_name
   termination_policies           = ["OldestLaunchConfiguration"]
   iam_instance_profile           = module.iprocess_app_profile.aws_iam_instance_profile.name
-  user_data_base64               = data.template_cloudinit_config.userdata_config.rendered
+  user_data_base64               = data.cloudinit_config.userdata_config.rendered
   enforce_imdsv2                 = var.enforce_imdsv2
 
   tags_as_map = merge(
