@@ -138,7 +138,7 @@ data "template_file" "userdata" {
   }
 }
 
-data "template_cloudinit_config" "userdata_config" {
+data "cloudinit_config" "userdata_config" {
   gzip          = true
   base64_encode = true
 
