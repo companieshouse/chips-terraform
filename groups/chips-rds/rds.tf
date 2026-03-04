@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "staging_dba_dev_ingress" {
 # ------------------------------------------------------------------------------
 module "chips_rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "~> 6.0.0"
+  version = "6.13.1"
 
   create_db_parameter_group = true
   create_db_subnet_group    = true
