@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
   to_port                  = 3872
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
   to_port                  = 4903
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -83,7 +83,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
   to_port                  = 22
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_listener" {
@@ -93,7 +93,7 @@ resource "aws_security_group_rule" "OEM_listener" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------

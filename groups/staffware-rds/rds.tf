@@ -154,6 +154,7 @@ module "staffware_rds" {
     local.default_tags,
     {
       "ServiceTeam" = "${upper(var.identifier)}-DBA-Support"
+      Name        = join("-", ["rds", var.identifier, var.environment, "001"])
     }
   )
 }

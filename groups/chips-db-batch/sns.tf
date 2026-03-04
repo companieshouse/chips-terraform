@@ -28,8 +28,8 @@ module "cloudwatch_sns_ooh" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "ServiceTeam" = "${upper(var.application)}-CSI-Support"
-    })
+    }
   )
 }
