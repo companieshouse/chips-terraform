@@ -4,7 +4,7 @@
 module "rds_security_group" {
 
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name        = "sgr-${var.identifier}-${var.environment}-rds-001"
   description = "Security group for the ${var.identifier}-${var.environment} RDS database"
@@ -62,6 +62,9 @@ module "staffware_rds" {
 
   create_db_parameter_group = true
   create_db_subnet_group    = true
+  option_group_description = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  parameter_group_description = "Database parameter group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  db_subnet_group_description = "Database subnet group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
 
   identifier                 = "rds-${var.identifier}-${var.environment}-001"
   engine                     = "oracle-se2"
@@ -77,6 +80,7 @@ module "staffware_rds" {
   multi_az                   = var.multi_az
   storage_encrypted          = true
   kms_key_id                 = data.aws_kms_key.rds.arn
+  manage_master_user_password = false
 
   db_name  = upper(var.name)
   username = local.staffware_rds_data["admin-username"]

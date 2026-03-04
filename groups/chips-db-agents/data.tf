@@ -74,17 +74,22 @@ data "aws_ami" "ami" {
   }
 }
 
+data "template_file" "userdata" {
+  template = file("${path.module}/templates/user_data.tpl")
+  vars = {
+    ANSIBLE_INPUTS             = jsonencode(local.userdata_ansible_inputs)
+    DNS_DOMAIN                 = local.internal_fqdn
+    DNS_ZONE_ID                = data.aws_route53_zone.private_zone.zone_id
+    HERITAGE_ENVIRONMENT       = title(var.environment)
+  }
+}
+
 data "cloudinit_config" "userdata_config" {
   gzip          = true
   base64_encode = true
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/templates/user_data.tpl", {
-      ANSIBLE_INPUTS       = jsonencode(local.userdata_ansible_inputs)
-      DNS_DOMAIN           = local.internal_fqdn
-      DNS_ZONE_ID          = data.aws_route53_zone.private_zone.zone_id
-      HERITAGE_ENVIRONMENT = title(var.environment)
-    })
+    content      = data.template_file.userdata.rendered
   }
 }
