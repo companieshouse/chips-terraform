@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "oem_rule" {
   protocol          = "tcp"
   type              = "ingress"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.administration.id]
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "application_access" {
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "application_access" {
   protocol          = "tcp"
   type              = "ingress"
   cidr_blocks       = var.rds_application_access_cidrs
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "source_sg_access" {
@@ -50,7 +50,7 @@ resource "aws_security_group_rule" "source_sg_access" {
   protocol                 = "tcp"
   type                     = "ingress"
   source_security_group_id = each.value
-  security_group_id        = module.rds_security_group.this_security_group_id
+  security_group_id        = module.rds_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ module "staffware_rds" {
 
   # RDS Security Group
   vpc_security_group_ids = [
-    module.rds_security_group.this_security_group_id,
+    module.rds_security_group.security_group_id,
     data.aws_security_group.rds_shared.id
   ]
 
@@ -121,7 +121,7 @@ module "staffware_rds" {
     {
       option_name                    = "OEM"
       port                           = "5500"
-      vpc_security_group_memberships = [module.rds_security_group.this_security_group_id]
+      vpc_security_group_memberships = [module.rds_security_group.security_group_id]
     },
     {
       option_name = "SQLT"
@@ -160,7 +160,7 @@ module "staffware_rds" {
 }
 
 module "rds_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.365"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
   db_instance_id        = module.staffware_rds.db_instance_identifier
   db_instance_shortname = upper(var.name)

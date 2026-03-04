@@ -112,7 +112,7 @@ resource "aws_instance" "db_ec2" {
   user_data_base64     = data.cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.db_ec2_security_group.this_security_group_id
+    module.db_ec2_security_group.security_group_id
   ]
 
   root_block_device {
@@ -274,7 +274,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.366"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
   db_instance_id         = "staffware-db"
   db_instance_shortname  = var.db_instance_shortname
