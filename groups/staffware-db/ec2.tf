@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
@@ -188,7 +188,7 @@ resource "aws_route53_record" "dns_cname" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.366"
   count  = var.db_instance_count
 
   name_prefix               = "staffware"
@@ -274,7 +274,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.366"
 
   db_instance_id         = "staffware-db"
   db_instance_shortname  = var.db_instance_shortname
