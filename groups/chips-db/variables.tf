@@ -386,6 +386,12 @@ variable "chips_oltp_oem_sg" {
   default     = ""
 }
 
+variable "goldengate_migration" {
+  description = "Boolean to toggle goldengate migration SG lookup"
+  type        = bool
+  default     = false
+}
+
 variable "test_access_cidrs" {
   type        = list(string)
   description = "A List of the CIDR range used for test access"

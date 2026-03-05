@@ -144,6 +144,14 @@ data "aws_security_group" "oem" {
   }
 }
 
+data "aws_security_group" "oracle_goldengate" {
+  count = var.goldengate_migration ? 1 : 0
+  filter {
+    name = "tag:Name"
+    values = ["${var.environment}-chips-db"]
+  }
+}
+
 data "aws_ec2_managed_prefix_list" "admin" {
   name = "administration-cidr-ranges"
 }

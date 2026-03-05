@@ -191,4 +191,3 @@ variable "post_bootstrap_commands" {
   default     = []
   description = "List of commands to run after the bootstrap commands on instance startup"
 }
-
