@@ -8,11 +8,8 @@ data "vault_generic_secret" "account_ids" {
 }
 
 
-data "aws_subnets" "data" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.vpc.id]
-  }
+data "aws_subnet_ids" "data" {
+  vpc_id = data.aws_vpc.vpc.id
   filter {
     name   = "tag:Name"
     values = ["sub-data-*"]
@@ -20,7 +17,7 @@ data "aws_subnets" "data" {
 }
 
 data "aws_subnet" "data_subnets" {
-  for_each = toset(data.aws_subnets.data.ids)
+  for_each = data.aws_subnet_ids.data.ids
 
   id = each.value
 }
@@ -109,7 +106,7 @@ data "template_file" "userdata" {
   }
 }
 
-data "cloudinit_config" "userdata_config" {
+data "template_cloudinit_config" "userdata_config" {
   count = var.db_instance_count
 
   gzip          = true
@@ -143,4 +140,3 @@ data "aws_security_group" "oem" {
 data "vault_generic_secret" "sns_url" {
   path = "applications/${var.aws_account}-${var.aws_region}/monitoring"
 }
-

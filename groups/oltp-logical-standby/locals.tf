@@ -84,4 +84,3 @@ locals {
     Account     = var.aws_account
   }
 }
-
