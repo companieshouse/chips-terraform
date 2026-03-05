@@ -107,7 +107,7 @@ module "asg_alarms" {
 
   count = var.asg_count
 
-  autoscaling_group_name = module.asg[count.index].this_autoscaling_group_name
+  autoscaling_group_name = module.asg[count.index].autoscaling_group_name
   prefix                 = "${var.aws_account}-${var.application}-${count.index}-asg-alarms"
 
   in_service_evaluation_periods      = "1"

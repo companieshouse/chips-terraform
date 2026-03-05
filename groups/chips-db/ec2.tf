@@ -175,7 +175,7 @@ resource "aws_security_group_rule" "oracle_goldengate_migration" {
   to_port           = 9005
   protocol          = "tcp"
   source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_goldengate_admin" {
@@ -187,7 +187,7 @@ resource "aws_security_group_rule" "oracle_goldengate_admin" {
   to_port           = 9005
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.admin.id]
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "migration_1521" {
@@ -199,7 +199,7 @@ resource "aws_security_group_rule" "migration_1521" {
   to_port           = 1522
   protocol          = "tcp"
   source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
