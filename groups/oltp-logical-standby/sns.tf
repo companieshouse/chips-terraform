@@ -22,3 +22,4 @@ resource "aws_sns_topic_subscription" "oltp-logstb_Subscriptionhttps" {
     aws_sns_topic.oltp-logstb_topic
   ]
 }
+
