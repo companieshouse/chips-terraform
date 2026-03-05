@@ -1,14 +1,14 @@
 terraform {
-  required_version = ">= 0.13.0, < 2.0"
+  required_version = ">= 1.3.0, < 2.0.0"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 0.3, < 6.0"
+      version = ">= 5.0.0, < 6.0.0"
     }
     vault = {
       source  = "hashicorp/vault"
-      version = ">= 2.0.0, < 5.0"
+      version = ">= 3.0.0, < 5.0.0"
     }
   }
   backend "s3" {}
@@ -16,15 +16,6 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-}
-
-provider "vault" {
-  auth_login {
-    path = "auth/userpass/login/${var.vault_username}"
-    parameters = {
-      password = var.vault_password
-    }
-  }
 }
 
 module "chips-read-only" {
@@ -44,7 +35,7 @@ module "chips-read-only" {
   nfs_mount_destination_parent_dir   = var.nfs_mount_destination_parent_dir
   nfs_mounts                         = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
   cloudwatch_logs                    = var.cloudwatch_logs
-  config_bucket_name                 = "shared-services.eu-west-2.configs.ch.gov.uk"
+  config_bucket_name                 = data.vault_generic_secret.shared_s3.data["config_bucket_name"]
   alb_idle_timeout                   = 180
   enable_sns_topic                   = var.enable_sns_topic
   create_app_target_group            = false
