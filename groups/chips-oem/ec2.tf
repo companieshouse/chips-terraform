@@ -166,7 +166,7 @@ resource "aws_ebs_volume" "u_drive" {
       "Name" = "chips-oem"
     })
   )
-  
+
   depends_on = [
     aws_instance.oem_ec2
   ]
