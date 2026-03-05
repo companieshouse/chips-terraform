@@ -3,7 +3,7 @@
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
 
-  module "db_ec2_security_group" {
+module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.0"
 
@@ -160,14 +160,14 @@ resource "aws_instance" "db_ec2" {
 
 resource "aws_ebs_volume" "u-drive" {
   availability_zone = "eu-west-2a"
-  size = 256
-  type = "gp3"
-  encrypted = true
+  size              = 256
+  type              = "gp3"
+  encrypted         = true
 
   tags = {
     Name = "oltp-logical-standby"
   }
-    depends_on = [
+  depends_on = [
     aws_instance.db_ec2
   ]
 }
@@ -183,14 +183,14 @@ resource "aws_volume_attachment" "ebs_attach" {
 
 resource "aws_ebs_volume" "u2-drive" {
   availability_zone = "eu-west-2a"
-  size = 256
-  type = "gp3"
-  encrypted = true
+  size              = 256
+  type              = "gp3"
+  encrypted         = true
 
   tags = {
     Name = "oltp-logical-standby"
   }
-    depends_on = [
+  depends_on = [
     aws_instance.db_ec2
   ]
 }
