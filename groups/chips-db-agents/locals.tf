@@ -37,10 +37,10 @@ locals {
   }
 
   userdata_ansible_inputs = {
-    mounts_parent_dir          = var.nfs_mount_destination_parent_dir
-    mounts                     = local.nfs_mounts
-    install_watcher_service    = false
-    cw_log_files               = local.cloudwatch_logs
-    cw_agent_user              = "root"
+    mounts_parent_dir       = var.nfs_mount_destination_parent_dir
+    mounts                  = local.nfs_mounts
+    install_watcher_service = false
+    cw_log_files            = local.cloudwatch_logs
+    cw_agent_user           = "root"
   }
 }

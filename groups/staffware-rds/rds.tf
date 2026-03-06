@@ -4,16 +4,16 @@
 module "rds_security_group" {
 
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name        = "sgr-${var.identifier}-${var.environment}-rds-001"
   description = "Security group for the ${var.identifier}-${var.environment} RDS database"
   vpc_id      = data.aws_vpc.vpc.id
 
-  ingress_rules            = ["oracle-db-tcp"]
-  ingress_prefix_list_ids  = [data.aws_ec2_managed_prefix_list.administration.id]
+  ingress_rules           = ["oracle-db-tcp"]
+  ingress_prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
 
-  ingress_with_cidr_blocks = []
+  ingress_with_cidr_blocks              = []
   ingress_with_source_security_group_id = []
 
   egress_rules = ["all-all"]
@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "oem_rule" {
   protocol          = "tcp"
   type              = "ingress"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.administration.id]
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "application_access" {
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "application_access" {
   protocol          = "tcp"
   type              = "ingress"
   cidr_blocks       = var.rds_application_access_cidrs
-  security_group_id = module.rds_security_group.this_security_group_id
+  security_group_id = module.rds_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "source_sg_access" {
@@ -50,7 +50,7 @@ resource "aws_security_group_rule" "source_sg_access" {
   protocol                 = "tcp"
   type                     = "ingress"
   source_security_group_id = each.value
-  security_group_id        = module.rds_security_group.this_security_group_id
+  security_group_id        = module.rds_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -58,10 +58,13 @@ resource "aws_security_group_rule" "source_sg_access" {
 # ------------------------------------------------------------------------------
 module "staffware_rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "2.23.0"
+  version = "6.13.1"
 
   create_db_parameter_group = true
   create_db_subnet_group    = true
+  option_group_description = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  parameter_group_description = "Database parameter group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  db_subnet_group_description = "Database subnet group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
 
   identifier                 = "rds-${var.identifier}-${var.environment}-001"
   engine                     = "oracle-se2"
@@ -77,18 +80,19 @@ module "staffware_rds" {
   multi_az                   = var.multi_az
   storage_encrypted          = true
   kms_key_id                 = data.aws_kms_key.rds.arn
+  manage_master_user_password = false
 
-  name     = upper(var.name)
+  db_name  = upper(var.name)
   username = local.staffware_rds_data["admin-username"]
   password = local.staffware_rds_data["admin-password"]
   port     = "1521"
 
-  deletion_protection       = true
-  maintenance_window        = var.rds_maintenance_window
-  backup_window             = var.rds_backup_window
-  backup_retention_period   = var.backup_retention_period
-  skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.identifier}-final-deletion-snapshot"
+  deletion_protection              = true
+  maintenance_window               = var.rds_maintenance_window
+  backup_window                    = var.rds_backup_window
+  backup_retention_period          = var.backup_retention_period
+  skip_final_snapshot              = false
+  final_snapshot_identifier_prefix = var.identifier
 
   # Enhanced Monitoring
   monitoring_interval             = "30"
@@ -101,12 +105,12 @@ module "staffware_rds" {
 
   # RDS Security Group
   vpc_security_group_ids = [
-    module.rds_security_group.this_security_group_id,
+    module.rds_security_group.security_group_id,
     data.aws_security_group.rds_shared.id
   ]
 
   # DB subnet group
-  subnet_ids = data.aws_subnet_ids.data.ids
+  subnet_ids = data.aws_subnets.data.ids
 
   # DB Parameter group
   family = "oracle-se2-${var.major_engine_version}"
@@ -117,7 +121,7 @@ module "staffware_rds" {
     {
       option_name                    = "OEM"
       port                           = "5500"
-      vpc_security_group_memberships = [module.rds_security_group.this_security_group_id]
+      vpc_security_group_memberships = [module.rds_security_group.security_group_id]
     },
     {
       option_name = "SQLT"
@@ -148,19 +152,20 @@ module "staffware_rds" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "${upper(var.identifier)}-DBA-Support"
-    )
+    {
+      "ServiceTeam" = "${upper(var.identifier)}-DBA-Support"
+      Name        = join("-", ["rds", var.identifier, var.environment, "001"])
+    }
   )
 }
 
 module "rds_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
-  db_instance_id         = module.staffware_rds.this_db_instance_id
-  db_instance_shortname  = upper(var.name)
-  alarm_actions_enabled  = var.alarm_actions_enabled
-  alarm_name_prefix      = "Oracle RDS"
-  alarm_topic_name       = var.alarm_topic_name
-  alarm_topic_name_ooh   = var.alarm_topic_name_ooh
+  db_instance_id        = module.staffware_rds.db_instance_identifier
+  db_instance_shortname = upper(var.name)
+  alarm_actions_enabled = var.alarm_actions_enabled
+  alarm_name_prefix     = "Oracle RDS"
+  alarm_topic_name      = var.alarm_topic_name
+  alarm_topic_name_ooh  = var.alarm_topic_name_ooh
 }

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "Oracle_Management_Agent" {
   to_port                  = 3872
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "Enterprise_Manager_Upload_Http_SSL" {
   to_port                  = 4903
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_SSH" {
@@ -83,7 +83,7 @@ resource "aws_security_group_rule" "OEM_SSH" {
   to_port                  = 22
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "OEM_listener" {
@@ -93,7 +93,7 @@ resource "aws_security_group_rule" "OEM_listener" {
   to_port                  = 1522
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oem.id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -109,10 +109,10 @@ resource "aws_instance" "db_ec2" {
   subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
   iam_instance_profile = module.db_instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
+  user_data_base64     = data.cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.db_ec2_security_group.this_security_group_id
+    module.db_ec2_security_group.security_group_id
   ]
 
   root_block_device {
@@ -188,7 +188,7 @@ resource "aws_route53_record" "dns_cname" {
 }
 
 module "cloudwatch-alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.123"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms?ref=tags/1.0.350"
   count  = var.db_instance_count
 
   name_prefix               = "staffware"
@@ -274,7 +274,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.173"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
 
   db_instance_id         = "staffware-db"
   db_instance_shortname  = var.db_instance_shortname

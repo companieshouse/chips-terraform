@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "admin_ingress_ssh" {
 
 # ASG Module
 module "asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.244"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.365"
 
   count = var.asg_count
 
@@ -64,7 +64,7 @@ module "asg" {
 
   # Auto scaling group
   asg_name                       = format("%s%s-asg", var.application, count.index)
-  vpc_zone_identifier            = data.aws_subnet_ids.application.ids
+  vpc_zone_identifier            = data.aws_subnets.application.ids
   health_check_type              = "EC2"
   min_size                       = var.asg_min_size
   max_size                       = var.asg_max_size
@@ -78,9 +78,9 @@ module "asg" {
   key_name                       = aws_key_pair.keypair.key_name
   termination_policies           = ["OldestLaunchConfiguration"]
   enforce_imdsv2                 = var.enforce_imdsv2
-  
+
   iam_instance_profile = module.instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config.rendered
+  user_data_base64     = data.cloudinit_config.userdata_config.rendered
 
   tags_as_map = merge(
     local.default_tags,
@@ -103,11 +103,11 @@ resource "aws_cloudwatch_log_group" "log_groups" {
 # ASG CloudWatch Alarms
 #--------------------------------------------
 module "asg_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.116"
+  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.365"
 
   count = var.asg_count
 
-  autoscaling_group_name = module.asg[count.index].this_autoscaling_group_name
+  autoscaling_group_name = module.asg[count.index].autoscaling_group_name
   prefix                 = "${var.aws_account}-${var.application}-${count.index}-asg-alarms"
 
   in_service_evaluation_periods      = "1"
@@ -123,8 +123,8 @@ module "asg_alarms" {
   total_instances_statistic_period   = "120"
   total_instances_in_service         = 1
 
-  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
-  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
+  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
+  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
 
 
   depends_on = [
