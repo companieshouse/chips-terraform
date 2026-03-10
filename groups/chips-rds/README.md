@@ -20,9 +20,9 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_chips_rds"></a> [chips\_rds](#module\_chips\_rds) | terraform-aws-modules/rds/aws | ~> 6.0.0 |
+| <a name="module_chips_rds"></a> [chips\_rds](#module\_chips\_rds) | terraform-aws-modules/rds/aws | 6.13.1 |
 | <a name="module_rds_cloudwatch_alarms"></a> [rds\_cloudwatch\_alarms](#module\_rds\_cloudwatch\_alarms) | git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms | tags/1.0.195 |
-| <a name="module_rds_security_group"></a> [rds\_security\_group](#module\_rds\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0.0 |
+| <a name="module_rds_security_group"></a> [rds\_security\_group](#module\_rds\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 
 ## Resources
 
