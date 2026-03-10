@@ -5,7 +5,7 @@
 
 module "oem_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.0.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-ec2-001"
   description = "Security group for the CHIPS OEM EC2 instance"
