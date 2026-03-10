@@ -1,7 +1,7 @@
 # CHIPS Security Group
 module "asg_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-asg-001"
   description = "Security group for the ${var.application} asg"

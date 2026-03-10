@@ -24,7 +24,7 @@
 | <a name="module_cloudwatch-alarms"></a> [cloudwatch-alarms](#module\_cloudwatch-alarms) | git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms | tags/1.0.365 |
 | <a name="module_cloudwatch_sns_notifications"></a> [cloudwatch\_sns\_notifications](#module\_cloudwatch\_sns\_notifications) | terraform-aws-modules/sns/aws | 6.2.1 |
 | <a name="module_cloudwatch_sns_notifications_ooh"></a> [cloudwatch\_sns\_notifications\_ooh](#module\_cloudwatch\_sns\_notifications\_ooh) | terraform-aws-modules/sns/aws | 6.2.1 |
-| <a name="module_db_ec2_security_group"></a> [db\_ec2\_security\_group](#module\_db\_ec2\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0 |
+| <a name="module_db_ec2_security_group"></a> [db\_ec2\_security\_group](#module\_db\_ec2\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 | <a name="module_db_instance_profile"></a> [db\_instance\_profile](#module\_db\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
 | <a name="module_oracledb_cloudwatch_alarms"></a> [oracledb\_cloudwatch\_alarms](#module\_oracledb\_cloudwatch\_alarms) | git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms | tags/1.0.195 |
 | <a name="module_ssm_runbook_execution_role"></a> [ssm\_runbook\_execution\_role](#module\_ssm\_runbook\_execution\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 5.4.0 |
@@ -55,8 +55,11 @@
 | [aws_security_group_rule.Oracle_Management_Agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.admin_oracle_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.admin_ssh_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.migration_1521](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.oracle_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.oracle_access_sgs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.oracle_goldengate_admin](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.oracle_goldengate_migration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.shared_services_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.sp_migration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.ssh_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
@@ -83,6 +86,7 @@
 | [aws_security_group.chips_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
 | [aws_security_group.nagios_shared](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
 | [aws_security_group.oem](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
+| [aws_security_group.oracle_goldengate](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
 | [aws_subnet.data_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
 | [aws_subnets.data](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnets) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
@@ -140,6 +144,7 @@
 | <a name="input_enable_inspector_scanning_policy"></a> [enable\_inspector\_scanning\_policy](#input\_enable\_inspector\_scanning\_policy) | Defines whether inspector policy is attached to instance profile to enable scanning (true) or not (false) | `bool` | `false` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment | `string` | n/a | yes |
 | <a name="input_failover_approvers"></a> [failover\_approvers](#input\_failover\_approvers) | List of aws roles that can approve database failover actions. Provided as regex strings to allow matching of roles names with UID's across environments. | `list(string)` | n/a | yes |
+| <a name="input_goldengate_migration"></a> [goldengate\_migration](#input\_goldengate\_migration) | Boolean to toggle goldengate migration SG lookup | `bool` | `false` | no |
 | <a name="input_hashicorp_vault_password"></a> [hashicorp\_vault\_password](#input\_hashicorp\_vault\_password) | The password used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
 | <a name="input_hashicorp_vault_username"></a> [hashicorp\_vault\_username](#input\_hashicorp\_vault\_username) | The username used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
 | <a name="input_maintenance_window_cutoff"></a> [maintenance\_window\_cutoff](#input\_maintenance\_window\_cutoff) | The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution | `number` | `1` | no |
