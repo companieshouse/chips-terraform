@@ -24,10 +24,10 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_asg_alarms"></a> [asg\_alarms](#module\_asg\_alarms) | git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms | tags/1.0.365 |
-| <a name="module_cloudwatch_sns_notifications"></a> [cloudwatch\_sns\_notifications](#module\_cloudwatch\_sns\_notifications) | terraform-aws-modules/sns/aws | 3.3.0 |
-| <a name="module_cloudwatch_sns_ooh"></a> [cloudwatch\_sns\_ooh](#module\_cloudwatch\_sns\_ooh) | terraform-aws-modules/sns/aws | 3.3.0 |
+| <a name="module_cloudwatch_sns_notifications"></a> [cloudwatch\_sns\_notifications](#module\_cloudwatch\_sns\_notifications) | terraform-aws-modules/sns/aws | 6.2.1 |
+| <a name="module_cloudwatch_sns_ooh"></a> [cloudwatch\_sns\_ooh](#module\_cloudwatch\_sns\_ooh) | terraform-aws-modules/sns/aws | 6.2.1 |
 | <a name="module_iprocess_app_asg"></a> [iprocess\_app\_asg](#module\_iprocess\_app\_asg) | git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template | tags/1.0.365 |
-| <a name="module_iprocess_app_asg_security_group"></a> [iprocess\_app\_asg\_security\_group](#module\_iprocess\_app\_asg\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.1 |
+| <a name="module_iprocess_app_asg_security_group"></a> [iprocess\_app\_asg\_security\_group](#module\_iprocess\_app\_asg\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 | <a name="module_iprocess_app_profile"></a> [iprocess\_app\_profile](#module\_iprocess\_app\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
 
 ## Resources
