@@ -251,6 +251,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_groups" {
   tags = merge(
     local.default_tags,
     tomap({
+      "Name"        = each.value["log_group_name"]
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
     })
@@ -267,6 +268,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
   tags = merge(
     local.default_tags,
     tomap({
+      "Name"        = var.cloudwatch_oracle_log_groups[count.index]
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
     })

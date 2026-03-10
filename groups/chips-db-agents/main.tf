@@ -63,6 +63,7 @@ module "asg" {
   tags_as_map = merge(
     local.default_tags,
     tomap({
+      Name              = format("%s-asg-%d", var.application, count.index)
       app-instance-name = format("%s%s", var.application, count.index)
       config-base-path  = format("s3://%s/%s-configs/%s", var.config_bucket_name, var.application, var.environment)
     })
@@ -160,6 +161,10 @@ resource "aws_cloudwatch_log_group" "log_groups" {
   name              = each.value["log_group_name"]
   retention_in_days = lookup(each.value, "log_group_retention", var.default_log_group_retention_in_days)
   kms_key_id        = lookup(each.value, "kms_key_id", local.logs_kms_key_id)
+
+  tags = {
+    "Name" = each.value["log_group_name"]
+  }
 }
 
 resource "aws_key_pair" "keypair" {
