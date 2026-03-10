@@ -22,7 +22,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cloudwatch-alarms"></a> [cloudwatch-alarms](#module\_cloudwatch-alarms) | git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms | tags/1.0.365 |
-| <a name="module_db_ec2_security_group"></a> [db\_ec2\_security\_group](#module\_db\_ec2\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0.0 |
+| <a name="module_db_ec2_security_group"></a> [db\_ec2\_security\_group](#module\_db\_ec2\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 | <a name="module_db_instance_profile"></a> [db\_instance\_profile](#module\_db\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
 | <a name="module_oracledb_cloudwatch_alarms"></a> [oracledb\_cloudwatch\_alarms](#module\_oracledb\_cloudwatch\_alarms) | git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms | tags/1.0.195 |
 | <a name="module_ssm_runbook_execution_role"></a> [ssm\_runbook\_execution\_role](#module\_ssm\_runbook\_execution\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 4.17.1 |
