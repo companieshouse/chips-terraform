@@ -30,14 +30,14 @@ resource "aws_security_group_rule" "oem_rule" {
 }
 
 resource "aws_security_group_rule" "application_access" {
-  count = length(var.rds_application_access_cidrs) > 0 ? 1 : 0
+  count = length(local.rds_application_access_cidrs) > 0 ? 1 : 0
 
   description       = "Application access to RDS"
   from_port         = 1521
   to_port           = 1521
   protocol          = "tcp"
   type              = "ingress"
-  cidr_blocks       = var.rds_application_access_cidrs
+  cidr_blocks       = local.rds_application_access_cidrs
   security_group_id = module.rds_security_group.security_group_id
 }
 

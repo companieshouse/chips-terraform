@@ -4,6 +4,8 @@
 locals {
   staffware_rds_data = data.vault_generic_secret.staffware_rds.data
 
+  rds_application_access_cidrs = split(",", local.staffware_rds_data["rds-application-access-cidrs"])
+
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
   rds_access_source_sg_ids = flatten([for sg in data.aws_security_groups.db_access_group_ids : sg.ids])
