@@ -23,7 +23,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_oem_instance_profile"></a> [oem\_instance\_profile](#module\_oem\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
-| <a name="module_oem_security_group"></a> [oem\_security\_group](#module\_oem\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0.0 |
+| <a name="module_oem_security_group"></a> [oem\_security\_group](#module\_oem\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 
 ## Resources
 
