@@ -6,7 +6,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.10, < 2.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0, < 6.0.0 |
 | <a name="requirement_cloudinit"></a> [cloudinit](#requirement\_cloudinit) | >= 2.0, < 3.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 4.0, < 5.0 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 5.0, < 6.0 |
 
 ## Providers
 
@@ -15,7 +15,7 @@
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0, < 6.0.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | >= 2.0, < 3.0 |
 | <a name="provider_template"></a> [template](#provider\_template) | n/a |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 4.0, < 5.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 5.0, < 6.0 |
 
 ## Modules
 
