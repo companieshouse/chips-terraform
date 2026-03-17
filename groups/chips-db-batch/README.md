@@ -24,8 +24,8 @@
 | <a name="module_asg"></a> [asg](#module\_asg) | git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template | tags/1.0.365 |
 | <a name="module_asg_alarms"></a> [asg\_alarms](#module\_asg\_alarms) | git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms | tags/1.0.365 |
 | <a name="module_asg_security_group"></a> [asg\_security\_group](#module\_asg\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
-| <a name="module_cloudwatch_sns_email"></a> [cloudwatch\_sns\_email](#module\_cloudwatch\_sns\_email) | terraform-aws-modules/sns/aws | 6.2.1 |
-| <a name="module_cloudwatch_sns_ooh"></a> [cloudwatch\_sns\_ooh](#module\_cloudwatch\_sns\_ooh) | terraform-aws-modules/sns/aws | 6.2.1 |
+| <a name="module_cloudwatch_sns_email"></a> [cloudwatch\_sns\_email](#module\_cloudwatch\_sns\_email) | terraform-aws-modules/sns/aws | 3.3.0 |
+| <a name="module_cloudwatch_sns_ooh"></a> [cloudwatch\_sns\_ooh](#module\_cloudwatch\_sns\_ooh) | terraform-aws-modules/sns/aws | 3.3.0 |
 | <a name="module_instance_profile"></a> [instance\_profile](#module\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
 
 ## Resources

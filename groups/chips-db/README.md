@@ -22,8 +22,8 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cloudwatch-alarms"></a> [cloudwatch-alarms](#module\_cloudwatch-alarms) | git@github.com:companieshouse/terraform-modules//aws/ec2-cloudwatch-alarms | tags/1.0.365 |
-| <a name="module_cloudwatch_sns_notifications"></a> [cloudwatch\_sns\_notifications](#module\_cloudwatch\_sns\_notifications) | terraform-aws-modules/sns/aws | 6.2.1 |
-| <a name="module_cloudwatch_sns_notifications_ooh"></a> [cloudwatch\_sns\_notifications\_ooh](#module\_cloudwatch\_sns\_notifications\_ooh) | terraform-aws-modules/sns/aws | 6.2.1 |
+| <a name="module_cloudwatch_sns_notifications"></a> [cloudwatch\_sns\_notifications](#module\_cloudwatch\_sns\_notifications) | terraform-aws-modules/sns/aws | 3.3.0 |
+| <a name="module_cloudwatch_sns_notifications_ooh"></a> [cloudwatch\_sns\_notifications\_ooh](#module\_cloudwatch\_sns\_notifications\_ooh) | terraform-aws-modules/sns/aws | 3.3.0 |
 | <a name="module_db_ec2_security_group"></a> [db\_ec2\_security\_group](#module\_db\_ec2\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 | <a name="module_db_instance_profile"></a> [db\_instance\_profile](#module\_db\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
 | <a name="module_oracledb_cloudwatch_alarms"></a> [oracledb\_cloudwatch\_alarms](#module\_oracledb\_cloudwatch\_alarms) | git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms | tags/1.0.195 |
