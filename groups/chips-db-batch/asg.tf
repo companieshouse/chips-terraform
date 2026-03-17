@@ -128,8 +128,8 @@ module "asg_alarms" {
   total_instances_statistic_period   = "120"
   total_instances_in_service         = 1
 
-  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
-  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
+  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
+  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
 
 
   depends_on = [
