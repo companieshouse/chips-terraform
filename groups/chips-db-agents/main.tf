@@ -63,7 +63,7 @@ module "asg" {
   tags_as_map = merge(
     local.default_tags,
     tomap({
-      Name              = format("%s%s-asg", var.application, count.index)
+      Name              = format("%s%s", var.application, count.index)
       app-instance-name = format("%s%s", var.application, count.index)
       config-base-path  = format("s3://%s/%s-configs/%s", var.config_bucket_name, var.application, var.environment)
     })
