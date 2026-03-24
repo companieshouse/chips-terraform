@@ -5,7 +5,7 @@
 
 module "db_ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-db-ec2-001"
   description = "Security group for the DB ec2 instance"
@@ -385,11 +385,11 @@ module "cloudwatch-alarms" {
   used_swap_memory_threshold = "50" # Percentage
 
   alarm_actions = [
-    module.cloudwatch_sns_notifications.topic_arn
+    module.cloudwatch_sns_notifications.sns_topic_arn
   ]
 
   ok_actions = [
-    module.cloudwatch_sns_notifications.topic_arn
+    module.cloudwatch_sns_notifications.sns_topic_arn
   ]
 
   depends_on = [
@@ -416,6 +416,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_groups" {
   tags = merge(
     local.default_tags,
     tomap({
+      "Name"        = each.value["log_group_name"]
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
     })
@@ -432,6 +433,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
   tags = merge(
     local.default_tags,
     tomap({
+      "Name"        = var.cloudwatch_oracle_log_groups[count.index]
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
     })

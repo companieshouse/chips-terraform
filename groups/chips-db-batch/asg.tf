@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 module "asg_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.3"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-asg-001"
   description = "Security group for the ${var.application} asg"
@@ -85,6 +85,7 @@ module "asg" {
   tags_as_map = merge(
     local.default_tags,
     tomap({
+      Name              = format("%s%s", var.application, count.index)
       app-instance-name = format("%s%s", var.application, count.index)
       config-base-path  = format("s3://%s/%s-configs/%s", var.config_bucket_name, var.application, var.environment)
     })
@@ -97,6 +98,10 @@ resource "aws_cloudwatch_log_group" "log_groups" {
   name              = each.value["log_group_name"]
   retention_in_days = lookup(each.value, "log_group_retention", var.default_log_group_retention_in_days)
   kms_key_id        = lookup(each.value, "kms_key_id", local.logs_kms_key_id)
+
+  tags = {
+    "Name" = each.value["log_group_name"]
+  }
 }
 
 #--------------------------------------------
@@ -107,7 +112,7 @@ module "asg_alarms" {
 
   count = var.asg_count
 
-  autoscaling_group_name = module.asg[count.index].autoscaling_group_name
+  autoscaling_group_name = module.asg[count.index].this_autoscaling_group_name
   prefix                 = "${var.aws_account}-${var.application}-${count.index}-asg-alarms"
 
   in_service_evaluation_periods      = "1"
@@ -123,8 +128,8 @@ module "asg_alarms" {
   total_instances_statistic_period   = "120"
   total_instances_in_service         = 1
 
-  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
-  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].topic_arn, module.cloudwatch_sns_ooh[0].topic_arn] : []
+  actions_alarm = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
+  actions_ok    = var.enable_sns_topic ? [module.cloudwatch_sns_email[0].sns_topic_arn, module.cloudwatch_sns_ooh[0].sns_topic_arn] : []
 
 
   depends_on = [

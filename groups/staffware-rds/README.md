@@ -5,21 +5,21 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.10, < 2.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0, < 6.0.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 4.0, < 5.0 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 5.0.0, < 6.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0, < 6.0.0 |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 4.0, < 5.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 5.0.0, < 6.0.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_rds_cloudwatch_alarms"></a> [rds\_cloudwatch\_alarms](#module\_rds\_cloudwatch\_alarms) | git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms | tags/1.0.195 |
-| <a name="module_rds_security_group"></a> [rds\_security\_group](#module\_rds\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0 |
+| <a name="module_rds_security_group"></a> [rds\_security\_group](#module\_rds\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 | <a name="module_staffware_rds"></a> [staffware\_rds](#module\_staffware\_rds) | terraform-aws-modules/rds/aws | 6.13.1 |
 
 ## Resources
@@ -70,7 +70,6 @@
 | <a name="input_parameter_group_settings"></a> [parameter\_group\_settings](#input\_parameter\_group\_settings) | A list of parameters that will be set in the RDS instance parameter group | `list(any)` | n/a | yes |
 | <a name="input_performance_insights_enabled"></a> [performance\_insights\_enabled](#input\_performance\_insights\_enabled) | Whether performance insights are required (true) or not (false). Typically enabled for Live resources. | `bool` | n/a | yes |
 | <a name="input_rds_access_sg_patterns"></a> [rds\_access\_sg\_patterns](#input\_rds\_access\_sg\_patterns) | List of source security group name patterns that will have access to port 1521 | `list(string)` | `[]` | no |
-| <a name="input_rds_application_access_cidrs"></a> [rds\_application\_access\_cidrs](#input\_rds\_application\_access\_cidrs) | A list of CIDR ranges to allow application access from | `list(string)` | `[]` | no |
 | <a name="input_rds_backup_window"></a> [rds\_backup\_window](#input\_rds\_backup\_window) | A backup window that allows AWS to backup your RDS instance e.g. `03:00-06:00` | `string` | `"03:00-06:00"` | no |
 | <a name="input_rds_log_exports"></a> [rds\_log\_exports](#input\_rds\_log\_exports) | A list log types to export from RDS to Cloudwatch | `list(string)` | `[]` | no |
 | <a name="input_rds_maintenance_window"></a> [rds\_maintenance\_window](#input\_rds\_maintenance\_window) | A maintenance window that will allow AWS to run maintenance on underlying hosts e.g. `Mon:00:00-Mon:03:00` | `string` | `"Sat:00:00-Sat:03:00"` | no |

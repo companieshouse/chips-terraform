@@ -200,7 +200,8 @@ EOF
   tags = merge(
     local.default_tags,
     {
-      "Account" = var.aws_account,
+      "Name"        = "ch-ssm-failover-${var.application}-db-eventbridge-role",
+      "Account"     = var.aws_account,
       "ServiceTeam" = "Platform"
     }
   )

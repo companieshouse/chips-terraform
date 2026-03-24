@@ -11,7 +11,7 @@ terraform {
     }
     vault = {
       source  = "hashicorp/vault"
-      version = ">= 4.0, < 5.0"
+      version = ">= 5.0, < 6.0"
     }
     cloudinit = {
       source  = "hashicorp/cloudinit"
