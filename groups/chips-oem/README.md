@@ -7,7 +7,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, < 2.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0, < 6.0.0 |
 | <a name="requirement_cloudinit"></a> [cloudinit](#requirement\_cloudinit) | >= 2.0, < 3.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 3.0.0, < 5.0.0 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 5.0, < 6.0 |
 
 ## Providers
 
@@ -16,14 +16,14 @@
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0, < 6.0.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | >= 2.0, < 3.0 |
 | <a name="provider_template"></a> [template](#provider\_template) | n/a |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 3.0.0, < 5.0.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 5.0, < 6.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_oem_instance_profile"></a> [oem\_instance\_profile](#module\_oem\_instance\_profile) | git@github.com:companieshouse/terraform-modules//aws/instance_profile | tags/1.0.365 |
-| <a name="module_oem_security_group"></a> [oem\_security\_group](#module\_oem\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.0.0 |
+| <a name="module_oem_security_group"></a> [oem\_security\_group](#module\_oem\_security\_group) | terraform-aws-modules/security-group/aws | 5.3.1 |
 
 ## Resources
 
