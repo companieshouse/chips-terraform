@@ -10,9 +10,9 @@ module "cloudwatch_sns_notifications" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    {
+      ServiceTeam = "CSI"
+    }
   )
 }
 
@@ -28,8 +28,8 @@ module "cloudwatch_sns_ooh" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "CSI"
-    )
+    {
+      ServiceTeam = "CSI"
+    }
   )
 }
