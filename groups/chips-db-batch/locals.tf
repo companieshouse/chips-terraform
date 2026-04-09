@@ -5,13 +5,13 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  security_kms_keys_data = data.vault_generic_secret.security_kms_keys.data
-  kms_keys_data          = data.vault_generic_secret.kms_keys.data
-  logs_kms_key_id        = local.kms_keys_data["logs"]
-  ssm_kms_key_id         = local.security_kms_keys_data["session-manager-kms-key-arn"]
-  sns_kms_key_id         = local.kms_keys_data["sns"]
-  account_ssm_key_arn    = local.kms_keys_data["ssm"]
-  bulk_gateway_s3_data   = data.vault_generic_secret.bulk_gateway_s3.data
+  security_kms_keys_data     = data.vault_generic_secret.security_kms_keys.data
+  kms_keys_data              = data.vault_generic_secret.kms_keys.data
+  logs_kms_key_id            = local.kms_keys_data["logs"]
+  ssm_kms_key_id             = local.security_kms_keys_data["session-manager-kms-key-arn"]
+  sns_kms_key_id             = local.kms_keys_data["sns"]
+  account_ssm_key_arn        = local.kms_keys_data["ssm"]
+  bulk_gateway_s3_data       = data.vault_generic_secret.bulk_gateway_s3.data
   bus_perf_dashboard_s3_data = data.vault_generic_secret.bus_perf_dashboard_s3.data
 
   security_s3_data            = data.vault_generic_secret.security_s3_buckets.data
@@ -22,7 +22,7 @@ locals {
   archive_bucket_name         = local.bulk_gateway_s3_data["archive_bucket_name"]
   adhoc_bucket_name           = local.bulk_gateway_s3_data["adhoc_bucket_name"]
   resource_bucket_name        = local.bus_perf_dashboard_s3_data["resource_bucket_name"]
-  nfs_mounts = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
+  nfs_mounts                  = jsondecode(data.vault_generic_secret.nfs_mounts.data["${var.application}-mounts"])
 
   #For each log map passed, add an extra kv for the log group name and append the NFS directory into the filepath where required
   log_directory_prefix = format("%s/%s", var.nfs_mount_destination_parent_dir, lookup(local.nfs_mounts["application_root"], "local_mount_point", ""))
@@ -46,10 +46,10 @@ locals {
   }
 
   userdata_ansible_inputs = {
-    mounts_parent_dir          = var.nfs_mount_destination_parent_dir
-    mounts                     = local.nfs_mounts
-    install_watcher_service    = false
-    cw_log_files               = local.cloudwatch_logs
-    cw_agent_user              = "root"
+    mounts_parent_dir       = var.nfs_mount_destination_parent_dir
+    mounts                  = local.nfs_mounts
+    install_watcher_service = false
+    cw_log_files            = local.cloudwatch_logs
+    cw_agent_user           = "root"
   }
 }
