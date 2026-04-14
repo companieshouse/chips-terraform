@@ -1,1 +1,0 @@
-# oltp-logical-standby
