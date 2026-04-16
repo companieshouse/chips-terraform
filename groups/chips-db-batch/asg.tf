@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 module "asg_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.3"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-asg-001"
   description = "Security group for the ${var.application} asg"
@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "admin_ingress_ssh" {
 
 # ASG Module
 module "asg" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.244"
+  source = "git@github.com:companieshouse/terraform-modules//aws/autoscaling-with-launch-template?ref=tags/1.0.365"
 
   count = var.asg_count
 
@@ -64,7 +64,7 @@ module "asg" {
 
   # Auto scaling group
   asg_name                       = format("%s%s-asg", var.application, count.index)
-  vpc_zone_identifier            = data.aws_subnet_ids.application.ids
+  vpc_zone_identifier            = data.aws_subnets.application.ids
   health_check_type              = "EC2"
   min_size                       = var.asg_min_size
   max_size                       = var.asg_max_size
@@ -78,13 +78,14 @@ module "asg" {
   key_name                       = aws_key_pair.keypair.key_name
   termination_policies           = ["OldestLaunchConfiguration"]
   enforce_imdsv2                 = var.enforce_imdsv2
-  
+
   iam_instance_profile = module.instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config.rendered
+  user_data_base64     = data.cloudinit_config.userdata_config.rendered
 
   tags_as_map = merge(
     local.default_tags,
     tomap({
+      Name              = format("%s%s", var.application, count.index)
       app-instance-name = format("%s%s", var.application, count.index)
       config-base-path  = format("s3://%s/%s-configs/%s", var.config_bucket_name, var.application, var.environment)
     })
@@ -97,13 +98,17 @@ resource "aws_cloudwatch_log_group" "log_groups" {
   name              = each.value["log_group_name"]
   retention_in_days = lookup(each.value, "log_group_retention", var.default_log_group_retention_in_days)
   kms_key_id        = lookup(each.value, "kms_key_id", local.logs_kms_key_id)
+
+  tags = {
+    "Name" = each.value["log_group_name"]
+  }
 }
 
 #--------------------------------------------
 # ASG CloudWatch Alarms
 #--------------------------------------------
 module "asg_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.116"
+  source = "git@github.com:companieshouse/terraform-modules//aws/asg-cloudwatch-alarms?ref=tags/1.0.365"
 
   count = var.asg_count
 
