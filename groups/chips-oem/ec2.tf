@@ -3,9 +3,9 @@
 # EC2 Sec Group
 # ------------------------------------------------------------------------------
 
-  module "oem_security_group" {
+module "oem_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "5.3.1"
 
   name        = "sgr-${var.application}-ec2-001"
   description = "Security group for the CHIPS OEM EC2 instance"
@@ -123,10 +123,10 @@ resource "aws_instance" "oem_ec2" {
   subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
   iam_instance_profile = module.oem_instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
+  user_data_base64     = data.cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
-    module.oem_security_group.this_security_group_id
+    module.oem_security_group.security_group_id
   ]
 
   root_block_device {
@@ -156,14 +156,18 @@ resource "aws_instance" "oem_ec2" {
 
 resource "aws_ebs_volume" "u_drive" {
   availability_zone = "eu-west-2a"
-  size = 256
-  type = "gp3"
-  encrypted = true
+  size              = 256
+  type              = "gp3"
+  encrypted         = true
 
-  tags = {
-    Name = "chips-oem"
-  }
-    depends_on = [
+  tags = merge(
+    local.default_tags,
+    tomap({
+      "Name" = "chips-oem"
+    })
+  )
+
+  depends_on = [
     aws_instance.oem_ec2
   ]
 }
@@ -186,4 +190,3 @@ resource "aws_route53_record" "oem_dns" {
   ttl     = "300"
   records = [aws_instance.oem_ec2[count.index].private_ip]
 }
-
