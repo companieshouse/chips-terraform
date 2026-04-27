@@ -2,7 +2,7 @@
 # Locals
 # ------------------------------------------------------------------------
 locals {
-  additional_app_cidrs = values(data.vault_generic_secret.additional_app_cidrs.data)
+  additional_app_cidrs      = values(data.vault_generic_secret.additional_app_cidrs.data)
   additional_internal_cidrs = values(data.vault_generic_secret.additional_internal_cidrs.data)
 
   data_subnet_az_map = { for id, map in data.aws_subnet.data_subnets : map["availability_zone"] => map }
@@ -30,14 +30,14 @@ locals {
 
   internal_fqdn = format("%s.%s.aws.internal", split("-", var.aws_account)[1], split("-", var.aws_account)[0])
 
-  oracle_allowed_ranges = concat(
+  oracle_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_oracle,
     local.additional_app_cidrs,
     local.dblink_cidrs,
     local.additional_internal_cidrs,
     local.cdp_cidrs
-  )
-  ssh_allowed_ranges    = concat(
+  ))
+  ssh_allowed_ranges = concat(
     var.vpc_sg_cidr_blocks_ssh,
     local.deployment_cidrs,
     local.additional_internal_cidrs
@@ -111,10 +111,12 @@ locals {
     Application = upper(var.application)
     Region      = var.aws_region
     Account     = var.aws_account
+    Environment = var.environment
+    Repository  = "chips-terraform"
   }
 
   aws_backup_plan_tags = var.aws_backup_plan_enable ? {
-    Backup      = var.aws_backup_plan_tag
+    Backup = var.aws_backup_plan_tag
   } : {}
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))
