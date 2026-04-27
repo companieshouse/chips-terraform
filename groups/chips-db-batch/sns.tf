@@ -10,9 +10,10 @@ module "cloudwatch_sns_email" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "${upper(var.application)}-CSI-Support"
-    )
+    tomap({
+      "Name"        = "${var.application}-cloudwatch-emails"
+      "ServiceTeam" = "${upper(var.application)}-CSI-Support"
+    })
   )
 }
 
@@ -28,8 +29,9 @@ module "cloudwatch_sns_ooh" {
 
   tags = merge(
     local.default_tags,
-    map(
-      "ServiceTeam", "${upper(var.application)}-CSI-Support"
-    )
+    {
+      "Name"        = "${var.application}-cloudwatch-ooh-only"
+      "ServiceTeam" = "${upper(var.application)}-CSI-Support"
+    }
   )
 }
