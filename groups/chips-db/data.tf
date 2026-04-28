@@ -150,7 +150,7 @@ data "aws_security_group" "oem" {
 data "aws_security_group" "oracle_goldengate" {
   count = var.goldengate_migration ? 1 : 0
   filter {
-    name = "tag:Name"
+    name   = "tag:Name"
     values = ["${var.environment}-chips-db"]
   }
 }

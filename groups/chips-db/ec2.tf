@@ -169,13 +169,13 @@ resource "aws_security_group_rule" "shared_services_access" {
 resource "aws_security_group_rule" "oracle_goldengate_migration" {
   count = var.goldengate_migration ? 1 : 0
 
-  type              = "ingress"
-  description       = "access from new oracle-19 instance"
-  from_port         = 9000
-  to_port           = 9005
-  protocol          = "tcp"
+  type                     = "ingress"
+  description              = "access from new oracle-19 instance"
+  from_port                = 9000
+  to_port                  = 9005
+  protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id = module.db_ec2_security_group.security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_goldengate_admin" {
@@ -192,26 +192,26 @@ resource "aws_security_group_rule" "oracle_goldengate_admin" {
 
 resource "aws_security_group_rule" "migration_1521" {
   count = var.goldengate_migration ? 1 : 0
-  
-  type              = "ingress"
-  description       = "access from new oracle-19 instance"
-  from_port         = 1521
-  to_port           = 1522
-  protocol          = "tcp"
+
+  type                     = "ingress"
+  description              = "access from new oracle-19 instance"
+  from_port                = 1521
+  to_port                  = 1522
+  protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id = module.db_ec2_security_group.security_group_id
+  security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
 resource "aws_security_group_rule" "oracle_goldengate_migration" {
   count = var.goldengate_migration ? 1 : 0
 
-  type              = "ingress"
-  description       = "access from new oracle-19 instance"
-  from_port         = 9000
-  to_port           = 9005
-  protocol          = "tcp"
+  type                     = "ingress"
+  description              = "access from new oracle-19 instance"
+  from_port                = 9000
+  to_port                  = 9005
+  protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id = module.db_ec2_security_group.this_security_group_id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
 # ------------------------------------------------------------------------------
@@ -441,7 +441,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 }
 
 module "oracledb_cloudwatch_alarms" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.195"
+  source = "git@github.com:companieshouse/terraform-modules//aws/oracledb_cloudwatch_alarms?ref=tags/1.0.366"
 
   db_instance_id          = "chips-oltp-db"
   db_instance_shortname   = var.db_instance_shortname

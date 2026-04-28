@@ -201,7 +201,7 @@ EOF
   tags = merge(
     local.default_tags,
     tomap({
-      "Account" = var.aws_account,
+      "Account"     = var.aws_account,
       "ServiceTeam" = "Platform"
     })
   )
