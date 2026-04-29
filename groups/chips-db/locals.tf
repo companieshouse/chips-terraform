@@ -107,7 +107,7 @@ locals {
   }
 
   aws_backup_plan_tags = var.aws_backup_plan_enable ? {
-    Backup      = var.aws_backup_plan_tag
+    Backup = var.aws_backup_plan_tag
   } : {}
 
   failover_approvers = distinct(compact(flatten([for roles in data.aws_iam_roles.failover_approvers : roles.arns])))
