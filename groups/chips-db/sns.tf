@@ -10,7 +10,7 @@ module "cloudwatch_sns_notifications" {
   tags = merge(
     local.default_tags,
     {
-      "ServiceTeam" = "DBA"
+      ServiceTeam = "DBA"
     }
   )
 }
@@ -27,7 +27,7 @@ module "cloudwatch_sns_notifications_ooh" {
   tags = merge(
     local.default_tags,
     {
-      "ServiceTeam" = "DBA"
+      ServiceTeam = "DBA"
     }
   )
 }

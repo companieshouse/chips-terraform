@@ -201,8 +201,8 @@ EOF
   tags = merge(
     local.default_tags,
     {
-      "Account"     = var.aws_account
-      "ServiceTeam" = "Platform"
+      Account     = var.aws_account
+      ServiceTeam = "Platform"
     }
   )
 }
