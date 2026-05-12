@@ -202,18 +202,6 @@ resource "aws_security_group_rule" "migration_1521" {
   security_group_id        = module.db_ec2_security_group.security_group_id
 }
 
-resource "aws_security_group_rule" "oracle_goldengate_migration" {
-  count = var.goldengate_migration ? 1 : 0
-
-  type                     = "ingress"
-  description              = "access from new oracle-19 instance"
-  from_port                = 9000
-  to_port                  = 9005
-  protocol                 = "tcp"
-  source_security_group_id = data.aws_security_group.oracle_goldengate[0].id
-  security_group_id        = module.db_ec2_security_group.this_security_group_id
-}
-
 # ------------------------------------------------------------------------------
 # EC2
 # ------------------------------------------------------------------------------
