@@ -243,14 +243,14 @@ resource "aws_instance" "db_ec2" {
   tags = merge(
     local.default_tags,
     local.aws_backup_plan_tags,
-    tomap({
+    {
       "Name"        = format("%s-db-%02d", var.application, count.index + 1)
-      "Domain"      = local.internal_fqdn,
-      "UNQNAME"     = var.oracle_unqname,
-      "SID"         = var.oracle_sid,
-      "ServiceTeam" = "Platforms/DBA",
+      "Domain"      = local.internal_fqdn
+      "UNQNAME"     = var.oracle_unqname
+      "SID"         = var.oracle_sid
+      "ServiceTeam" = "Platforms/DBA"
       "Terraform"   = true
-    })
+    }
   )
 
   lifecycle {
@@ -399,10 +399,10 @@ module "cloudwatch-alarms" {
 
   tags = merge(
     local.default_tags,
-    tomap({
-      "ServiceTeam" = "Platforms/DBA",
+    {
+      "ServiceTeam" = "Platforms/DBA"
       "Terraform"   = true
-    })
+    }
   )
 }
 
@@ -415,11 +415,11 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_groups" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "Name"        = each.value["log_group_name"]
-      "ServiceTeam" = "Platforms/DBA",
+      "ServiceTeam" = "Platforms/DBA"
       "Terraform"   = true
-    })
+    }
   )
 }
 
@@ -432,11 +432,11 @@ resource "aws_cloudwatch_log_group" "cloudwatch_oracle_log_groups" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "Name"        = var.cloudwatch_oracle_log_groups[count.index]
-      "ServiceTeam" = "Platforms/DBA",
+      "ServiceTeam" = "Platforms/DBA"
       "Terraform"   = true
-    })
+    }
   )
 }
 
