@@ -37,11 +37,11 @@ locals {
     local.additional_internal_cidrs,
     local.cdp_cidrs
   ))
-  ssh_allowed_ranges = concat(
+  ssh_allowed_ranges = nonsensitive(concat(
     var.vpc_sg_cidr_blocks_ssh,
     local.deployment_cidrs,
     local.additional_internal_cidrs
-  )
+  ))
 
   iscsi_initiator_names = split(",", local.ec2_data["iscsi-initiator-names"])
 
