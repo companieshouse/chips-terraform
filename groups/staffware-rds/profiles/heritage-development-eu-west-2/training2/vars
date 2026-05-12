@@ -27,6 +27,7 @@ auto_minor_version_upgrade = false
 
 rds_access_sg_patterns = [
   "sgr-chips-devtest-asg-001-*",
+  "sgr-chips-training2-asg-001-*",
   "sgr-iprocess-app-training2-asg-001-*"
 ]
 
