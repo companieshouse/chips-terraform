@@ -30,8 +30,8 @@ module "cloudwatch_sns_ooh" {
   tags = merge(
     local.default_tags,
     {
-      "Name"        = "${var.application}-cloudwatch-ooh-only"
-      "ServiceTeam" = "${upper(var.application)}-CSI-Support"
+      Name        = "${var.application}-cloudwatch-ooh-only"
+      ServiceTeam = "${upper(var.application)}-CSI-Support"
     }
   )
 }
