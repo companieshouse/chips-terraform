@@ -138,12 +138,12 @@ resource "aws_instance" "oem_ec2" {
 
   tags = merge(
     local.default_tags,
-    tomap({
-      "Name"        = format("%s-%02d", var.application, count.index + 1)
+    {
+      "Name" = format("%s-%02d", var.application, count.index + 1)
       "Domain"      = local.internal_fqdn,
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true
-    })
+    }
   )
 
   lifecycle {
@@ -162,9 +162,9 @@ resource "aws_ebs_volume" "u_drive" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "Name" = "chips-oem"
-    })
+    }
   )
 
   depends_on = [
