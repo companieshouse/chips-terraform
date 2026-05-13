@@ -60,26 +60,26 @@ module "staffware_rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "6.13.1"
 
-  create_db_parameter_group = true
-  create_db_subnet_group    = true
-  option_group_description = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
+  create_db_parameter_group   = true
+  create_db_subnet_group      = true
+  option_group_description    = "Option group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
   parameter_group_description = "Database parameter group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
   db_subnet_group_description = "Database subnet group for ${join("-", ["rds", var.identifier, var.environment, "001"])}"
 
-  identifier                 = "rds-${var.identifier}-${var.environment}-001"
-  engine                     = "oracle-se2"
-  major_engine_version       = var.major_engine_version
-  engine_version             = var.engine_version
-  ca_cert_identifier         = var.ca_cert_identifier
-  auto_minor_version_upgrade = var.auto_minor_version_upgrade
-  license_model              = var.license_model
-  instance_class             = var.instance_class
-  allocated_storage          = var.allocated_storage
-  storage_type               = var.storage_type
-  iops                       = var.iops
-  multi_az                   = var.multi_az
-  storage_encrypted          = true
-  kms_key_id                 = data.aws_kms_key.rds.arn
+  identifier                  = "rds-${var.identifier}-${var.environment}-001"
+  engine                      = "oracle-se2"
+  major_engine_version        = var.major_engine_version
+  engine_version              = var.engine_version
+  ca_cert_identifier          = var.ca_cert_identifier
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  license_model               = var.license_model
+  instance_class              = var.instance_class
+  allocated_storage           = var.allocated_storage
+  storage_type                = var.storage_type
+  iops                        = var.iops
+  multi_az                    = var.multi_az
+  storage_encrypted           = true
+  kms_key_id                  = data.aws_kms_key.rds.arn
   manage_master_user_password = false
 
   db_name  = upper(var.name)
@@ -154,7 +154,7 @@ module "staffware_rds" {
     local.default_tags,
     {
       "ServiceTeam" = "${upper(var.identifier)}-DBA-Support"
-      Name        = join("-", ["rds", var.identifier, var.environment, "001"])
+      Name          = join("-", ["rds", var.identifier, var.environment, "001"])
     }
   )
 }
