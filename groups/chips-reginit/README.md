@@ -70,6 +70,7 @@
 | [vault_generic_secret.security_kms_keys](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
 | [vault_generic_secret.security_s3_buckets](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
 | [vault_generic_secret.shared_services_s3](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
+| [vault_generic_secret.sns_data](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
 | [vault_generic_secret.sns_url](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
 | [vault_generic_secret.ssm](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) | data source |
 
@@ -121,8 +122,6 @@
 | <a name="input_region"></a> [region](#input\_region) | Short version of the name of the AWS region in which resources will be administered | `string` | n/a | yes |
 | <a name="input_ssm_playbook_file_name"></a> [ssm\_playbook\_file\_name](#input\_ssm\_playbook\_file\_name) | Name of the playbook file to run | `string` | `"ssm-playbook.yml"` | no |
 | <a name="input_ssm_requirements_file_name"></a> [ssm\_requirements\_file\_name](#input\_ssm\_requirements\_file\_name) | Name of the requirements file to download Ansible dependancies | `string` | `"requirements.yml"` | no |
-| <a name="input_vault_password"></a> [vault\_password](#input\_vault\_password) | Password for connecting to Vault - usually supplied through TF\_VARS | `string` | n/a | yes |
-| <a name="input_vault_username"></a> [vault\_username](#input\_vault\_username) | Username for connecting to Vault - usually supplied through TF\_VARS | `string` | n/a | yes |
 | <a name="input_vpn_prefix_list_name"></a> [vpn\_prefix\_list\_name](#input\_vpn\_prefix\_list\_name) | Name of the vpn prefix list to lookup | `string` | `"on-premise-cidr-ranges"` | no |
 
 ## Outputs

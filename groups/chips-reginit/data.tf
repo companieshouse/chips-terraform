@@ -68,6 +68,10 @@ data "vault_generic_secret" "ec2_data" {
   path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/db/ec2"
 }
 
+data "vault_generic_secret" "sns_data" {
+  path = "applications/${var.aws_account}-${var.aws_region}/${var.application}/db/sns"
+}
+
 data "vault_generic_secret" "kms_keys" {
   path = "aws-accounts/${var.aws_account}/kms"
 }
