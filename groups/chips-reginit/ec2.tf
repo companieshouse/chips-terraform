@@ -85,7 +85,7 @@ resource "aws_instance" "reginit_ec2" {
   subnet_id     = local.data_subnet_az_map[element(local.deployment_zones, count.index)]["id"]
 
   iam_instance_profile = module.reginit_instance_profile.aws_iam_instance_profile.name
-  user_data_base64     = data.template_cloudinit_config.userdata_config[count.index].rendered
+  user_data_base64     = data.cloudinit_config.userdata_config[count.index].rendered
 
   vpc_security_group_ids = [
     aws_security_group.reginit.id
@@ -100,13 +100,13 @@ resource "aws_instance" "reginit_ec2" {
 
   tags = merge(
     local.default_tags,
-    tomap({
+    {
       "Name"        = format("%s-%02d", var.application, count.index + 1)
       "Domain"      = local.internal_fqdn,
       "ServiceTeam" = "Platforms/DBA",
       "Terraform"   = true,
       "Backup"      = "backup21"
-    })
+    }
   )
 
   lifecycle {
