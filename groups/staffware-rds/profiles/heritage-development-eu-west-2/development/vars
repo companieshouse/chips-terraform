@@ -25,10 +25,6 @@ engine_version             = "19"
 license_model              = "license-included"
 auto_minor_version_upgrade = false
 
-rds_application_access_cidrs = [
-  "10.94.6.242/32"
-]
-
 rds_access_sg_patterns = [
   "development-chips-e2e-*",
   "sgr-chips-*-asg-001-*",
