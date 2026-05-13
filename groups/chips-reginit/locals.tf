@@ -13,7 +13,7 @@ locals {
   security_kms_keys_data     = data.vault_generic_secret.security_kms_keys.data
   ssm_data                   = data.vault_generic_secret.ssm.data
   chs_subnet_data            = data.vault_generic_secret.chs_subnet.data
-  subscribed_email_addresses = toset(data.vault_generic_secret.sns_data.data["subscribed_email_addresses"])
+  subscribed_email_addresses = toset(jsondecode(data.vault_generic_secret.sns_data.data["subscribed_email_addresses"]))
 
   logs_kms_key_id        = local.kms_keys_data["logs"]
   ssm_logs_key_id        = local.kms_keys_data["ssm"]
