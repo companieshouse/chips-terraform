@@ -141,7 +141,7 @@ module "iprocess_app_asg" {
 
   tags_as_map = merge(
     local.default_tags,
-    tomap({
+    ({
       "ServiceTeam" = "CSI"
     })
   )
