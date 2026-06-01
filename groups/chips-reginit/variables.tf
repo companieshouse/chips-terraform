@@ -205,7 +205,7 @@ variable "data_volume_device_name" {
 variable "data_volume_size" {
   type        = number
   description = "The size, in GiB, of the data EBS volume"
-  default     = 7000
+  default     = 7500
 }
 
 variable "data_volume_type" {
