@@ -156,6 +156,13 @@ data "aws_security_group" "oem" {
   }
 }
 
+data "aws_security_group" "chips-db-ora19" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.environment}-chips-db"]
+  }
+}
+
 data "aws_ec2_managed_prefix_list" "admin" {
   name = "administration-cidr-ranges"
 }
