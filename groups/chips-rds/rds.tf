@@ -76,7 +76,6 @@ resource "aws_security_group_rule" "staging_chips_db_batch_ingress" {
   protocol          = "tcp"
   cidr_blocks       = [data.vault_generic_secret.staging_chips_db_batch.data["chips-db-batch-ip"]]
   security_group_id = module.rds_security_group.this_security_group_id
-
 }
 
 # ------------------------------------------------------------------------------
