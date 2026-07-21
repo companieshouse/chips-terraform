@@ -55,3 +55,6 @@ data "vault_generic_secret" "staging_dba_dev" {
   path = "applications/${var.aws_profile}/chips/dba_dev"
   
 }
+data "vault_generic_secret" "staging_chips_db_batch" {
+  path = "applications/${var.aws_profile}/chips/staging_db_batch"
+}
