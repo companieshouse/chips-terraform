@@ -32,6 +32,10 @@ rds_access_sg_patterns = [
   "sgr-chips-rds-001-*"
 ]
 
+rds_application_access_cidrs = [
+  "10.94.6.242/32"
+]
+
 # RDS logging
 rds_log_exports = [
   "alert",
