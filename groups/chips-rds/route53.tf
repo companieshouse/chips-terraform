@@ -3,5 +3,5 @@ resource "aws_route53_record" "chips_rds" {
   name    = "${var.name}db"
   type    = "CNAME"
   ttl     = "300"
-  records = [module.chips_rds.this_db_instance_address]
+  records = [module.chips_rds.db_instance_address]
 }
