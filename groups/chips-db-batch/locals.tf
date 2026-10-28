@@ -43,6 +43,7 @@ locals {
     ApplicationType = upper(var.application_type)
     Region          = var.aws_region
     Account         = var.aws_account
+    ServiceTeam     = "CSI"
   }
 
   userdata_ansible_inputs = {

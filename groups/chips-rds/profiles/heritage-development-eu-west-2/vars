@@ -114,7 +114,9 @@ oracle_ingress_sg_patterns = [
   "sgr-chips-devtest-asg*",
   "sgr-chips-training1-asg*",
   "sgr-chips-training2-asg*",
-  "sgr-chips-uam-ec2*"
+  "sgr-chips-uam-ec2*",
+  "sgr-staffware-training1-rds-001*",
+  "sgr-staffware-training2-rds-001*"
 ]
 
 ## CloudWatch Alarms

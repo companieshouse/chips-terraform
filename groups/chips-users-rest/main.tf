@@ -29,7 +29,7 @@ provider "vault" {
 }
 
 module "chips-users-rest" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.363"
+  source = "git@github.com:companieshouse/terraform-modules//aws/chips-app?ref=1.0.445"
 
   application                        = var.application
   application_type                   = "chips"
@@ -50,7 +50,7 @@ module "chips-users-rest" {
   enable_sns_topic                   = var.enable_sns_topic
   create_nlb                         = true
   maximum_5xx_threshold              = 5
-  maximum_4xx_threshold              = 5
+  maximum_4xx_threshold              = 10
   test_access_enable                 = var.test_access_enable
   ssh_access_security_group_patterns = var.ssh_access_security_group_patterns
   additional_alb_ingress_cidr_blocks = local.allowed_ranges
