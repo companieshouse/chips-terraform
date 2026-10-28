@@ -53,7 +53,7 @@ data "aws_ec2_managed_prefix_list" "administration" {
 }
 
 data "aws_ami" "ami" {
-  owners      = [data.vault_generic_secret.account_ids.data["development"]]
+  owners      = [data.vault_generic_secret.account_ids.data["shared-services"]]
   most_recent = var.ami_name == "docker-ami-*" ? true : false
 
   filter {
