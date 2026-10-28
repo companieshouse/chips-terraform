@@ -71,7 +71,7 @@ data "vault_generic_secret" "bulk_gateway_s3" {
 }
 
 data "aws_ami" "ami" {
-  owners      = [data.vault_generic_secret.account_ids.data["development"]]
+  owners      = [data.vault_generic_secret.account_ids.data["shared-services"]]
   most_recent = var.ami_name == "docker-ami-*" ? true : false
 
   filter {

@@ -93,7 +93,9 @@ staffware_db_sg = [
   "sgr-chips-db-agents-asg-001-*",
   "sgr-chips-oltp-db-ec2-001-*",
   "sgr-chips-rep-db-ec2-001-*",
-  "sgr-chips-oltp-logstb-db-ec2*"
+  "sgr-chips-oltp-logstb-db-ec2*",
+  "staging-chips-db",
+  "staging-chips-db-dataguard"
 ]
 
 # OEM Security Group
