@@ -13,7 +13,7 @@ oracle_unqname = "REPLIVE"
 oracle_sid = "REPLIVE"
 
 db_instance_count = 2
-db_instance_size = "r6i.12xlarge"
+db_instance_size = "r7i.12xlarge"
 
 availability_zones = ["eu-west-2a","eu-west-2b"]
 
@@ -51,7 +51,7 @@ cloudwatch_logs = {
     file_path = "/var/log"
     log_group_retention = 180
   }
-  
+
   "secure" = {
     file_path = "/var/log"
     log_group_retention = 180
