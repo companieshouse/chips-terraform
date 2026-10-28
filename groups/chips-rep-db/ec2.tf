@@ -81,6 +81,16 @@ resource "aws_security_group_rule" "oracle_access_sgs" {
   security_group_id        = module.db_ec2_security_group.this_security_group_id
 }
 
+resource "aws_security_group_rule" "chips_db_ora19_oracle" {
+  type                     = "ingress"
+  description              = "Oracle access from Oracle 19c chips-db instance"
+  from_port                = 1521
+  to_port                  = 1521
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.chips-db-ora19.id
+  security_group_id        = module.db_ec2_security_group.this_security_group_id
+}
+
 # ------------------------------------------------------------------------------
 # OEM agent 
 # ------------------------------------------------------------------------------
