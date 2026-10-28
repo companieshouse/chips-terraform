@@ -1,8 +1,8 @@
 module "db_instance_profile" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.88"
+  source = "git@github.com:companieshouse/terraform-modules//aws/instance_profile?ref=tags/1.0.365"
 
   name       = format("%s-db", var.application)
-  enable_SSM = true
+  enable_ssm = true
   kms_key_refs = [
     "alias/${var.account}/${var.region}/ebs",
     local.ssm_kms_key_id,
@@ -197,10 +197,10 @@ resource "aws_iam_role" "eventbridge_ssm_execution_role" {
 EOF
   tags = merge(
     local.default_tags,
-    map(
-      "Account", var.aws_account,
-      "ServiceTeam", "Platform"
-    )
+    {
+      Account     = var.aws_account,
+      ServiceTeam = "Platform"
+    }
   )
 }
 
@@ -244,8 +244,8 @@ data "aws_iam_policy_document" "eventbridge_ssm_execution_policy_document" {
 }
 
 resource "aws_iam_role_policy_attachment" "inspector_cis_scanning_policy_attach" {
-  count      = var.enable_inspector_scanning_policy ? 1 : 0
-  
+  count = var.enable_inspector_scanning_policy ? 1 : 0
+
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ManagedCisPolicy"
   role       = module.db_instance_profile.aws_iam_role.name
 }
