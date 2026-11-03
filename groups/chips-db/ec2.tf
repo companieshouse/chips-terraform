@@ -142,7 +142,7 @@ resource "aws_security_group_rule" "test_access" {
 
 resource "aws_security_group_rule" "sp_migration" {
   for_each = length(local.sp_migration_cidrs) > 0 ? {
-    for idx, cidr in local.sp_migration_cidrs : idx => cidr
+    for idx, cidr in nonsensitive(local.sp_migration_cidrs) : idx => cidr
   } : {}
 
   type              = "ingress"
