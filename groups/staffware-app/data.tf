@@ -43,19 +43,14 @@ data "aws_security_group" "nagios_shared" {
   }
 }
 
-data "aws_security_group" "chips_users_rest_app" {
+data "aws_security_groups" "iprocess_access_group_ids" {
+  for_each = toset(var.iprocess_access_sg_patterns)
   filter {
     name   = "group-name"
-    values = ["sgr-chips-users-rest-asg-*"]
+    values = [each.key]
   }
 }
 
-data "aws_security_group" "chips_ef_batch_app" {
-  filter {
-    name   = "group-name"
-    values = ["sgr-chips-ef-batch-asg-*"]
-  }
-}
 
 data "aws_route53_zone" "private_zone" {
   name         = local.internal_fqdn

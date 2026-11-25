@@ -151,3 +151,9 @@ variable "instance_root_volume_type" {
   default     = "gp3"
   description = "The EC2 instance root volume type"
 }
+
+variable "iprocess_access_sg_patterns" {
+  type        = list(string)
+  description = "List of source app security group name patterns that will have access"
+  default     = []
+}

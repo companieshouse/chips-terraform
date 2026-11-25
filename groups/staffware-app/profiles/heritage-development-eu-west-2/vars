@@ -23,6 +23,13 @@ public_allow_cidr_blocks = [
   "127.0.0.1/32"
 ]
 
+iprocess_access_sg_patterns = [
+  "sgr-chips-users-rest-asg-*",
+  "sgr-chips-ef-batch-asg-*",
+  "development-chips-e2e-*",
+  "sgr-chips-austin-asg-*"
+]
+
 cw_logs = {
   "audit.log" = {
     file_path = "/var/log/audit"
