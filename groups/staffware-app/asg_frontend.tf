@@ -19,22 +19,17 @@ module "iprocess_app_asg_security_group" {
     }
   ]
 
-  ingress_with_source_security_group_id = [
-    {
-      from_port                = 30511
-      to_port                  = 30514
-      protocol                 = "tcp"
-      description              = "WebLogic chips-users-rest inbound port range"
-      source_security_group_id = data.aws_security_group.chips_users_rest_app.id
-    },
-    {
-      from_port                = 30511
-      to_port                  = 30514
-      protocol                 = "tcp"
-      description              = "WebLogic chips-ef-batch inbound port range"
-      source_security_group_id = data.aws_security_group.chips_ef_batch_app.id
-    }
-  ]
+  ingress_with_source_security_group_id = flatten([
+    for pattern, sg in data.aws_security_groups.iprocess_access_group_ids : [
+      for sg_id in sg.ids : {
+        from_port                = 30511
+        to_port                  = 30514
+        protocol                 = "tcp"
+        description              = "WebLogic ${pattern} inbound port range"
+        source_security_group_id = sg_id
+      }
+    ]
+  ])
 
   egress_rules = ["all-all"]
 
